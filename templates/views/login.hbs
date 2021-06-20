@@ -7,19 +7,19 @@
     </head>
     <body>
         {{>header}}
-       <div class = "centered-form">
+       <div class = "centered-form" >
             <div class = "centered-form__box">
                 <h1>LOG IN</h1>
-                <form>
+                <form id="login-form">
                     <label>EMAIL</label>
-                    <input type="text" name="email" placeholder="email" required>
+                    <input type="text" name="email" placeholder="email" required id="login-email">
                     <label>PASSWORD</label>
-                    <input type = "text" name = "password" placeholder="password" required>
+                    <input type = "text" name = "password" placeholder="password" required id="login-password">
                     <button type = "submit">LOG IN</button>
                 </form>
 
             </div>
-       
+       <script src = "/js/scripts.js"></script>
     </body>
 
 

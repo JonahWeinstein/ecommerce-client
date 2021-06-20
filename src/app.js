@@ -3,6 +3,7 @@ const express = require('express')
 const hbs =require('hbs')
 
 
+
 const app = express()
 
 
@@ -30,5 +31,19 @@ app.get('/register', (req, res) =>{
         title: 'REGISTER',
     })
 })
+app.get('/login', (req, res) =>{
+    res.render('login', {
+        title: 'LOGIN',
+    })
+})
+
+
+app.get('/dashboard', (req, res) => {
+    res.render('dashboard', {
+        title: 'Dashboard'
+    })
+})
+
+
 
 module.exports = app

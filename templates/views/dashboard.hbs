@@ -1,0 +1,28 @@
+<!DOCTYPE html> 
+
+<html>
+    <head>
+        <link rel="stylesheet" href="/css/styles.css">
+        
+    </head>
+    <body>
+        {{>header}}
+        <button id="get-stores-btn">Stores</button>
+        <div id="stores">
+
+        </div>
+
+         
+
+         <!-- store template -->
+        <script id="store-template", type="text/html">
+            <div class = "store">
+                <p>{{store_name}}</p>
+            </div>
+        </script>
+        <script src = "/js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.min.js"></script>
+    </body>
+
+
+</html>
