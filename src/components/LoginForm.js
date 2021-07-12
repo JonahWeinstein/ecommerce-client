@@ -1,10 +1,11 @@
 import React from 'react'
-import { useFetch } from 'react-async';
+
 
 class LoginForm extends React.Component {
     state = {
         error: undefined
     }
+    
     onFormSubmit = async (data) => {
         try{
             const response = await fetch(`http://localhost:3000/users/login`, {
@@ -40,7 +41,7 @@ class LoginForm extends React.Component {
             <form onSubmit = {this.loginUser}>
                 <input type="text" name="email" placeholder = "Email" />
                 <input type = "text" name = "password" placeholder = "password" />
-                {this.state.error && <p>{this.state.error}</p>}
+                {this.state.error && <p className = "error">{this.state.error}</p>}
                 <button type = "submit">Login</button>
             </form>
         )
