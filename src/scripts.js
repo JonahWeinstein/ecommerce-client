@@ -85,6 +85,7 @@ const getStores = async () => {
             'Authorization': `Bearer ${authToken}`
             }
         })
+        
         return response.json();
     } catch (e) {
         return e
@@ -93,17 +94,16 @@ const getStores = async () => {
 const $stores = document.querySelector('#stores')
 const storeTemplate = document.querySelector('#store-template').innerHTML
 const getStoresButton = document.querySelector('#get-stores-btn')
+ 
+if(getStoresButton) {
+
 getStoresButton.addEventListener('click', async () => {
     const stores = await getStores()
     console.log(stores)
-    stores.forEach( (store) => {
-        const html = Mustache.render(storeTemplate, {
-            store_name: store.store_name
-        })
-        $stores.insertAdjacentHTML('beforeend', html)
-    })
-    
+    const html = Mustache.render(storeTemplate, stores)
+    $stores.innerHTML = html
 })
+}
 
 
 
