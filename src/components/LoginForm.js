@@ -30,8 +30,11 @@ class LoginForm extends React.Component {
             const user = await this.onFormSubmit(data)
             console.log(user)
             localStorage.setItem('token', user.token)
-            this.setState(() => ({ error: '' }))
+            this.setState(() => ({ error: undefined }))
+            this.props.onSubmit()
+
         } catch (error) {
+            console.log(error)
             this.setState(()=> ({error: 'Invalid Login Attempt'}))
         }
         
