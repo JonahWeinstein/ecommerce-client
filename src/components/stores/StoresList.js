@@ -2,7 +2,6 @@ import React from 'react'
 import StoreListItem from './StoreListItem'
 
 const StoresList = (props) => {
-    console.log(props.stores)
     return (
         <div>
             <p>Stores</p>

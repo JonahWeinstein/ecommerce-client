@@ -1,5 +1,6 @@
 import React from 'react';
-import StoresList from './StoresList'
+import StoresList from './stores/StoresList'
+import AddStoreButton from './AddStoreButton';
 
 class UserDashboard extends React.Component {
     state = {
@@ -31,6 +32,7 @@ class UserDashboard extends React.Component {
             <div>
                 <p>This is the user Dashboard</p>
                 <StoresList stores = {this.state.stores} />
+                <AddStoreButton />
                 
             </div>
         )
