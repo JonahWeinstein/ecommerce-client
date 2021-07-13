@@ -28,8 +28,7 @@ class LoginForm extends React.Component {
         }
         try {
             const user = await this.onFormSubmit(data)
-            console.log(user)
-            localStorage.setItem('token', user.token)
+            sessionStorage.setItem('token', user.token)
             this.setState(() => ({ error: undefined }))
             this.props.onSubmit()
 

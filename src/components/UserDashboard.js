@@ -2,21 +2,22 @@ import React from 'react';
 import StoresList from './stores/StoresList'
 import AddStoreButton from './AddStoreButton';
 
+
 class UserDashboard extends React.Component {
     state = {
         stores: []
     }
     async componentDidMount() {
         try{
-            const result = await this.getStores()
-            this.setState(() => ({stores: result}))
+            const stores = await this.getStores()
+            this.setState(() => ({stores}))
         } catch (e) {
             return e
         }
     }
     getStores = async () => {
         try{
-            const authToken = localStorage.getItem('token')
+            const authToken = sessionStorage.getItem('token')
             const response = await fetch('http://localhost:3000/stores', {
             headers: {
                 'Authorization': `Bearer ${authToken}`

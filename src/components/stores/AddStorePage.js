@@ -6,7 +6,9 @@ const AddStorePage = () => {
     return (
         <div>
             <p>Pick A Name For Your Store </p>
-            <AddStoreForm />
+            <AddStoreForm onAddStore = {() => {
+                props.history.push('/UserDashboard')
+            }} />
         </div>
     )
 }
