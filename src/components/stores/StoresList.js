@@ -1,5 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import StoreListItem from './StoreListItem'
+
 
 const StoresList = (props) => {
     return (
@@ -19,5 +21,10 @@ const StoresList = (props) => {
     )
   
 }
+const mapStateToProps = (state) => {
+    return {
+        stores: state.stores
+    }
+}
 
-export default StoresList
+export default connect(mapStateToProps)(StoresList)

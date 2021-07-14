@@ -1,4 +1,6 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { startGetStores } from '../actions/storeActions';
 
 
 class LoginForm extends React.Component {
@@ -30,6 +32,7 @@ class LoginForm extends React.Component {
             const user = await this.onFormSubmit(data)
             sessionStorage.setItem('token', user.token)
             this.setState(() => ({ error: undefined }))
+            this.props.startGetStores()
             this.props.onSubmit()
 
         } catch (error) {
@@ -49,5 +52,9 @@ class LoginForm extends React.Component {
         )
     }
 }
+const mapDispatchToProps = (dispatch) => ({
+    startGetStores: () => dispatch(startGetStores())
+})
 
-export default LoginForm
+
+export default connect(undefined, mapDispatchToProps)(LoginForm)
