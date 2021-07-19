@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import {startGetStores} from '../../actions/storeActions'
+import { Link } from 'react-router-dom'
 
 
 class StoreDashboard extends React.Component {
@@ -27,7 +28,9 @@ class StoreDashboard extends React.Component {
     render(){
         return (
             <div>
-                <p>This is the Store Dashboard for {this.props.store.store_name} </p>
+                <p>{this.props.store.store_name} </p>
+                <Link to = {`/UserDashboard/stores/${this.props.store.id}/products`}>Products</Link>
+
             </div>
         )
     }
