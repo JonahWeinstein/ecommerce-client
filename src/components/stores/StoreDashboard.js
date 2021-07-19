@@ -25,10 +25,9 @@ class StoreDashboard extends React.Component {
     //     }
     // }
     render(){
-        console.log(this.props)
         return (
             <div>
-                <p>This is the Store Dashboard for store </p>
+                <p>This is the Store Dashboard for {this.props.store.store_name} </p>
             </div>
         )
     }

@@ -10,18 +10,13 @@ class AddStoreForm extends React.Component {
     onformSubmit = async (e) => {
         e.preventDefault()
         const store_name = e.target.elements.store_name.value
-        const store = await this.props.startAddStore(store_name)
-        // if store is undefined that means the post request failed
-        if(store === undefined){
-            this.setState(() => ({error:'Unable to add store'}))
-        } 
-        // if addStore (called by startAddStore) worked...
-        else {
+        try {
+            const store = await this.props.startAddStore(store_name)
             this.setState(() => ({error: undefined, success:'Store Added!'}))
+        } catch (e) {
+            this.setState(() => ({error:'Unable to add store', success: undefined}))
         }
     }
-    
-    
     render() {
         return (
             <div>

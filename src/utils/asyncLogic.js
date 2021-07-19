@@ -13,7 +13,7 @@ const fetchStores = async () => {
 }
 const addStore = async (store_name) => {
     const data = { store_name }
-    try {
+    
         const authToken = sessionStorage.getItem('token')
         // remember to set content-type in request
         const response = await fetch(`http://localhost:3000/stores/add`, {
@@ -23,12 +23,11 @@ const addStore = async (store_name) => {
                 'Content-Type': 'application/json'
             },
             method: 'POST'});
-        this.setState(() => ({success: "store added!", error: undefined}))
+        if(!response.ok) {
+            throw new Error(`An Error has occured ${response.status}`)
+        }
         return response.json()
-    } catch (e) {
-        this.setState(() => ({error: e, success: undefined}))
-        return e
-    }
+    
 }
 
 export { fetchStores, addStore }

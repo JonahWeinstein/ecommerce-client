@@ -16,13 +16,12 @@ const getStores = (stores = []) => ({
     stores
 })
 const startAddStore = (store_name) => {
-    console.log(store_name)
     return async (dispatch) => {
         try {
             const store = await addStore(store_name)
             dispatch(addStoreAction(store))
         } catch (e) {
-            dispatch(updateError('Unable to add store'))
+            throw new Error(e)
         }
     }
 }
