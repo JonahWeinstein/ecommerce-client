@@ -50,4 +50,21 @@ const fetchProducts = async (storeId) => {
         return response.json();
     
 }
-export { fetchStores, addStore, fetchProducts }
+const addProduct = async (name, description = '', price, quantity, storeId) => {
+    const data = { name, description, price, quantity }
+        const authToken = sessionStorage.getItem('token')
+        // remember to set content-type in request
+        const response = await fetch(`http://localhost:3000/stores/${storeId}/products/add`, {
+            body: JSON.stringify(data),
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'application/json'
+            },
+            method: 'POST'});
+        if(!response.ok) {
+            throw new Error(`Unable to add product ${response.status}`)
+        }
+        return response.json()
+    
+}
+export { fetchStores, addStore, fetchProducts, addProduct }

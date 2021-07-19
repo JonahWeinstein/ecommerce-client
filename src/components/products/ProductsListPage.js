@@ -1,11 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 import {startGetProducts} from '../../actions/productActions'
 import ProductListItem from './ProductListItem'
 
 
 
-class ProductsList extends React.Component  {
+
+class ProductsListPage extends React.Component  {
     
     componentDidMount() {
         this.props.startGetProducts(this.props.store.id)
@@ -21,6 +23,7 @@ class ProductsList extends React.Component  {
                     </li>
                 ))}
             </ul>
+            <Link to = {`/UserDashboard/stores/${this.props.store.id}/products/add`}>Add Product</Link>
             </div>
         )
        
@@ -35,4 +38,4 @@ const mapSateToProps = (state, props) => {
 const mapDispatchToProps = (dispatch) => ({
     startGetProducts: (storeId) => dispatch(startGetProducts(storeId))
 })
-export default connect(mapSateToProps, mapDispatchToProps)(ProductsList)
+export default connect(mapSateToProps, mapDispatchToProps)(ProductsListPage)
