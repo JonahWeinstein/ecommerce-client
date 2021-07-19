@@ -3,16 +3,18 @@ import { connect } from 'react-redux'
 import StoreListItem from './StoreListItem'
 
 
+
 const StoresList = (props) => {
+
     return (
-        <div>
+        <div >
             <p>Stores</p>
             <ul>
                 {props.stores.map((store) => (
-                    <li>
+                    <li key = {store.id}>
                         <StoreListItem 
                         store = {store}
-                        key = {store.id}
+                        
                         />
                     </li>
                 ))}
@@ -26,5 +28,6 @@ const mapStateToProps = (state) => {
         stores: state.stores
     }
 }
+
 
 export default connect(mapStateToProps)(StoresList)

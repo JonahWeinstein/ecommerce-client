@@ -6,6 +6,7 @@ import { startGetStores } from '../actions/storeActions'
 
 
 
+
 class UserDashboard extends React.Component {
         componentDidMount() {
             this.props.startGetStores()
@@ -14,18 +15,17 @@ class UserDashboard extends React.Component {
             return (
                 <div>
                     <p>This is the user Dashboard</p>
-                    <StoresList  />
+                    <StoresList />
                     <AddStoreButton />
                     
                 </div>
             )
         } 
 }
-
-
 const mapDispatchToProps = (dispatch) => ({
     startGetStores: () => dispatch(startGetStores())
 })
+
 export default connect(undefined, mapDispatchToProps)(UserDashboard)
 
 

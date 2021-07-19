@@ -34,7 +34,6 @@ class LoginForm extends React.Component {
             this.props.onSubmit()
 
         } catch (error) {
-            console.log(error)
             this.setState(()=> ({error: 'Invalid Login Attempt'}))
         }
         

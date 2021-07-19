@@ -1,9 +1,10 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 
 const StoreListItem = (props) => {
     return (
         <div>
-            <p>{props.store.store_name}</p>
+            <Link to = {`UserDashboard/stores/${props.store.id}`}>{props.store.store_name}</Link>
         </div>
     )
 }

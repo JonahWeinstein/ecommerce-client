@@ -1,35 +1,19 @@
 import React from 'react'
+import { startAddStore} from '../../actions/storeActions'
+import { connect } from 'react-redux'
 
 class AddStoreForm extends React.Component {
     state = {
         error: undefined,
         success: undefined
     }
-    onformSubmit = async (e) => {
+    onformSubmit = (e) => {
         e.preventDefault()
         const store_name = e.target.elements.store_name.value
-        const store = await this.addStore(store_name)
+        console.log(store_name)
+        const store = this.props.startAddStore(store_name)
     }
-    addStore = async (store_name) => {
-        const data = { store_name }
-        console.log(JSON.stringify(data))
-        try {
-            const authToken = sessionStorage.getItem('token')
-            // remember to set content-type in request
-            const response = await fetch(`http://localhost:3000/stores/add`, {
-                body: JSON.stringify(data),
-                headers: {
-                    'Authorization': `Bearer ${authToken}`,
-                    'Content-Type': 'application/json'
-                },
-                method: 'POST'});
-            this.setState(() => ({success: "store added!", error: undefined}))
-            return response.json()
-        } catch (e) {
-            this.setState(() => ({error: e, success: undefined}))
-            return e
-        }
-    }
+    
     render() {
         return (
             <div>
@@ -47,5 +31,8 @@ class AddStoreForm extends React.Component {
         )
     } 
 }
+const mapDispatchToProps = (dispatch) => ({
+    startAddStore: (store_name) => dispatch(startAddStore(store_name))
+})
 
-export default AddStoreForm
+export default connect(undefined, mapDispatchToProps)(AddStoreForm)
