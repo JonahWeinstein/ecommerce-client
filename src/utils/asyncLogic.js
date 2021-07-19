@@ -36,7 +36,7 @@ const addStore = async (store_name) => {
 }
 // PRODUCT LOGIC
 
-const getProducts = async (storeId) => {
+const fetchProducts = async (storeId) => {
     
         const authToken = sessionStorage.getItem('token')
         const response = await fetch(`http://localhost:3000/stores/${storeId}/products/all`, {
@@ -50,4 +50,4 @@ const getProducts = async (storeId) => {
         return response.json();
     
 }
-export { fetchStores, addStore, getProducts }
+export { fetchStores, addStore, fetchProducts }

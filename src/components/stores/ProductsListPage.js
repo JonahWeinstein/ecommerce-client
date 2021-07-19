@@ -1,11 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import {startGetProducts} from '../../actions/productActions'
 
 
 
 class ProductsList extends React.Component  {
     
-    
+    componentDidMount() {
+        this.props.startGetProducts(this.props.store.id)
+    }
     render() {
         return (
             <div>
@@ -20,4 +23,7 @@ const mapSateToProps = (state, props) => {
         store: state.stores.find((store) => store.id == props.match.params.id)
     }
 }
-export default connect(mapSateToProps)(ProductsList)
+const mapDispatchToProps = (dispatch) => ({
+    startGetProducts: (storeId) => dispatch(startGetProducts(storeId))
+})
+export default connect(mapSateToProps, mapDispatchToProps)(ProductsList)
