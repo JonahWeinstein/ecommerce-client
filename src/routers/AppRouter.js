@@ -5,6 +5,7 @@ import AddStorePage from '../components/stores/AddStorePage';
 import UserDashboard from '../components/UserDashboard';
 import StoreDashboard from '../components/stores/StoreDashboard';
 import ProductsListPage from '../components/stores/ProductsListPage';
+import NotFoundPage from '../components/NotfoundPage'
 
 const AppRouter = () => (
     <BrowserRouter>
@@ -15,6 +16,7 @@ const AppRouter = () => (
                 <Route path = '/UserDashboard/AddStore' component = {AddStorePage} />
                 <Route path = '/UserDashboard/stores/:id/products' component = {ProductsListPage} />
                 <Route path = '/UserDashboard/stores/:id' component = {StoreDashboard} exact = {true} />
+                <Route  component = {NotFoundPage}  />
                 
             </Switch>
         </div>

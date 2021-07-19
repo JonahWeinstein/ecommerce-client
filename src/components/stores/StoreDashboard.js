@@ -21,6 +21,7 @@ class StoreDashboard extends React.Component {
         
 }
 const mapSateToProps = (state, props) => {
+    // add conditional logic for if store isn't found
     return {
         store: state.stores.find((store) => store.id == props.match.params.id)
     }
