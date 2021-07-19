@@ -8,14 +8,9 @@ class StoreDashboard extends React.Component {
     // state = {
     //     products: []
     // }
-    // async componentDidMount() {
-    //     try{
-    //         const products = await this.getProducts()
-    //         this.setState(() => ({products}))
-    //     } catch (e) {
-    //         return e
-    //     }
-    // }
+    async componentDidMount() {
+        await this.props.startGetStores()
+    }
     // getProducts = async () => {
     //     try{
     //         const authToken = sessionStorage.getItem('token')
@@ -30,6 +25,7 @@ class StoreDashboard extends React.Component {
     //     }
     // }
     render(){
+        console.log(this.props)
         return (
             <div>
                 <p>This is the Store Dashboard for store </p>
@@ -40,7 +36,7 @@ class StoreDashboard extends React.Component {
 }
 const mapSateToProps = (state, props) => {
     return {
-        store: state.stores.find((store) => store.id === props.match.params.id)
+        store: state.stores.find((store) => store.id == props.match.params.id)
     }
 }   
 const mapDispatchToProps = (dispatch) => ({

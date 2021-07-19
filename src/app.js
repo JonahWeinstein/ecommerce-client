@@ -4,10 +4,15 @@ import { Provider } from 'react-redux'
 import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import './styles/base/base.css';
-
+import StateLoader from './store/StateLoader';
 // importing normalize.css file from normalize.css folder in node modules
 
 const store = configureStore()
+
+const stateLoader = new StateLoader()
+store.subscribe(() => {
+    stateLoader.saveState(store.getState());
+});
 
 const jsx = (
     <Provider store = {store}>

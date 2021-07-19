@@ -7,12 +7,20 @@ class AddStoreForm extends React.Component {
         error: undefined,
         success: undefined
     }
-    onformSubmit = (e) => {
+    onformSubmit = async (e) => {
         e.preventDefault()
         const store_name = e.target.elements.store_name.value
-        console.log(store_name)
-        const store = this.props.startAddStore(store_name)
+        const store = await this.props.startAddStore(store_name)
+        // if store is undefined that means the post request failed
+        if(store === undefined){
+            this.setState(() => ({error:'Unable to add store'}))
+        } 
+        // if addStore (called by startAddStore) worked...
+        else {
+            this.setState(() => ({error: undefined, success:'Store Added!'}))
+        }
     }
+    
     
     render() {
         return (
@@ -24,7 +32,7 @@ class AddStoreForm extends React.Component {
                     placeholder = "store name"
                     />
                     <button type = 'submit'>Create Store</button>
-                    {this.state.error && <p className = "error">Something went wrong</p>}
+                    {this.state.error && <p className = "error">{this.state.error}</p>}
                     {this.state.success && <p>{this.state.success}</p>}
                 </form>
             </div>
