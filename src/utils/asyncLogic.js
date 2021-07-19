@@ -64,6 +64,7 @@ const addProduct = async (name, description = '', price, quantity, storeId) => {
         if(!response.ok) {
             throw new Error(`Unable to add product ${response.status}`)
         }
+        
         return response.json()
     
 }

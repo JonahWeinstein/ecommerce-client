@@ -5,7 +5,7 @@ import AddStorePage from '../components/stores/AddStorePage';
 import UserDashboard from '../components/UserDashboard';
 import StoreDashboard from '../components/stores/StoreDashboard';
 import ProductsListPage from '../components/products/ProductsListPage';
-import AddProductForm from '../components/products/AddProductForm';
+import AddProductPage from '../components/products/AddProductPage';
 import NotFoundPage from '../components/NotfoundPage'
 
 const AppRouter = () => (
@@ -17,7 +17,7 @@ const AppRouter = () => (
                 <Route path = '/UserDashboard/AddStore' component = {AddStorePage} />
                 <Route path = '/UserDashboard/stores/:id/products' component = {ProductsListPage} exact />
                 <Route path = '/UserDashboard/stores/:id' component = {StoreDashboard} exact = {true} />
-                <Route path = '/UserDashboard/stores/:id/products/add' component = {AddProductForm}  />
+                <Route path = '/UserDashboard/stores/:id/products/add' component = {AddProductPage}  />
                 <Route  component = {NotFoundPage}  />
                 
             </Switch>

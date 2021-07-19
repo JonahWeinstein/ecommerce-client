@@ -2,15 +2,15 @@ import React from 'react'
 import { startAddProduct } from '../../actions/productActions'
 import { connect } from 'react-redux'
 
-class AddProductForm extends React.Component {
+class ProductForm extends React.Component {
     constructor(props) {
         super(props)
-        // if we are editing an expense we want to set state to match current expense values
+        // if we are editing a product we want to set state to match current product values
         this.state = {
             name: props.product ? props.product.name : '',
-            amount: props.product ? props.product.description : '',
-            note: props.product ? props.product.price.toString() : '',
-            createdAt: props.product ? props.product.quantity: 0,
+            description: props.product ? props.product.description : '',
+            price: props.product ? props.product.price.toString() : '',
+            quantity: props.product ? props.product.quantity: 0,
             error: undefined,
             success: undefined
         }
@@ -36,12 +36,15 @@ class AddProductForm extends React.Component {
     }
     onformSubmit = async (e) => {
         e.preventDefault()
+        // make sure required fields are filled out
         if(!this.state.name || !this.state.price || !this.state.quantity) {
             this.setState(() => ({error: 'Name, price, and quantity are required'}))
         } else {
+            // get field values from component state
             const {name, description, price, quantity } = this.state
             try {
-                const store = await this.props.startAddProduct(name, description, price, quantity, this.props.store.id)
+                // add product using the storeId from mapstatetoprops
+                const product = await this.props.startAddProduct(name, description, price, quantity, this.props.store.id)
                 this.setState(() => ({error: undefined, success:'Product Added!'}))
             } catch (e) {
                 this.setState(() => ({error:'Unable to add product', success: undefined}))
@@ -88,8 +91,6 @@ class AddProductForm extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
     startAddProduct: (name, description, price, quantity, storeId) => dispatch(startAddProduct(name, description, price, quantity, storeId))
 })
-const mapSateToProps = (state, props) => ({
-    store: state.stores.find((store) => store.id == props.match.params.id)
-})
 
-export default connect(mapSateToProps, mapDispatchToProps)(AddProductForm)
+
+export default connect(undefined, mapDispatchToProps)(ProductForm)
