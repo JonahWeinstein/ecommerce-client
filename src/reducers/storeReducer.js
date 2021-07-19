@@ -2,7 +2,9 @@ import StateLoader from "../store/StateLoader"
 
 // create an instance of StateLoader and load in stores 
 const stateLoader = new StateLoader()
-const storeReducerDefaultState = stateLoader.loadState().stores
+// check if stores are in localStorage and if not use stateLoader default
+const storeReducerDefaultState = 
+    stateLoader.loadState().stores || stateLoader.initializeState().stores
 
 const storeReducer = (state = storeReducerDefaultState, action ) => {
     switch (action.type) {

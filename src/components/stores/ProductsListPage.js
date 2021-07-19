@@ -3,14 +3,17 @@ import { connect } from 'react-redux'
 
 
 
-const ProductsList = (props) => {
-    // destruct id from url parameters
-    console.log(props)
-    return (
-        <div>
-            <p>Product list for {props.store.store_name}</p>
-        </div>
-    )
+class ProductsList extends React.Component  {
+    
+    
+    render() {
+        return (
+            <div>
+            <p>Product list for {this.props.store.store_name}</p>
+            </div>
+        )
+       
+    }
 }
 const mapSateToProps = (state, props) => {
     return {

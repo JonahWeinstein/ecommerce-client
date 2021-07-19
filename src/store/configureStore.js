@@ -1,11 +1,8 @@
-import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
+import {createStore, combineReducers, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk'
+import productReducer from '../reducers/productReducer';
 import storeReducer from '../reducers/storeReducer';
-
-
-
-// used to compose our redux dev tools with applyMiddleware call (createStore only takes 2 args)
 
 
 export default () => {
@@ -14,8 +11,10 @@ export default () => {
 const store = createStore(
     // combineReducers takes an object as argument with each field in state and the reducer to handle that field
     combineReducers({
-        stores:storeReducer
+        stores:storeReducer,
+        products:productReducer
     }),
+    // used to compose our redux dev tools with applyMiddleware call (createStore only takes 2 args)
     composeWithDevTools(applyMiddleware(thunk))
 )
 

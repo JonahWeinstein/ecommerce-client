@@ -9,7 +9,6 @@ class StateLoader {
             if (serializedState === null) {
                 return this.initializeState();
             }
-
             return JSON.parse(serializedState);
         }
         catch (err) {
@@ -29,7 +28,8 @@ class StateLoader {
     // private method to load a default state
     initializeState() {
         return {
-              stores: []
+              stores: [],
+              products: []
             }
         };
 }
