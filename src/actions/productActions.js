@@ -1,4 +1,4 @@
-import { fetchProducts, addProduct } from "../utils/asyncLogic";
+import { fetchProducts, addProduct, updateProduct } from "../utils/asyncLogic";
 
 
 const startGetProducts = (storeId) => {
@@ -19,8 +19,8 @@ const getProducts = (products = []) => ({
 const startAddProduct = (name, description = '', price, quantity, storeId) => {
     return async (dispatch) => {
         try {
-            const store = await addProduct(name, description, price, quantity, storeId)
-            dispatch(addProductAction(store))
+            const product = await addProduct(name, description, price, quantity, storeId)
+            dispatch(addProductAction(product))
         } catch (e) {
             throw new Error(e)
         }
@@ -30,5 +30,26 @@ const addProductAction = (product= {}) => ({
     type: 'ADD_PRODUCT',
     product
 })
+const startUpdateProduct = (name, description = '', price, quantity, storeId, productId) => {
+    return async (dispatch) => {
+        try {
+            const product = await updateProduct(name, description, price, quantity, storeId, productId)
+            dispatch(updateProductAction(product))
+        } catch (e) {
+            throw new Error(e)
+        }
+    }
+}
+const updateProductAction = (product= {}) => ({
+    type: 'UPDATE_PRODUCT',
+    product
+})
 
-export {startGetProducts, getProducts, startAddProduct, addProductAction}
+export {
+    startGetProducts, 
+    getProducts, 
+    startAddProduct, 
+    addProductAction,
+    startUpdateProduct,
+    updateProductAction
+}

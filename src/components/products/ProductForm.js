@@ -1,5 +1,5 @@
 import React from 'react'
-import { startAddProduct } from '../../actions/productActions'
+import { startAddProduct, startUpdateProduct } from '../../actions/productActions'
 import { connect } from 'react-redux'
 
 class ProductForm extends React.Component {
@@ -43,8 +43,26 @@ class ProductForm extends React.Component {
             // get field values from component state
             const {name, description, price, quantity } = this.state
             try {
-                // add product using the storeId from mapstatetoprops
-                const product = await this.props.startAddProduct(name, description, price, quantity, this.props.store.id)
+                // if we are updating a product, use startUpdateProduct instead of startAddProduct
+                if(this.props.product) {
+                    const product = await this.props.startUpdateProduct(
+                        name, 
+                        description, 
+                        price, 
+                        quantity, 
+                        this.props.store.id,
+                        this.props.product.id 
+                        )
+                } else {
+                    // add product using the storeId from mapstatetoprops
+                    const product = await this.props.startAddProduct(
+                        name, 
+                        description, 
+                        price, 
+                        quantity, 
+                        this.props.store.id
+                        )
+                }
                 this.setState(() => ({error: undefined, success:'Product Added!'}))
             } catch (e) {
                 this.setState(() => ({error:'Unable to add product', success: undefined}))
@@ -89,7 +107,8 @@ class ProductForm extends React.Component {
     } 
 }
 const mapDispatchToProps = (dispatch) => ({
-    startAddProduct: (name, description, price, quantity, storeId) => dispatch(startAddProduct(name, description, price, quantity, storeId))
+    startAddProduct: (name, description, price, quantity, storeId) => dispatch(startAddProduct(name, description, price, quantity, storeId)),
+    startUpdateProduct: (name, description, price, quantity, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, storeId, productId))
 })
 
 

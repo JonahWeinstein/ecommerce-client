@@ -8,6 +8,8 @@ const productReducer = (state = productReducerDefaultState, action ) => {
     switch (action.type) {
         case 'GET_PRODUCTS':
             return [ ...action.products]
+        case 'ADD_PRODUCT':
+            return [ ...state, action.product]
         default: 
             return state;
     }
