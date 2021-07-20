@@ -2,6 +2,8 @@ import React from 'react'
 import { startAddProduct, startUpdateProduct } from '../../actions/productActions'
 import { connect } from 'react-redux'
 
+
+
 class ProductForm extends React.Component {
     constructor(props) {
         super(props)
@@ -103,6 +105,7 @@ class ProductForm extends React.Component {
                     value = {this.state.quantity}
                     onChange = {this.onQuantityChange}
                     />
+
                 <button type = 'submit'>{this.props.action} Product</button> 
                 </form>
             </div>

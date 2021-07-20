@@ -87,4 +87,24 @@ const updateProduct = async (name, description = '', price, quantity, storeId, p
         return response.json()
     
 }
+
+// IMAGE LOGIC
+const addImage = async (image, storeId, productId) => {
+        const authToken = sessionStorage.getItem('token')
+        // remember to set content-type in request
+        const response = await fetch(`http://localhost:3000/stores/${storeId}/products/${productId}/images/add`, {
+            body: JSON.stringify(data),
+            headers: {
+                'Authorization': `Bearer ${authToken}`,
+                'Content-Type': 'multipart/form-data'
+            },
+            method: 'POST'});
+        if(!response.ok) {
+            throw new Error(`Unable to add product ${response.status}`)
+        }
+        
+        return response.json()
+    
+}
+
 export { fetchStores, addStore, fetchProducts, addProduct, updateProduct }
