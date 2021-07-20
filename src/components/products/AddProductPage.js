@@ -6,7 +6,7 @@ class AddProductPage extends React.Component {
     render() {
         return (
             <div>
-                <ProductForm store = {this.props.store}/>
+                <ProductForm store = {this.props.store} action = {'Add'}/>
             </div>
         )
     }

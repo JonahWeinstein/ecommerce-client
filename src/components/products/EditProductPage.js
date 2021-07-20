@@ -6,7 +6,7 @@ class EditProductPage extends React.Component {
     render() {
         return (
             <div>
-                <ProductForm store = {this.props.store} product = {this.props.product}/>
+                <ProductForm store = {this.props.store} product = {this.props.product} action = {'Update'}/>
             </div>
         )
     }

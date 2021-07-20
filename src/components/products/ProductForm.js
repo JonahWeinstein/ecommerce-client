@@ -63,9 +63,12 @@ class ProductForm extends React.Component {
                         this.props.store.id
                         )
                 }
-                this.setState(() => ({error: undefined, success:'Product Added!'}))
-            } catch (e) {
-                this.setState(() => ({error:'Unable to add product', success: undefined}))
+                // setState needs some logic to see if product is being added or updated 
+                this.setState(() => ({
+                    error: undefined, 
+                    success: 'Product '  + (this.props.action == 'Add' ? 'Added' : 'Updated')}))
+            } catch (e) { 
+                this.setState(() => ({error:`Unable To ${this.props.action} Product`, success: undefined}))
             }
         }
         
@@ -100,7 +103,7 @@ class ProductForm extends React.Component {
                     value = {this.state.quantity}
                     onChange = {this.onQuantityChange}
                     />
-                <button type = 'submit'>Add Product</button> 
+                <button type = 'submit'>{this.props.action} Product</button> 
                 </form>
             </div>
         )
