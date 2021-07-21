@@ -69,7 +69,7 @@ const addProduct = async (name, description = '', price, quantity, storeId) => {
     
 }
 // updates a product with given id and storeId using argument values
-const updateProduct = async (name, description = '', price, quantity, storeId, productId) => {
+const updateProduct = async (name, description = '', price, quantity, images, storeId, productId) => {
     const data = { name, description, price, quantity }
         const authToken = sessionStorage.getItem('token')
         // remember to set content-type in request
@@ -82,6 +82,13 @@ const updateProduct = async (name, description = '', price, quantity, storeId, p
             method: 'PATCH'});
         if(!response.ok) {
             throw new Error(`Unable to add product ${response.status}`)
+        }
+        for (const image in images) {
+            try {
+                await addImage(image, storeId, productId)
+            } catch (e) {
+                throw new Error(`Unable to add product images ${response.status}`)
+            }
         }
         
         return response.json()
@@ -100,7 +107,8 @@ const addImage = async (image, storeId, productId) => {
             },
             method: 'POST'});
         if(!response.ok) {
-            throw new Error(`Unable to add product ${response.status}`)
+            
+            throw new Error(`Unable to add Image ${response.status}`)
         }
         
         return response.json()

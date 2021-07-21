@@ -30,10 +30,10 @@ const addProductAction = (product= {}) => ({
     type: 'ADD_PRODUCT',
     product
 })
-const startUpdateProduct = (name, description = '', price, quantity, storeId, productId) => {
+const startUpdateProduct = (name, description = '', price, quantity, images, storeId, productId) => {
     return async (dispatch) => {
         try {
-            const product = await updateProduct(name, description, price, quantity, storeId, productId)
+            const product = await updateProduct(name, description, price, quantity, images, storeId, productId)
             dispatch(updateProductAction(product))
         } catch (e) {
             throw new Error(e)

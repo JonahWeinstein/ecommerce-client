@@ -13,7 +13,7 @@ class ProductForm extends React.Component {
             description: props.product ? props.product.description : '',
             price: props.product ? props.product.price.toString() : '',
             quantity: props.product ? props.product.quantity: 0,
-            images: props.product.Images ? props.product.Images : [],
+            images: [],
             error: undefined,
             success: undefined
         }
@@ -40,7 +40,7 @@ class ProductForm extends React.Component {
     onImageChange = (e) => {
         const image = e.target.value
         // add the image to images array in state (but don't add to database until form is submitted)
-        this.setState((prevState) => ({images: prevState.images.push(image)}))
+        this.setState((prevState) => ({images: prevState.images.concat(image)}))
     }
     onformSubmit = async (e) => {
         e.preventDefault()
@@ -58,6 +58,7 @@ class ProductForm extends React.Component {
                         description, 
                         price, 
                         quantity, 
+                        this.state.images,
                         this.props.store.id,
                         this.props.product.id 
                         )
@@ -113,7 +114,7 @@ class ProductForm extends React.Component {
                     />
                     <input 
                     type = 'file'
-                    multiple
+                    accept="image/png, image/jpeg"
                     onChange = {this.onImageChange}
                     />
 
@@ -126,7 +127,7 @@ class ProductForm extends React.Component {
 }
 const mapDispatchToProps = (dispatch) => ({
     startAddProduct: (name, description, price, quantity, storeId) => dispatch(startAddProduct(name, description, price, quantity, storeId)),
-    startUpdateProduct: (name, description, price, quantity, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, storeId, productId))
+    startUpdateProduct: (name, description, price, quantity, images, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, images, storeId, productId))
 })
 
 
