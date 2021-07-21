@@ -51,8 +51,8 @@ const fetchProducts = async (storeId) => {
         return response.json();
     
 }
-const addProduct = async (name, description = '', price, quantity, storeId) => {
-    const data = { name, description, price, quantity }
+const addProduct = async (name, description, price, quantity, storeId) => {
+        const data = { name, description, price, quantity }
         const authToken = sessionStorage.getItem('token')
         // remember to set content-type in request
         const response = await fetch(`http://localhost:3000/stores/${storeId}/products/add`, {
@@ -65,8 +65,25 @@ const addProduct = async (name, description = '', price, quantity, storeId) => {
         if(!response.ok) {
             throw new Error(`Unable to add product ${response.status}`)
         }
-        
         return response.json()
+    
+}
+// runs addProduct and uses the return product's id to add image(s) for that product
+const addProductWithImages = async (name, description = '', price, quantity, images, storeId) => {
+    try {
+        const product = await addProduct(name, description, price, quantity, storeId)
+    
+        for (let i = 0; i < images.length; i++) {
+            try {
+                const image = await addImage(images[i], storeId, product.id)
+            } catch (e) {
+                throw new Error(`Unable to add product images ${response.status}`)
+            }
+        }
+        return product
+    } catch (e) {
+        throw new Error(e)
+    }
     
 }
 // updates a product with given id and storeId using argument values
@@ -117,6 +134,6 @@ export {
     fetchStores, 
     addStore, 
     fetchProducts, 
-    addProduct, 
+    addProductWithImages, 
     updateProduct,
     addImage }

@@ -70,8 +70,10 @@ class ProductForm extends React.Component {
                         description, 
                         price, 
                         quantity, 
+                        images,
                         this.props.store.id
                         )
+                    
                 }
                 // setState needs some logic to see if product is being added or updated 
                 this.setState(() => ({
@@ -114,6 +116,7 @@ class ProductForm extends React.Component {
                     onChange = {this.onQuantityChange}
                     />
                     <input 
+                    
                     type = 'file'
                     label = 'file'
                     accept="image/png, image/jpeg"
@@ -128,7 +131,7 @@ class ProductForm extends React.Component {
     } 
 }
 const mapDispatchToProps = (dispatch) => ({
-    startAddProduct: (name, description, price, quantity, storeId) => dispatch(startAddProduct(name, description, price, quantity, storeId)),
+    startAddProduct: (name, description, price, quantity, images, storeId) => dispatch(startAddProduct(name, description, price, quantity, images, storeId)),
     startUpdateProduct: (name, description, price, quantity, images, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, images, storeId, productId))
 })
 
