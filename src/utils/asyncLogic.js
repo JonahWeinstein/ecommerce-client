@@ -1,5 +1,6 @@
 // STORE LOGIC  
 
+
 const fetchStores = async () => {
     try{
         const authToken = sessionStorage.getItem('token')
@@ -83,36 +84,33 @@ const updateProduct = async (name, description = '', price, quantity, images, st
         if(!response.ok) {
             throw new Error(`Unable to add product ${response.status}`)
         }
-        for (const image in images) {
+        for (let i = 0; i < images.length; i++) {
             try {
-                await addImage(image, storeId, productId)
+                const image = await addImage(images[i], storeId, productId)
+                return image
             } catch (e) {
                 throw new Error(`Unable to add product images ${response.status}`)
             }
         }
-        
         return response.json()
-    
 }
 
 // IMAGE LOGIC
 const addImage = async (image, storeId, productId) => {
         const authToken = sessionStorage.getItem('token')
-        // remember to set content-type in request
+        let formData = new FormData()
+        formData.append("image", image);
         const response = await fetch(`http://localhost:3000/stores/${storeId}/products/${productId}/images/add`, {
-            body: JSON.stringify(image),
+            body: formData,
+            // we don't specify content-type because the browser handles that
             headers: {
-                'Authorization': `Bearer ${authToken}`,
-                'Content-Type': 'multipart/form-data'
+                'Authorization': `Bearer ${authToken}`
             },
             method: 'POST'});
         if(!response.ok) {
-            
             throw new Error(`Unable to add Image ${response.status}`)
         }
-        
-        return response.json()
-    
+        return response.json() 
 }
 
 export { 

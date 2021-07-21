@@ -38,7 +38,8 @@ class ProductForm extends React.Component {
         this.setState(() => ({ quantity }))
     }
     onImageChange = (e) => {
-        const image = e.target.value
+        console.log(e.target.files)
+        const image = e.target.files[0]
         // add the image to images array in state (but don't add to database until form is submitted)
         this.setState((prevState) => ({images: prevState.images.concat(image)}))
     }
@@ -49,7 +50,7 @@ class ProductForm extends React.Component {
             this.setState(() => ({error: 'Name, price, and quantity are required'}))
         } else {
             // get field values from component state
-            const {name, description, price, quantity } = this.state
+            const {name, description, price, quantity, images } = this.state
             try {
                 // if we are updating a product, use startUpdateProduct instead of startAddProduct
                 if(this.props.product) {
@@ -58,7 +59,7 @@ class ProductForm extends React.Component {
                         description, 
                         price, 
                         quantity, 
-                        this.state.images,
+                        images,
                         this.props.store.id,
                         this.props.product.id 
                         )
@@ -114,6 +115,7 @@ class ProductForm extends React.Component {
                     />
                     <input 
                     type = 'file'
+                    label = 'file'
                     accept="image/png, image/jpeg"
                     onChange = {this.onImageChange}
                     />
