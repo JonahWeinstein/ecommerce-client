@@ -1,7 +1,7 @@
 import React from 'react'
 import { startAddProduct, startUpdateProduct } from '../../actions/productActions'
 import { connect } from 'react-redux'
-
+import ImagesList from '../images/ImagesList'
 
 
 class ProductForm extends React.Component {
@@ -13,6 +13,7 @@ class ProductForm extends React.Component {
             description: props.product ? props.product.description : '',
             price: props.product ? props.product.price.toString() : '',
             quantity: props.product ? props.product.quantity: 0,
+            images: props.product.Images ? props.product.Images : [],
             error: undefined,
             success: undefined
         }
@@ -35,6 +36,11 @@ class ProductForm extends React.Component {
     onQuantityChange = (e) => {
         const quantity = e.target.value
         this.setState(() => ({ quantity }))
+    }
+    onImageChange = (e) => {
+        const image = e.target.value
+        // add the image to images array in state (but don't add to database until form is submitted)
+        this.setState((prevState) => ({images: prevState.images.push(image)}))
     }
     onformSubmit = async (e) => {
         e.preventDefault()
@@ -105,9 +111,15 @@ class ProductForm extends React.Component {
                     value = {this.state.quantity}
                     onChange = {this.onQuantityChange}
                     />
+                    <input 
+                    type = 'file'
+                    multiple
+                    onChange = {this.onImageChange}
+                    />
 
                 <button type = 'submit'>{this.props.action} Product</button> 
                 </form>
+                <ImagesList product = {this.props.product} />
             </div>
         )
     } 

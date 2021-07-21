@@ -93,7 +93,7 @@ const addImage = async (image, storeId, productId) => {
         const authToken = sessionStorage.getItem('token')
         // remember to set content-type in request
         const response = await fetch(`http://localhost:3000/stores/${storeId}/products/${productId}/images/add`, {
-            body: JSON.stringify(data),
+            body: JSON.stringify(image),
             headers: {
                 'Authorization': `Bearer ${authToken}`,
                 'Content-Type': 'multipart/form-data'
@@ -107,4 +107,10 @@ const addImage = async (image, storeId, productId) => {
     
 }
 
-export { fetchStores, addStore, fetchProducts, addProduct, updateProduct }
+export { 
+    fetchStores, 
+    addStore, 
+    fetchProducts, 
+    addProduct, 
+    updateProduct,
+    addImage }

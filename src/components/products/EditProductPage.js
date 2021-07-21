@@ -1,14 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import ProductForm from './ProductForm'
-import ImageList from '../images/ImagesList'
+
 
 class EditProductPage extends React.Component {
     render() {
         return (
             <div>
                 <ProductForm store = {this.props.store} product = {this.props.product} action = {'Update'}/>
-                <ImageList product = {this.props.product} />
             </div>
         )
     }
