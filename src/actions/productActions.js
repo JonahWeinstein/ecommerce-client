@@ -20,8 +20,8 @@ const startAddProduct = (name, description = '', price, quantity, images, storeI
     return async (dispatch) => {
         try {
             const product = await addProductWithImages(name, description, price, quantity, images, storeId)
-            console.log(product)
             dispatch(addProductAction(product))
+            return product
         } catch (e) {
             throw new Error(e)
         }

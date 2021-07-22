@@ -1,5 +1,5 @@
 import React from 'react'
-import { startAddProduct, startUpdateProduct } from '../../actions/productActions'
+import { startAddProduct, startUpdateProduct, startGetProducts } from '../../actions/productActions'
 import { connect } from 'react-redux'
 import ImagesList from '../images/ImagesList'
 
@@ -38,7 +38,6 @@ class ProductForm extends React.Component {
         this.setState(() => ({ quantity }))
     }
     onImageChange = (e) => {
-        console.log(e.target.files)
         const image = e.target.files[0]
         // add the image to images array in state (but don't add to database until form is submitted)
         this.setState((prevState) => ({images: prevState.images.concat(image)}))
@@ -47,7 +46,7 @@ class ProductForm extends React.Component {
         e.preventDefault()
         // make sure required fields are filled out
         if(!this.state.name || !this.state.price || !this.state.quantity) {
-            this.setState(() => ({error: 'Name, price, and quantity are required'}))
+            this.setState(() => ({error: 'Name, price, and quantity are required', success: undefined}))
         } else {
             // get field values from component state
             const {name, description, price, quantity, images } = this.state
@@ -73,12 +72,16 @@ class ProductForm extends React.Component {
                         images,
                         this.props.store.id
                         )
+                    await this.props.startGetProducts(this.props.store.id)
+                    this.props.history.push(`/UserDashboard/stores/${this.props.store.id}/products/${product.id}`)
                     
                 }
                 // setState needs some logic to see if product is being added or updated 
                 this.setState(() => ({
                     error: undefined, 
                     success: 'Product '  + (this.props.action == 'Add' ? 'Added' : 'Updated')}))
+                    // fetch all products from database to update redux store (and display new image for this product)
+                    await this.props.startGetProducts(this.props.store.id)
             } catch (e) { 
                 this.setState(() => ({error:`Unable To ${this.props.action} Product`, success: undefined}))
             }
@@ -116,7 +119,6 @@ class ProductForm extends React.Component {
                     onChange = {this.onQuantityChange}
                     />
                     <input 
-                    
                     type = 'file'
                     label = 'file'
                     accept="image/png, image/jpeg"
@@ -132,7 +134,8 @@ class ProductForm extends React.Component {
 }
 const mapDispatchToProps = (dispatch) => ({
     startAddProduct: (name, description, price, quantity, images, storeId) => dispatch(startAddProduct(name, description, price, quantity, images, storeId)),
-    startUpdateProduct: (name, description, price, quantity, images, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, images, storeId, productId))
+    startUpdateProduct: (name, description, price, quantity, images, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, images, storeId, productId)),
+    startGetProducts: (storeId) => dispatch(startGetProducts(storeId))
 })
 
 
