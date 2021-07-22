@@ -111,6 +111,20 @@ const updateProduct = async (name, description = '', price, quantity, images, st
         }
         return response.json()
 }
+// DELETE PRODUCT
+
+const deleteProduct = async (storeId, productId) => {
+    const authToken = sessionStorage.getItem('token')
+    const response = await fetch(`http://localhost:3000/stores/${storeId}/products/${productId}/delete`, {
+        headers: {
+            'Authorization': `Bearer ${authToken}`
+        },
+        method: 'DELETE'})
+        if(!response.ok) {
+            throw new Error(`Unable to delete product ${response.status}`)
+        }
+        return response.json() 
+}
 
 // IMAGE LOGIC
 const addImage = async (image, storeId, productId) => {
@@ -136,4 +150,5 @@ export {
     fetchProducts, 
     addProductWithImages, 
     updateProduct,
-    addImage }
+    addImage,
+    deleteProduct }

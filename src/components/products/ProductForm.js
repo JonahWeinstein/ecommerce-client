@@ -1,7 +1,8 @@
 import React from 'react'
-import { startAddProduct, startUpdateProduct, startGetProducts } from '../../actions/productActions'
+import { startAddProduct, startUpdateProduct, startGetProducts, startDeleteProduct } from '../../actions/productActions'
 import { connect } from 'react-redux'
 import ImagesList from '../images/ImagesList'
+
 
 
 class ProductForm extends React.Component {
@@ -73,7 +74,7 @@ class ProductForm extends React.Component {
                         this.props.store.id
                         )
                     await this.props.startGetProducts(this.props.store.id)
-                    this.props.history.push(`/UserDashboard/stores/${this.props.store.id}/products/${product.id}`)
+                    this.props.history.replace(`/UserDashboard/stores/${this.props.store.id}/products/${product.id}`)
                     
                 }
                 // setState needs some logic to see if product is being added or updated 
@@ -87,6 +88,22 @@ class ProductForm extends React.Component {
             }
         }
         
+    }
+    handleDeleteProduct = async (e) => {
+        e.preventDefault()
+        try {
+           const product = await this.props.startDeleteProduct(this.props.store.id, this.props.product.id)
+           this.setState(() => ({
+            error: undefined, 
+            success: 'Product Deleted!'
+        }))
+        this.props.history.replace(`/UserDashboard/stores/${this.props.store.id}/products`)
+        }
+        catch {
+            this.setState(() => ({error:`Unable To Delete Product`, success: undefined}))
+        }
+        
+
     }
     render() {
         return (
@@ -121,13 +138,14 @@ class ProductForm extends React.Component {
                     <input 
                     type = 'file'
                     label = 'file'
+                    name = 'image'
                     accept="image/png, image/jpeg"
                     onChange = {this.onImageChange}
                     />
-
                 <button type = 'submit'>{this.props.action} Product</button> 
                 </form>
                 <ImagesList product = {this.props.product} />
+                <button onClick = {this.handleDeleteProduct}>Delete Product</button>
             </div>
         )
     } 
@@ -135,7 +153,8 @@ class ProductForm extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
     startAddProduct: (name, description, price, quantity, images, storeId) => dispatch(startAddProduct(name, description, price, quantity, images, storeId)),
     startUpdateProduct: (name, description, price, quantity, images, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, images, storeId, productId)),
-    startGetProducts: (storeId) => dispatch(startGetProducts(storeId))
+    startGetProducts: (storeId) => dispatch(startGetProducts(storeId)),
+    startDeleteProduct: (storeId, productId) => dispatch(startDeleteProduct(storeId, productId))
 })
 
 
