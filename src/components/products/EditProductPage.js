@@ -18,4 +18,5 @@ const mapSateToProps = (state, props) => ({
     product: state.products.find((product) => product.id == props.match.params.productId)
     
 })
+
 export default connect(mapSateToProps)(EditProductPage)

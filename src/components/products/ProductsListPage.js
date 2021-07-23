@@ -3,17 +3,28 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {startGetProducts} from '../../actions/productActions'
 import ProductListItem from './ProductListItem'
+import Loading from '../Loading'
 
 
 
 
 class ProductsListPage extends React.Component  {
-    
-    componentDidMount() {
-        this.props.startGetProducts(this.props.store.id)
+    state = {
+        loaded: false,
+        error: undefined
+    }
+    async componentDidMount() {
+        try {
+            await this.props.startGetProducts(this.props.store.id)
+            this.setState(() => ({loaded: true}))
+        } catch (e) {
+            this.setState(()=> ({error: 'Unable to load Products :('}))
+        }
+        
     }
     render() {
-        return (
+        const {loaded} =this.state
+        return loaded ? (
             <div>
             <p>Product list for {this.props.store.store_name}</p>
             <ul>
@@ -25,7 +36,7 @@ class ProductsListPage extends React.Component  {
             </ul>
             <Link to = {`/UserDashboard/stores/${this.props.store.id}/products/add`}>Add Product</Link>
             </div>
-        )
+        ) : <Loading />
        
     }
 }

@@ -23,8 +23,6 @@ class StateLoader {
         }
         catch (err) {
             localStorage.clear()
-            console.log(JSON.stringify(sessionStorage).length)
-            console.log(err)
         }
 
     }

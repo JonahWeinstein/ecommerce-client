@@ -2,6 +2,7 @@ import React from 'react'
 import { startAddProduct, startUpdateProduct, startGetProducts, startDeleteProduct } from '../../actions/productActions'
 import { connect } from 'react-redux'
 import ImagesList from '../images/ImagesList'
+import Loading from '../Loading'
 
 
 class ProductForm extends React.Component {
@@ -158,7 +159,7 @@ class ProductForm extends React.Component {
                 <ImagesList product = {this.props.product} store = {this.props.store}/>
                 {this.props.product && <button onClick = {this.handleDeleteProduct}>Delete Product</button>}
             </div>
-        ) :null
+        ) : <Loading />
     } 
 }
 const mapDispatchToProps = (dispatch) => ({

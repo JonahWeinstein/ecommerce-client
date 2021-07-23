@@ -6,7 +6,7 @@ import ImageListItem from './ImageListItem'
 
 const ImagesList = (props) => {
     // if there are images associated with this product then list them
-    if(props.product.Images){
+    if(props.product){
         return (
             <div >
                 <ul>
