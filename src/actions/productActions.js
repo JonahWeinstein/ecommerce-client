@@ -17,6 +17,7 @@ const startGetProduct = (storeId, productId) => {
         try {
             const product = await fetchProduct(storeId, productId)
             dispatch(getProductAction(product))
+            return product
         } catch (e) {
             throw new Error(e)
         }

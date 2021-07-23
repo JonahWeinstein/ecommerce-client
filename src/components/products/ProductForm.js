@@ -1,5 +1,5 @@
 import React from 'react'
-import { startAddProduct, startUpdateProduct, startGetProducts, startGetProduct, startDeleteProduct } from '../../actions/productActions'
+import { startAddProduct, startUpdateProduct, startGetProduct, startGetProducts, startDeleteProduct } from '../../actions/productActions'
 import { connect } from 'react-redux'
 import ImagesList from '../images/ImagesList'
 import Loading from '../Loading'
@@ -21,12 +21,18 @@ class ProductForm extends React.Component {
         }
     }
     async componentDidMount() {
-        try{
-            const product = await this.props.startGetProduct(this.props.store.id, this.props.product.id)
-            console.log(product)
+        // check if we are adding or updating a product 
+        // if we are updating a product we need to fetch the current version from the database
+        if(this.props.action == 'Update') {
+
+            try{
+                const product = await this.props.startGetProduct(this.props.store.id, this.props.product.id)
+                this.setState(() => ({loaded: true}))
+            } catch(e) {
+                this.setState(() => ({success: undefined, error: 'could not get product, return to product list', loaded: true}))
+            }
+        } else {
             this.setState(() => ({loaded: true}))
-        } catch(e) {
-            this.setState(() => ({success: undefined, error: 'could not get product(s)'}))
         }
         
     }
@@ -101,7 +107,7 @@ class ProductForm extends React.Component {
                         images,
                         this.props.store.id
                         )
-                    await this.props.startGetProduct(this.props.store.id, this.props.product.id)
+                    await this.props.startGetProduct(this.props.store.id, product.id)
                     this.props.history.replace(`/UserDashboard/stores/${this.props.store.id}/products/${product.id}`)
                     
                 }
@@ -166,9 +172,9 @@ class ProductForm extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
     startAddProduct: (name, description, price, quantity, images, storeId) => dispatch(startAddProduct(name, description, price, quantity, images, storeId)),
     startUpdateProduct: (name, description, price, quantity, images, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, images, storeId, productId)),
-    startGetProducts: (storeId) => dispatch(startGetProducts(storeId)),
     startDeleteProduct: (storeId, productId) => dispatch(startDeleteProduct(storeId, productId)),
-    startGetProduct: (storeId, productId) => dispatch(startGetProduct(storeId, productId))
+    startGetProducts: (storeId) => dispatch(startGetProducts(storeId)),
+    startGetProduct: (storeId, productId) => dispatch(startGetProduct(storeId, productId)),  
 })
 
 
