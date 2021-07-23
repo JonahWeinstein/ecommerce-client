@@ -51,6 +51,18 @@ const fetchProducts = async (storeId) => {
         return response.json();
     
 }
+const fetchProduct = async (storeId, productId) => {
+    const authToken = sessionStorage.getItem('token')
+        const response = await fetch(`http://localhost:3000/stores/${storeId}/products/${productId}`, {
+        headers: {
+            'Authorization': `Bearer ${authToken}`
+            }
+        })
+        if(!response.ok) {
+            throw new Error(`Unable to fetch products ${response.status}`)
+        }
+        return response.json();
+}
 const addProduct = async (name, description, price, quantity, storeId) => {
         const data = { name, description, price, quantity }
         const authToken = sessionStorage.getItem('token')
@@ -176,4 +188,5 @@ export {
     addImage,
     deleteProduct,
     fetchImages,
-    deleteImage }
+    deleteImage,
+    fetchProduct }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { startAddProduct, startUpdateProduct, startGetProducts, startDeleteProduct } from '../../actions/productActions'
+import { startAddProduct, startUpdateProduct, startGetProducts, startGetProduct, startDeleteProduct } from '../../actions/productActions'
 import { connect } from 'react-redux'
 import ImagesList from '../images/ImagesList'
 import Loading from '../Loading'
@@ -22,7 +22,8 @@ class ProductForm extends React.Component {
     }
     async componentDidMount() {
         try{
-            const products = await this.props.startGetProducts(this.props.store.id)
+            const product = await this.props.startGetProduct(this.props.store.id, this.props.product.id)
+            console.log(product)
             this.setState(() => ({loaded: true}))
         } catch(e) {
             this.setState(() => ({success: undefined, error: 'could not get product(s)'}))
@@ -89,7 +90,7 @@ class ProductForm extends React.Component {
                         this.props.store.id,
                         this.props.product.id 
                         )
-                    await this.props.startGetProducts(this.props.store.id)
+                        await this.props.startGetProduct(this.props.store.id, this.props.product.id)
                 } else {
                     // add product using the storeId from mapstatetoprops
                     const product = await this.props.startAddProduct(
@@ -100,7 +101,7 @@ class ProductForm extends React.Component {
                         images,
                         this.props.store.id
                         )
-                    await this.props.startGetProducts(this.props.store.id)
+                    await this.props.startGetProduct(this.props.store.id, this.props.product.id)
                     this.props.history.replace(`/UserDashboard/stores/${this.props.store.id}/products/${product.id}`)
                     
                 }
@@ -166,7 +167,8 @@ const mapDispatchToProps = (dispatch) => ({
     startAddProduct: (name, description, price, quantity, images, storeId) => dispatch(startAddProduct(name, description, price, quantity, images, storeId)),
     startUpdateProduct: (name, description, price, quantity, images, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, images, storeId, productId)),
     startGetProducts: (storeId) => dispatch(startGetProducts(storeId)),
-    startDeleteProduct: (storeId, productId) => dispatch(startDeleteProduct(storeId, productId))
+    startDeleteProduct: (storeId, productId) => dispatch(startDeleteProduct(storeId, productId)),
+    startGetProduct: (storeId, productId) => dispatch(startGetProduct(storeId, productId))
 })
 
 
