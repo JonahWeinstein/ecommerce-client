@@ -1,10 +1,21 @@
-import {fetchImages} from '../utils/asyncLogic'
+import {fetchImages, deleteImage} from '../utils/asyncLogic'
 
 const startGetImages = (storeId, productId) => {
     return async (dispatch) => {
-        const images = await fetchImages(storeId, productId)
+        try{
+            const images = await fetchImages(storeId, productId)
+            dispatch(getImagesAction(images))
+        } catch(e) {
+            throw new Error(e)
+        }
+        
     }
 }
+const getImagesAction = (images) => ({
+    type: 'GET_IMAGES',
+    images
+})
+
 
 export default {
     startGetImages

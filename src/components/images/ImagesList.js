@@ -1,10 +1,12 @@
 import React from 'react'
+import {connect} from 'react-redux'
 import ImageListItem from './ImageListItem'
+
 
 
 const ImagesList = (props) => {
     // if there are images associated with this product then list them
-    if(props.product){
+    if(props.product.Images){
         return (
             <div >
                 <ul>
@@ -13,6 +15,7 @@ const ImagesList = (props) => {
                         <li key = {image.id}>
                             <ImageListItem 
                             image = {image}
+                            store = {props.store}
                             />
                         </li>
                     ))}
@@ -26,9 +29,10 @@ const ImagesList = (props) => {
             </div>
         )
     }
-    
-  
 }
+// const mapstatetoprops = (state) => ({
+//     images
+// })
 
 
 

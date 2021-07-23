@@ -6,6 +6,7 @@ const startGetProducts = (storeId) => {
         try {
             const products = await fetchProducts(storeId)
             dispatch(getProducts(products))
+            return products
         } catch(e) {
             throw new Error(e)
         }

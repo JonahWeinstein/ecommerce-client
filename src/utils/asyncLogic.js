@@ -126,6 +126,18 @@ const deleteProduct = async (storeId, productId) => {
         return response.json() 
 }
 // IMAGE LOGIC
+const fetchImages = async (storeId, productId) => {
+    const authToken = sessionStorage.getItem('token')
+    const response = await fetch(`http://localhost:3000/stores/${storeId}/products/${productId}/images`, {
+        headers: {
+            'Authorization': `Bearer ${authToken}`
+        }});
+    if(!response.ok) {
+        throw new Error(`Unable to add Image ${response.status}`)
+    }
+    return response.json() 
+}
+
 const addImage = async (image, storeId, productId) => {
         const authToken = sessionStorage.getItem('token')
         let formData = new FormData()
@@ -142,6 +154,18 @@ const addImage = async (image, storeId, productId) => {
         }
         return response.json() 
 }
+const deleteImage = async (storeId, productId, imageId) => {
+    const authToken = sessionStorage.getItem('token')
+    const response = await fetch(`http://localhost:3000/stores/${storeId}/products/${productId}/images/${imageId}/delete`, {
+        headers: {
+            'Authorization': `Bearer ${authToken}`
+        },
+        method: 'DELETE'});
+        if(!response.ok) {
+            throw new Error(`Unable to add Image ${response.status}`)
+        }
+        return response.json()
+}   
 
 export { 
     fetchStores, 
@@ -150,4 +174,6 @@ export {
     addProductWithImages, 
     updateProduct,
     addImage,
-    deleteProduct }
+    deleteProduct,
+    fetchImages,
+    deleteImage }

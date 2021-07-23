@@ -15,8 +15,18 @@ class ProductForm extends React.Component {
             quantity: props.product ? props.product.quantity: 0,
             images: [],
             error: undefined,
-            success: undefined
+            success: undefined,
+            loaded: false
         }
+    }
+    async componentDidMount() {
+        try{
+            const products = await this.props.startGetProducts(this.props.store.id)
+            this.setState(() => ({loaded: true}))
+        } catch(e) {
+            this.setState(() => ({success: undefined, error: 'could not get product(s)'}))
+        }
+        
     }
     onDescriptionChange = (e) => {
         const description = e.target.value
@@ -106,7 +116,8 @@ class ProductForm extends React.Component {
         
     }
     render() {
-        return (
+        const {loaded} = this.state
+        return loaded ? (
             <div>
                 <form onSubmit = {this.onformSubmit}>
                     {this.state.error && <p className = "error">{this.state.error}</p>}
@@ -144,10 +155,10 @@ class ProductForm extends React.Component {
 
                 <button type = 'submit'>{this.props.action} Product</button> 
                 </form>
-                <ImagesList product = {this.props.product} />
+                <ImagesList product = {this.props.product} store = {this.props.store}/>
                 {this.props.product && <button onClick = {this.handleDeleteProduct}>Delete Product</button>}
             </div>
-        )
+        ) :null
     } 
 }
 const mapDispatchToProps = (dispatch) => ({
