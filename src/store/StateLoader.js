@@ -1,10 +1,10 @@
-// used to persist redux state in localStorage
+// used to persist redux state in sessionStorage
 
 class StateLoader {
 
     loadState() {
         try {
-            let serializedState = localStorage.getItem("appState");
+            let serializedState = sessionStorage.getItem("appState");
 
             if (serializedState === null) {
                 return this.initializeState();
@@ -19,11 +19,14 @@ class StateLoader {
     saveState(state) {
         try {
             let serializedState = JSON.stringify(state);
-            localStorage.setItem("appState", serializedState);
-
+            sessionStorage.setItem("appState", serializedState);
         }
         catch (err) {
+            localStorage.clear()
+            console.log(JSON.stringify(sessionStorage).length)
+            console.log(err)
         }
+
     }
     // private method to load a default state
     initializeState() {

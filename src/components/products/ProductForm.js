@@ -1,5 +1,5 @@
 import React from 'react'
-import { startAddProduct, startUpdateProduct, startGetProducts } from '../../actions/productActions'
+import { startAddProduct, startUpdateProduct, startGetProducts, startDeleteProduct } from '../../actions/productActions'
 import { connect } from 'react-redux'
 import ImagesList from '../images/ImagesList'
 
@@ -42,6 +42,22 @@ class ProductForm extends React.Component {
         // add the image to images array in state (but don't add to database until form is submitted)
         this.setState((prevState) => ({images: prevState.images.concat(image)}))
     }
+    handleDeleteProduct = async (e) => {
+        e.preventDefault()
+        try {
+           const product = await this.props.startDeleteProduct(this.props.store.id, this.props.product.id)
+           this.setState(() => ({
+            error: undefined, 
+            success: 'Product Deleted!'
+        }))
+        this.props.history.replace(`/UserDashboard/stores/${this.props.store.id}/products`)
+        }
+        catch {
+            this.setState(() => ({error:`Unable To Delete Product`, success: undefined}))
+        }
+
+
+    }
     onformSubmit = async (e) => {
         e.preventDefault()
         // make sure required fields are filled out
@@ -62,6 +78,7 @@ class ProductForm extends React.Component {
                         this.props.store.id,
                         this.props.product.id 
                         )
+                    await this.props.startGetProducts(this.props.store.id)
                 } else {
                     // add product using the storeId from mapstatetoprops
                     const product = await this.props.startAddProduct(
@@ -73,15 +90,15 @@ class ProductForm extends React.Component {
                         this.props.store.id
                         )
                     await this.props.startGetProducts(this.props.store.id)
-                    this.props.history.push(`/UserDashboard/stores/${this.props.store.id}/products/${product.id}`)
+                    this.props.history.replace(`/UserDashboard/stores/${this.props.store.id}/products/${product.id}`)
                     
                 }
                 // setState needs some logic to see if product is being added or updated 
                 this.setState(() => ({
                     error: undefined, 
-                    success: 'Product '  + (this.props.action == 'Add' ? 'Added' : 'Updated')}))
+                    success: 'Product '  + (this.props.action == 'Add' ? 'Added' : 'Updated'),
+                    images: []}))
                     // fetch all products from database to update redux store (and display new image for this product)
-                    await this.props.startGetProducts(this.props.store.id)
             } catch (e) { 
                 this.setState(() => ({error:`Unable To ${this.props.action} Product`, success: undefined}))
             }
@@ -128,6 +145,7 @@ class ProductForm extends React.Component {
                 <button type = 'submit'>{this.props.action} Product</button> 
                 </form>
                 <ImagesList product = {this.props.product} />
+                {this.props.product && <button onClick = {this.handleDeleteProduct}>Delete Product</button>}
             </div>
         )
     } 
@@ -135,7 +153,8 @@ class ProductForm extends React.Component {
 const mapDispatchToProps = (dispatch) => ({
     startAddProduct: (name, description, price, quantity, images, storeId) => dispatch(startAddProduct(name, description, price, quantity, images, storeId)),
     startUpdateProduct: (name, description, price, quantity, images, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, images, storeId, productId)),
-    startGetProducts: (storeId) => dispatch(startGetProducts(storeId))
+    startGetProducts: (storeId) => dispatch(startGetProducts(storeId)),
+    startDeleteProduct: (storeId, productId) => dispatch(startDeleteProduct(storeId, productId))
 })
 
 

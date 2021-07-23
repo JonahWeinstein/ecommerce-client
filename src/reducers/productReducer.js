@@ -2,7 +2,8 @@ import StateLoader from "../store/StateLoader"
 
 // create an instance of StateLoader and load in stores 
 const stateLoader = new StateLoader()
-const productReducerDefaultState = stateLoader.loadState().products || stateLoader.initializeState().products
+const productReducerDefaultState = 
+    stateLoader.loadState().products || stateLoader.initializeState().products
 
 const productReducer = (state = productReducerDefaultState, action ) => {
     switch (action.type) {
