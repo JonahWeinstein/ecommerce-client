@@ -1,179 +1,186 @@
-import React from 'react'
-import { startAddProduct, startUpdateProduct, startGetProduct, startGetProducts, startDeleteProduct } from '../../actions/productActions'
+import React, {useState, useEffect} from 'react'
+import { startAddProduct, startUpdateProduct, startGetProduct, startDeleteProduct } from '../../actions/productActions'
 import { connect } from 'react-redux'
 import ImagesList from '../images/ImagesList'
 import Loading from '../Loading'
 
 
-class ProductForm extends React.Component {
-    constructor(props) {
-        super(props)
+
+const ProductForm = (props) => {
+        const [name, setName] = useState(props.product ? props.product.name : '')
+        const [description, setDescription] = useState(props.product ? props.product.description : '')
+        const [price, setPrice] = useState(props.product ? props.product.price.toString() : '')
+        const [quantity, setQuantity] = useState(props.product ? props.product.quantity: 0)
+        const [images, setImages] = useState([])
+        const [imagesToDelete, setImagesToDelete] = useState([])
+        const [error, setError] = useState(undefined)
+        const [success, setSuccess] = useState(undefined)
+        const [loaded, setLoaded] = useState(false)
+
         // if we are editing a product we want to set state to match current product values
-        this.state = {
-            name: props.product ? props.product.name : '',
-            description: props.product ? props.product.description : '',
-            price: props.product ? props.product.price.toString() : '',
-            quantity: props.product ? props.product.quantity: 0,
-            images: [],
-            error: undefined,
-            success: undefined,
-            loaded: false
-        }
-    }
-    async componentDidMount() {
+    useEffect(() => {
+        const fetchData = async () => {
+
+        
         // check if we are adding or updating a product 
         // if we are updating a product we need to fetch the current version from the database
-        if(this.props.action == 'Update') {
+        if(props.action == 'Update') {
 
             try{
-                const product = await this.props.startGetProduct(this.props.store.id, this.props.product.id)
-                this.setState(() => ({loaded: true}))
+                const product = await props.startGetProduct(props.store.id, props.product.id)
+                console.log(product)
+                setLoaded(true)
             } catch(e) {
-                this.setState(() => ({success: undefined, error: 'could not get product, return to product list', loaded: true}))
+                setSuccess(undefined)
+                setError('could not get product, return to product list')
+                setLoaded(true)
             }
         } else {
-            this.setState(() => ({loaded: true}))
+            setLoaded(true)
         }
+    }
+    fetchData()
         
+    }, [])
+    const onDescriptionChange = (e) => {
+        setDescription(e.target.value)
     }
-    onDescriptionChange = (e) => {
-        const description = e.target.value
-        this.setState(() => ({ description }))
+    const onNameChange = (e) => {
+        setName(e.target.value)
     }
-    onNameChange = (e) => {
-        const name = e.target.value
-        this.setState(() => ({ name }))
-    }
-    onPriceChange = (e) => {
+    const onPriceChange = (e) => {
         const price = e.target.value
         // this regex doesn't work exactly as it should
         if(!price || price.match(/^\d{1,}(\.\d{0,2})?/)){
-            this.setState(() => ({ price }))
+            setPrice(price)
         }
     }
-    onQuantityChange = (e) => {
-        const quantity = e.target.value
-        this.setState(() => ({ quantity }))
+    const onQuantityChange = (e) => {
+        setQuantity(e.target.value)
     }
-    onImageChange = (e) => {
+    const onImageChange = (e) => {
         const image = e.target.files[0]
         // add the image to images array in state (but don't add to database until form is submitted)
-        this.setState((prevState) => ({images: prevState.images.concat(image)}))
+        setImages(prevImages => [...prevImages, image])
     }
-    handleDeleteProduct = async (e) => {
+    const handleDeleteProduct = async (e) => {
         e.preventDefault()
         try {
            const product = await this.props.startDeleteProduct(this.props.store.id, this.props.product.id)
-           this.setState(() => ({
-            error: undefined, 
-            success: 'Product Deleted!'
-        }))
+           setError(undefined)
+           setSuccess('Product Deleted')
         this.props.history.replace(`/UserDashboard/stores/${this.props.store.id}/products`)
         }
         catch {
-            this.setState(() => ({error:`Unable To Delete Product`, success: undefined}))
+            setSuccess(undefined)
+            setError('Unable to delete product :(')
         }
 
 
     }
-    onformSubmit = async (e) => {
+    const selectImageToDelete = (image) => {
+        this.setState((prevState) => ({imagesToDelete: prevState.imagesToDelete.concat(image)}))
+    }
+    const onformSubmit = async (e) => {
         e.preventDefault()
         // make sure required fields are filled out
-        if(!this.state.name || !this.state.price || !this.state.quantity) {
-            this.setState(() => ({error: 'Name, price, and quantity are required', success: undefined}))
+        if(!name || !price || !quantity) {
+            setSuccess(undefined)
+            setError('Name, Price, and Description are required')
         } else {
             // get field values from component state
-            const {name, description, price, quantity, images } = this.state
+    
             try {
                 // if we are updating a product, use startUpdateProduct instead of startAddProduct
-                if(this.props.product) {
-                    const product = await this.props.startUpdateProduct(
+                if(props.product) {
+                    const product = await props.startUpdateProduct(
                         name, 
                         description, 
                         price, 
                         quantity, 
                         images,
-                        this.props.store.id,
-                        this.props.product.id 
+                        props.store.id,
+                        props.product.id 
                         )
-                        await this.props.startGetProduct(this.props.store.id, this.props.product.id)
+                        await props.startGetProduct(props.store.id, props.product.id)
                 } else {
                     // add product using the storeId from mapstatetoprops
-                    const product = await this.props.startAddProduct(
+                    const product = await props.startAddProduct(
                         name, 
                         description, 
                         price, 
                         quantity, 
                         images,
-                        this.props.store.id
+                        props.store.id
                         )
-                    await this.props.startGetProduct(this.props.store.id, product.id)
-                    this.props.history.replace(`/UserDashboard/stores/${this.props.store.id}/products/${product.id}`)
+                    await props.startGetProduct(props.store.id, product.id)
+                    props.history.replace(`/UserDashboard/stores/${props.store.id}/products/${product.id}`)
                     
                 }
                 // setState needs some logic to see if product is being added or updated 
-                this.setState(() => ({
-                    error: undefined, 
-                    success: 'Product '  + (this.props.action == 'Add' ? 'Added' : 'Updated'),
-                    images: []}))
+                    setError(undefined)
+                    setSuccess(props.action == 'Add' ? 'Added' : 'Updated')
+                    setImages([])
                     // fetch all products from database to update redux store (and display new image for this product)
             } catch (e) { 
-                this.setState(() => ({error:`Unable To ${this.props.action} Product`, success: undefined}))
+                setSuccess(undefined)
+                setError(`Unable To ${this.props.action} Product`)
             }
         }
         
     }
-    render() {
-        const {loaded} = this.state
+        // once ajax is complete render the product form for this product
         return loaded ? (
             <div>
-                <form onSubmit = {this.onformSubmit}>
-                    {this.state.error && <p className = "error">{this.state.error}</p>}
-                    {this.state.success && <p>{this.state.success}</p>}
+                <form onSubmit = {onformSubmit}>
+                    {error && <p className = "error">{error}</p>}
+                    {success && <p>{success}</p>}
                     <input 
                     type = 'text' 
                     placeholder = 'name'
-                    value = {this.state.name}
-                    onChange = {this.onNameChange}
+                    value = {name}
+                    onChange = {onNameChange}
                     autoFocus />
                     <input 
                     type = 'text'
                     placeholder = 'description'
-                    value = {this.state.description}
-                    onChange = {this.onDescriptionChange}
+                    value = {description}
+                    onChange = {onDescriptionChange}
                     />
                     <input 
                     type = 'text'
                     placeholder = 'price'
-                    value = {this.state.price}
-                    onChange = {this.onPriceChange}
+                    value = {price}
+                    onChange = {onPriceChange}
                     />
                     <input 
                     type = 'number'
                     placeholder = 'quantity'
-                    value = {this.state.quantity}
-                    onChange = {this.onQuantityChange}
+                    value = {quantity}
+                    onChange = {onQuantityChange}
                     />
                     <input 
                     type = 'file'
                     label = 'file'
                     accept="image/png, image/jpeg"
-                    onChange = {this.onImageChange}
+                    onChange = {onImageChange}
                     />
 
-                <button type = 'submit'>{this.props.action} Product</button> 
+                <button type = 'submit'>{props.action} Product</button> 
                 </form>
-                <ImagesList product = {this.props.product} store = {this.props.store}/>
-                {this.props.product && <button onClick = {this.handleDeleteProduct}>Delete Product</button>}
+                <ImagesList 
+                product = {props.product} 
+                store = {props.store}
+                />
+                {props.product && <button onClick = {handleDeleteProduct}>Delete Product</button>}
             </div>
         ) : <Loading />
     } 
-}
+
 const mapDispatchToProps = (dispatch) => ({
     startAddProduct: (name, description, price, quantity, images, storeId) => dispatch(startAddProduct(name, description, price, quantity, images, storeId)),
     startUpdateProduct: (name, description, price, quantity, images, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, images, storeId, productId)),
     startDeleteProduct: (storeId, productId) => dispatch(startDeleteProduct(storeId, productId)),
-    startGetProducts: (storeId) => dispatch(startGetProducts(storeId)),
     startGetProduct: (storeId, productId) => dispatch(startGetProduct(storeId, productId)),  
 })
 
