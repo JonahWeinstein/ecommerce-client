@@ -1,10 +1,20 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import ImageListItem from './ImageListItem'
 
 
 
 const ImagesList = (props) => {
+    const onSelect = (selected) => {
+        if(selected = false) {
+            props.setSelectedImages(
+                prevImages => prevImages.filter((currentImage) => currentImage.id != image.id)
+                )
+        }
+        else {
+            props.setSelectedImages(prevImages => prevImages.concat(image))
+        }
+    }
+    
     // if there are images associated with this product then list them
     if(props.product){
         return (
@@ -16,7 +26,9 @@ const ImagesList = (props) => {
                             <ImageListItem 
                             image = {image}
                             store = {props.store}
+                            onSelect = {onSelect}
                             />
+                            
                         </li>
                     ))}
                 </ul>

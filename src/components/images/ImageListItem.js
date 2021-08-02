@@ -4,6 +4,12 @@ import { deleteImage } from '../../utils/asyncLogic';
 
 
 const ImageListItem = (props) => {
+    const [selected, setSelected] = useState(false)
+    const handleSelection = () => {
+        setSelected((prevBoolean) => !prevBoolean)
+        
+
+    }
     // images will either be from the database in Buffer form or from user in image format
     const arrayBufferToBase64 = (buffer) => {
         var binary = '';
@@ -11,6 +17,7 @@ const ImageListItem = (props) => {
         bytes.forEach((b) => binary += String.fromCharCode(b));
         return window.btoa(binary);
     };
+
     // const handleDeleteImage = async (e) => {
     //     e.preventDefault()
     //     try{
@@ -25,7 +32,7 @@ const ImageListItem = (props) => {
     return (
         <div>
             <img src = { "data:image/png;base64," + arrayBufferToBase64(props.image.data.data)} />
-            <button >Delete</button>
+            <button onClick = {handleSelection}>Delete</button>
         </div>
     )
 }

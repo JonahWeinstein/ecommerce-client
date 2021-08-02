@@ -169,7 +169,7 @@ const ProductForm = (props) => {
                 product = {props.product} 
                 store = {props.store}
                 selected = {selectedImages}
-                onSelected = {setSelectedImages}
+                setSelectedImages = {setSelectedImages}
                 />
                 {props.product && <button onClick = {handleDeleteProduct}>Delete Product</button>}
             </div>
