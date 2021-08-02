@@ -12,7 +12,7 @@ const ProductForm = (props) => {
         const [price, setPrice] = useState(props.product ? props.product.price.toString() : '')
         const [quantity, setQuantity] = useState(props.product ? props.product.quantity: 0)
         const [images, setImages] = useState([])
-        const [imagesToDelete, setImagesToDelete] = useState([])
+        const [selectedImages, setSelectedImages] = useState([])
         const [error, setError] = useState(undefined)
         const [success, setSuccess] = useState(undefined)
         const [loaded, setLoaded] = useState(false)
@@ -20,15 +20,12 @@ const ProductForm = (props) => {
         // if we are editing a product we want to set state to match current product values
     useEffect(() => {
         const fetchData = async () => {
-
-        
         // check if we are adding or updating a product 
         // if we are updating a product we need to fetch the current version from the database
         if(props.action == 'Update') {
 
             try{
                 const product = await props.startGetProduct(props.store.id, props.product.id)
-                console.log(product)
                 setLoaded(true)
             } catch(e) {
                 setSuccess(undefined)
@@ -171,6 +168,8 @@ const ProductForm = (props) => {
                 <ImagesList 
                 product = {props.product} 
                 store = {props.store}
+                selected = {selectedImages}
+                onSelected = {setSelectedImages}
                 />
                 {props.product && <button onClick = {handleDeleteProduct}>Delete Product</button>}
             </div>
