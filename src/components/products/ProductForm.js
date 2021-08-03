@@ -75,9 +75,6 @@ const ProductForm = (props) => {
 
 
     }
-    const selectImageToDelete = (image) => {
-        this.setState((prevState) => ({imagesToDelete: prevState.imagesToDelete.concat(image)}))
-    }
     const onformSubmit = async (e) => {
         e.preventDefault()
         // make sure required fields are filled out
@@ -96,6 +93,7 @@ const ProductForm = (props) => {
                         price, 
                         quantity, 
                         images,
+                        selectedImages,
                         props.store.id,
                         props.product.id 
                         )
@@ -121,7 +119,7 @@ const ProductForm = (props) => {
                     // fetch all products from database to update redux store (and display new image for this product)
             } catch (e) { 
                 setSuccess(undefined)
-                setError(`Unable To ${this.props.action} Product`)
+                setError(e.message)
             }
         }
         
@@ -178,7 +176,7 @@ const ProductForm = (props) => {
 
 const mapDispatchToProps = (dispatch) => ({
     startAddProduct: (name, description, price, quantity, images, storeId) => dispatch(startAddProduct(name, description, price, quantity, images, storeId)),
-    startUpdateProduct: (name, description, price, quantity, images, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, images, storeId, productId)),
+    startUpdateProduct: (name, description, price, quantity, images, imagesToDelete, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, images, imagesToDelete, storeId, productId)),
     startDeleteProduct: (storeId, productId) => dispatch(startDeleteProduct(storeId, productId)),
     startGetProduct: (storeId, productId) => dispatch(startGetProduct(storeId, productId)),  
 })

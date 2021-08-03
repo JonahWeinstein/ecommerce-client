@@ -8,7 +8,7 @@ const startGetProducts = (storeId) => {
             dispatch(getProducts(products))
             return products
         } catch(e) {
-            throw new Error(e)
+            throw e
         }
     }
 }
@@ -19,7 +19,7 @@ const startGetProduct = (storeId, productId) => {
             dispatch(getProductAction(product))
             return product
         } catch (e) {
-            throw new Error(e)
+            throw e
         }
     }
 }
@@ -39,7 +39,7 @@ const startAddProduct = (name, description = '', price, quantity, images, storeI
             dispatch(addProductAction(product))
             return product
         } catch (e) {
-            throw new Error(e)
+            throw e
         }
     }
 }
@@ -47,13 +47,13 @@ const addProductAction = (product= {}) => ({
     type: 'ADD_PRODUCT',
     product
 })
-const startUpdateProduct = (name, description = '', price, quantity, images, storeId, productId) => {
+const startUpdateProduct = (name, description = '', price, quantity, images, imagesToDelete, storeId, productId) => {
     return async (dispatch) => {
         try {
-            const product = await updateProduct(name, description, price, quantity, images, storeId, productId)
+            const product = await updateProduct(name, description, price, quantity, images, imagesToDelete, storeId, productId)
             dispatch(updateProductAction(product))
         } catch (e) {
-            throw new Error(e)
+            throw e
         }
     }
 }
@@ -68,7 +68,7 @@ const startDeleteProduct = (storeId, productId) => {
             const product = await deleteProduct(storeId, productId)
             dispatch(deleteProductAction(product))
         } catch (e) {
-            throw new Error(e)
+            throw e
         }
     }
 }

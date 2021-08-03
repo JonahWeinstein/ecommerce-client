@@ -94,16 +94,17 @@ const addProductWithImages = async (name, description = '', price, quantity, ima
         }
         return product
     } catch (e) {
-        throw new Error(e)
+        throw e
     }
     
 }
 // updates a product with given id and storeId using argument values
-const updateProduct = async (name, description = '', price, quantity, images, storeId, productId) => {
+const updateProduct = async (name, description = '', price, quantity, images, imagesToDelete, storeId, productId) => {
     const data = { name, description, price, quantity }
         const authToken = sessionStorage.getItem('token')
         // remember to set content-type in request
-        const response = await fetch(`http://localhost:3000/stores/${storeId}/products/${productId}/update`, {
+        
+            const response = await fetch(`http://localhost:3000/stores/${storeId}/products/${productId}/update`, {
             body: JSON.stringify(data),
             headers: {
                 'Authorization': `Bearer ${authToken}`,
@@ -112,6 +113,13 @@ const updateProduct = async (name, description = '', price, quantity, images, st
             method: 'PATCH'});
         if(!response.ok) {
             throw new Error(`Unable to add product ${response.status}`)
+        }
+        for(let image in imagesToDelete) {
+            try {
+                await deleteImage(storeId, productId, image.id)
+            } catch(e) {
+                throw e 
+            }            
         }
         for (let i = 0; i < images.length; i++) {
             try {
@@ -122,6 +130,8 @@ const updateProduct = async (name, description = '', price, quantity, images, st
             }
         }
         return response.json()
+        
+        
 }
 // DELETE PRODUCT
 
@@ -174,7 +184,7 @@ const deleteImage = async (storeId, productId, imageId) => {
         },
         method: 'DELETE'});
         if(!response.ok) {
-            throw new Error(`Unable to add Image ${response.status}`)
+            throw new Error(`Unable to Delete Images`)
         }
         return response.json()
 }   
