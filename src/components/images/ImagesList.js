@@ -4,8 +4,8 @@ import ImageListItem from './ImageListItem'
 
 
 const ImagesList = (props) => {
-    const onSelect = (selected) => {
-        if(selected = false) {
+    const onSelect = (image, selected) => {
+        if(!selected) {
             props.setSelectedImages(
                 prevImages => prevImages.filter((currentImage) => currentImage.id != image.id)
                 )

@@ -1,14 +1,18 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {connect} from 'react-redux'
 import { deleteImage } from '../../utils/asyncLogic';
 
 
 const ImageListItem = (props) => {
     const [selected, setSelected] = useState(false)
+    // watch for selected to change and call handler from parent
+    useEffect(() => {
+        props.onSelect(props.image, selected)
+    }, [selected])
+    // toggle selected state when user selects an image
     const handleSelection = () => {
-        setSelected((prevBoolean) => !prevBoolean)
-        
-
+        // toggle selected state for this image
+        setSelected((selected) => !selected); 
     }
     // images will either be from the database in Buffer form or from user in image format
     const arrayBufferToBase64 = (buffer) => {
