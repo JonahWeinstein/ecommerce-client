@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {connect} from 'react-redux'
-import { deleteImage } from '../../utils/asyncLogic';
+
 
 
 const ImageListItem = (props) => {
@@ -22,16 +21,6 @@ const ImageListItem = (props) => {
         return window.btoa(binary);
     };
 
-    // const handleDeleteImage = async (e) => {
-    //     e.preventDefault()
-    //     try{
-    //         const image = await deleteImage(this.props.store.id, this.props.image.ProductId, this.props.image.id)
-    //         console.log(image)
-    //         console.log('success')
-    //     } catch(e) {
-    //         console.log('could not delete image')
-    //     }
-    // }
     // must specify mime type and encoding so browser knows how to display the file
     return (
         <div>
@@ -40,9 +29,7 @@ const ImageListItem = (props) => {
         </div>
     )
 }
-const mapDispatchToProps = (dispatch) => ({
-    deleteImage: (storeId, productId, imageId) => dispatch(deleteImage(storeId, productId, imageId))
-})  
 
 
-export default connect(undefined, mapDispatchToProps)(ImageListItem)
+
+export default ImageListItem

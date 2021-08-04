@@ -114,11 +114,11 @@ const updateProduct = async (name, description = '', price, quantity, images, im
         if(!response.ok) {
             throw new Error(`Unable to add product ${response.status}`)
         }
-        for(let image in imagesToDelete) {
+        for(let i = 0; i<imagesToDelete.length; i++) {
             try {
-                await deleteImage(storeId, productId, image.id)
+                const image = await deleteImage(storeId, productId, imagesToDelete[i].id)
             } catch(e) {
-                throw e 
+                throw e
             }            
         }
         for (let i = 0; i < images.length; i++) {

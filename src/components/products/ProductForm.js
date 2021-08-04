@@ -87,7 +87,7 @@ const ProductForm = (props) => {
             try {
                 // if we are updating a product, use startUpdateProduct instead of startAddProduct
                 if(props.product) {
-                    const product = await props.startUpdateProduct(
+                    await props.startUpdateProduct(
                         name, 
                         description, 
                         price, 
@@ -116,6 +116,7 @@ const ProductForm = (props) => {
                     setError(undefined)
                     setSuccess(props.action == 'Add' ? 'Added' : 'Updated')
                     setImages([])
+                    setSelectedImages([])
                     // fetch all products from database to update redux store (and display new image for this product)
             } catch (e) { 
                 setSuccess(undefined)
