@@ -1,5 +1,8 @@
 // used to persist redux state in sessionStorage
 
+// when a users localStorage is full this won't work and reloading the page (on  editProduct page for example)
+// will give appropriate error (can't load product) and prompt user to return to product list
+
 class StateLoader {
 
     loadState() {

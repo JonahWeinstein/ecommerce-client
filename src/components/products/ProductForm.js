@@ -97,7 +97,10 @@ const ProductForm = (props) => {
                         props.store.id,
                         props.product.id 
                         )
+                        // fetch the updated product which will rerender productForm
+                        setLoaded(false)
                         await props.startGetProduct(props.store.id, props.product.id)
+                        setLoaded(true)
                 } else {
                     // add product using the storeId from mapstatetoprops
                     const product = await props.startAddProduct(
@@ -119,6 +122,7 @@ const ProductForm = (props) => {
                     setSelectedImages([])
                     // fetch all products from database to update redux store (and display new image for this product)
             } catch (e) { 
+                console.log(e)
                 setSuccess(undefined)
                 setError(e.message)
             }

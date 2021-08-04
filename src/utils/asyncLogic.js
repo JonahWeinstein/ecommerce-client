@@ -116,7 +116,7 @@ const updateProduct = async (name, description = '', price, quantity, images, im
         }
         for(let i = 0; i<imagesToDelete.length; i++) {
             try {
-                const image = await deleteImage(storeId, productId, imagesToDelete[i].id)
+                await deleteImage(storeId, productId, imagesToDelete[i].id)
             } catch(e) {
                 throw e
             }            
