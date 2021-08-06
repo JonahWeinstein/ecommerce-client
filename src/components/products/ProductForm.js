@@ -3,6 +3,7 @@ import { startAddProduct, startUpdateProduct, startGetProduct, startDeleteProduc
 import { connect } from 'react-redux'
 import ImagesList from '../images/ImagesList'
 import Loading from '../Loading'
+import ConfirmDeleteModal from '../ConfirmDeleteModal'
 
 
 
@@ -16,6 +17,7 @@ const ProductForm = (props) => {
         const [error, setError] = useState(undefined)
         const [success, setSuccess] = useState(undefined)
         const [loaded, setLoaded] = useState(false)
+        const [showModal, setShowModal] = useState(false)
 
         // if we are editing a product we want to set state to match current product values
     useEffect(() => {
@@ -74,8 +76,12 @@ const ProductForm = (props) => {
             setSuccess(undefined)
             setError('Unable to delete product :(')
         }
-
-
+    }
+    const openModal = () => {
+        setShowModal(true)
+    }
+    const hideModal = () => {
+        setShowModal(false)
     }
     const onformSubmit = async (e) => {
         e.preventDefault()
@@ -134,6 +140,11 @@ const ProductForm = (props) => {
         // once ajax is complete render the product form for this product
         return loaded ? (
             <div className = 'product-page'>
+            <ConfirmDeleteModal 
+            show = {showModal} 
+            handleClose = {hideModal}
+            action = {handleDeleteProduct}
+            />
             <div className = 'form__wrapper'>
                 <form 
                 onSubmit = {onformSubmit}
@@ -194,7 +205,7 @@ const ProductForm = (props) => {
                 selected = {selectedImages}
                 setSelectedImages = {setSelectedImages}
                 />
-                {props.product && <button className = 'cta' onClick = {handleDeleteProduct}>Delete Product</button>}
+                {props.product && <button className = 'cta' onClick = {openModal}>Delete Product</button>}
             </div>
         ) : <Loading />
     } 
