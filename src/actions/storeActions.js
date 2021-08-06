@@ -30,9 +30,31 @@ const addStoreAction = (store= {}) => ({
     store
 })
 
+const startDeleteStore = (storeId) => {
+    return async (dispatch) => {
+        try {
+            const store = await deleteStore(storeId)
+            dispatch(deleteStoreAction(store))
+        } catch(e) {
+            throw e
+        }
+    }
+}
+const deleteStoreAction = (store) => ({
+    type: 'DELETE_STORE',
+    store
+}
+)
 const updateError = (error) => ({
     type: 'UPDATE_ERROR',
     error
 })
 
-export {startGetStores, startAddStore, addStoreAction, getStores, updateError }
+export {
+    startGetStores, 
+    startAddStore, 
+    addStoreAction, 
+    getStores, 
+    updateError, 
+    startDeleteStore 
+}
