@@ -1,6 +1,11 @@
 body {
-    background-color: peachpuff;
+    background-color: rgba(57, 56, 78, 0.329);
 }
+a {
+    text-decoration: none;
+}
+
+
 .error {
     color: red;
 }
@@ -9,3 +14,116 @@ body {
     filter: blur(8px);
     -webkit-filter: blur(8px);
 }
+.list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.product-page {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 0;
+}
+@media (max-width:800px) {
+    .product-page{
+        flex-direction: column;
+    }
+}
+.form__wrapper {
+	display: flex;
+	align-items: center;
+}
+.product-form{
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+	padding: 20px;
+    flex-wrap: wrap;
+}
+
+.product-form input {
+	min-width: 250px;
+	padding: 12px;
+	border: 1px solid;
+	background-color: white;
+  	border-image-slice: 1;
+	border-image: conic-gradient(from var(--angle), #E2BBE1,#F9DFCA,#F5B946,#83C79C,#E2BBE1) 1;
+	animation: 10s rotate linear infinite;
+	border-radius: 4px;
+	margin-top: 6px;
+	margin-bottom: 16px;
+	resize: vertical;
+  }
+.list--grid-layout__row {
+    list-style-type: none;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+	align-items: center;
+	padding-bottom: var(--s-4);
+}
+.list--grid-layout__item {
+    flex-basis: 25%;
+	padding:var(--s-3);
+}
+
+.cta{
+	background-position: 0 0;
+	--angle: 0deg;
+	margin-top: var(--s-4);
+	padding:var(--s-1);
+    border: 2px solid;
+  	border-image-slice: 1;
+    vertical-align: middle;
+	text-align: center;
+    background-color: white;
+	color:var(--black);
+	white-space: nowrap;
+	min-width: 100px;
+    max-width: 200px;
+    min-height: 30px;
+    max-height: 40px;
+	border-image: conic-gradient(from var(--angle), #E2BBE1,#F9DFCA,#F5B946,#83C79C,#E2BBE1) 1;
+	animation: 10s rotate linear infinite;
+	cursor:pointer;
+}
+@keyframes rotate {
+	to {
+	  --angle: 360deg;
+	}
+  }
+  @-webkit-keyframes gradientBG {
+	0% {
+	background-position: 0% 50%;
+	}
+	50% {
+	background-position: 100% 50%;
+	}
+	100% {
+	background-position: 0% 50%;
+	}
+   }
+   @keyframes gradientBG {
+	0% {
+	background-position: 0% 50%;
+	}
+	50% {
+	background-position: 100% 50%;
+	}
+	100% {
+	background-position: 0% 50%;
+	}
+   }
+  @property --angle {
+	syntax: '<angle>';
+	initial-value: 0deg;
+	inherits: false;
+  }
+
+  .cta:hover {
+    background: linear-gradient(-45deg,  #E2BBE1,#F9DFCA,#F5B946,#83C79C );
+	background-size: 400% 400%;
+	-webkit-animation: gradientBG 5s ease infinite;
+			animation: gradientBG 5s ease infinite;
+  }

@@ -19,7 +19,7 @@ const ImagesList = (props) => {
     if(props.product){
         return (
             <div >
-                <ul>
+                <ul className = 'list--grid-layout__row'>
                 
                     {props.product.Images.map((image) => (
                         <li key = {image.id}>

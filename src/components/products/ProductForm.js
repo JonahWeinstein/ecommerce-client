@@ -133,50 +133,59 @@ const ProductForm = (props) => {
     }
         // once ajax is complete render the product form for this product
         return loaded ? (
-            <div>
-                <form onSubmit = {onformSubmit}>
+            <div className = 'product-page'>
+            <div className = 'form__wrapper'>
+                <form 
+                onSubmit = {onformSubmit}
+                className = 'product-form'
+                >
                     {error && <p className = "error">{error}</p>}
                     {success && <p>{success}</p>}
                     <input 
                     type = 'text' 
                     placeholder = 'name'
                     value = {name}
+                    label= 'Name'
                     onChange = {onNameChange}
                     autoFocus />
                     <input 
                     type = 'text'
                     placeholder = 'description'
+                    label = 'Description'
                     value = {description}
                     onChange = {onDescriptionChange}
                     />
                     <input 
                     type = 'text'
                     placeholder = 'price'
+                    label = 'Price'
                     value = {price}
                     onChange = {onPriceChange}
                     />
                     <input 
                     type = 'number'
                     placeholder = 'quantity'
+                    label = 'Quantity'
                     value = {quantity}
                     onChange = {onQuantityChange}
                     />
                     <input 
                     type = 'file'
-                    label = 'file'
+                    label = 'Add Image'
                     accept="image/png, image/jpeg"
                     onChange = {onImageChange}
                     />
 
-                <button type = 'submit'>{props.action} Product</button> 
+                <button className = 'cta' type = 'submit'>{props.action} Product</button> 
                 </form>
-                <ImagesList 
+                </div>
+                <ImagesList
                 product = {props.product} 
                 store = {props.store}
                 selected = {selectedImages}
                 setSelectedImages = {setSelectedImages}
                 />
-                {props.product && <button onClick = {handleDeleteProduct}>Delete Product</button>}
+                {props.product && <button className = 'cta' onClick = {handleDeleteProduct}>Delete Product</button>}
             </div>
         ) : <Loading />
     } 

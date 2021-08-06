@@ -27,14 +27,19 @@ class ProductsListPage extends React.Component  {
         return loaded ? (
             <div>
             <p>Product list for {this.props.store.store_name}</p>
-            <ul>
+            <div>
+            <ul className = 'list'>
                 {this.props.products.map((product) => (
                     <li key = {product.id}>
                         <ProductListItem product = {product}/>
                     </li>
                 ))}
             </ul>
-            <Link to = {`/UserDashboard/stores/${this.props.store.id}/products/add`}>Add Product</Link>
+            </div>
+            <Link 
+            to = {`/UserDashboard/stores/${this.props.store.id}/products/add`}
+            className = 'cta'
+            >Add Product</Link>
             </div>
         ) : <Loading />
        
