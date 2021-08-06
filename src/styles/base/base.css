@@ -1,10 +1,44 @@
+:root {
+    --s-1: 7px;
+	--s-2: 11px;
+	--s-3: 18px;
+	--s-4: 30px;
+	--s-5: 50px;
+	--s-6: 75px;
+	--s-7: 100px;
+	--s-8: 140px;
+	font-family: 'Basis Grotesque Regular';
+	--accent-color:#F9DFCA;
+    --black:#221000;  /* shade of black/grey from design */
+    --f-xs: 14px; /*font size for paragraphs */
+    --f-m: 24px; /*font size for paragraphs */
+    --f-ml:30px;
+
+    --t-h0: 400 120px/1.1 "Basis Grotesque Regular";
+	--t-h1: 500 68px/1.2 "Basis Grotesque Regular";
+	--t-h2: 400 64px/1.1 "Basis Grotesque Regular";
+	--t-h3: 500 44px/1.1 "Basis Grotesque Regular";
+	--t-h4: 500 30px/1.1 "Basis Grotesque Regular";
+	--t-h5: 500 23px/1.4 "Basis Grotesque Regular";
+	--t-h6: 500 18px/1.4 "Basis Grotesque Regular";
+
+	--t-label: 500 14px/1"Basis Grotesque Regular";
+
+	--t-body-bold: 500 14px/1.6 "Basis Grotesque Regular";
+	--t-body-large: 400 18px/1.6 "Basis Grotesque Regular";
+	--t-body: 12px;
+	--t-body-small: 400 11px/1.8 "Basis Grotesque Regular";
+
+}
 body {
     background-color: rgba(57, 56, 78, 0.329);
 }
 a {
     text-decoration: none;
 }
-
+button {
+    cursor: pointer
+}
 
 .error {
     color: red;
@@ -25,14 +59,9 @@ a {
     width: 100%;
     padding: 0;
 }
-@media (max-width:800px) {
-    .product-page{
-        flex-direction: column;
-    }
-}
+
 .form__wrapper {
 	display: flex;
-	align-items: center;
 }
 .product-form{
     display: flex;
@@ -61,11 +90,31 @@ a {
     flex-flow: row wrap;
     justify-content: flex-start;
 	align-items: center;
-	padding-bottom: var(--s-4);
+
 }
 .list--grid-layout__item {
-    flex-basis: 25%;
-	padding:var(--s-3);
+    position: relative;
+    flex-basis: 30%;
+	margin:var(--s-1);
+}
+
+.remove-image-button {
+    background-color: white;
+    border: 1px solid blue;
+    color: blue;
+    position: absolute;
+	top:0;
+	right:0;
+	opacity: 0;
+	height:20px;
+	width:20px;
+    text-align: center;
+	transition: transform .2s, opacity .2s;
+	transform: scale(0.5);
+}
+.list--grid-layout__item:hover .remove-image-button {
+    transform: scale(1);
+	opacity: 1;
 }
 
 .cta{

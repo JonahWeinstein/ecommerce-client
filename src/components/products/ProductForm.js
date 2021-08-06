@@ -141,35 +141,44 @@ const ProductForm = (props) => {
                 >
                     {error && <p className = "error">{error}</p>}
                     {success && <p>{success}</p>}
+                    <label for='name'>Name</label>
                     <input 
                     type = 'text' 
+                    name = 'name'
                     placeholder = 'name'
                     value = {name}
-                    label= 'Name'
                     onChange = {onNameChange}
                     autoFocus />
+                    <label for='description'>Decription</label>
                     <input 
+                    name ='description'
                     type = 'text'
                     placeholder = 'description'
                     label = 'Description'
                     value = {description}
                     onChange = {onDescriptionChange}
                     />
+                    <label for='price'>Price</label>
                     <input 
+                    name = 'price'
                     type = 'text'
                     placeholder = 'price'
                     label = 'Price'
                     value = {price}
                     onChange = {onPriceChange}
                     />
+                    <label for='quantity'>Quantity</label>
                     <input 
+                    name = 'quantity'
                     type = 'number'
                     placeholder = 'quantity'
                     label = 'Quantity'
                     value = {quantity}
                     onChange = {onQuantityChange}
                     />
+                    <label for='image'>Add Image</label>
                     <input 
+                    name = "image"
                     type = 'file'
                     label = 'Add Image'
                     accept="image/png, image/jpeg"
