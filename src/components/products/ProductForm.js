@@ -19,6 +19,7 @@ const ProductForm = (props) => {
 
         // if we are editing a product we want to set state to match current product values
     useEffect(() => {
+        // this is the way to make useEffect async
         const fetchData = async () => {
         // check if we are adding or updating a product 
         // if we are updating a product we need to fetch the current version from the database
@@ -63,12 +64,13 @@ const ProductForm = (props) => {
     const handleDeleteProduct = async (e) => {
         e.preventDefault()
         try {
-           const product = await this.props.startDeleteProduct(this.props.store.id, this.props.product.id)
+           const product = await props.startDeleteProduct(props.store.id, props.product.id)
            setError(undefined)
            setSuccess('Product Deleted')
-        this.props.history.replace(`/UserDashboard/stores/${this.props.store.id}/products`)
+        props.history.replace(`/UserDashboard/stores/${props.store.id}/products`)
         }
-        catch {
+        catch (e){
+            console.log(e)
             setSuccess(undefined)
             setError('Unable to delete product :(')
         }

@@ -1,4 +1,4 @@
-import { fetchStores, addStore } from "../utils/asyncLogic"
+import { fetchStores, addStore, deleteStore } from "../utils/asyncLogic/storeLogic"
 
 const startGetStores = () => {
     return  async (dispatch) => {

@@ -1,4 +1,4 @@
-import { fetchProducts, fetchProduct, addProductWithImages, updateProduct, deleteProduct } from "../utils/asyncLogic";
+import { fetchProducts, fetchProduct, addProductWithImages, updateProduct, deleteProduct } from "../utils/asyncLogic/productLogic";
 
 
 const startGetProducts = (storeId) => {

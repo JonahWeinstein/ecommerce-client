@@ -24,7 +24,10 @@ const ImageListItem = (props) => {
     // must specify mime type and encoding so browser knows how to display the file
     return (
         <div>
-            <img src = { "data:image/png;base64," + arrayBufferToBase64(props.image.data.data)} />
+            <img 
+            src = { "data:image/png;base64," + arrayBufferToBase64(props.image.data.data)} 
+            className = {selected ? 'image--selected' : ''}
+            />
             <button onClick = {handleSelection}>Delete</button>
         </div>
     )
