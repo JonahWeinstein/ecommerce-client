@@ -5,12 +5,12 @@ const ConfirmDeleteModal = ({ handleClose, show, action }) => {
     return (
       <div className={showHideClassName} >
         <section className="modal-main form centered">
-          <div>Are you sure you want to delete this product? </div>
+          <div>Are you sure you want to delete? </div>
           <p>Deleting this product will remove all of its data</p>
-          <button type="button" onClick = {action} >
+          <button type="button" onClick = {action} className = 'button delete-button' >
             Delete
           </button>
-          <button onClick={handleClose} className = 'cta'>Nevermind</button>
+          <button onClick={handleClose} className = 'button cta'>Nevermind</button>
         </section>
       </div>
     );

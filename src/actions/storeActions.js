@@ -20,6 +20,7 @@ const startAddStore = (store_name) => {
         try {
             const store = await addStore(store_name)
             dispatch(addStoreAction(store))
+            return store
         } catch (e) {
             throw new Error(e)
         }

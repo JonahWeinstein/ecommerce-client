@@ -38,7 +38,7 @@ class ProductsListPage extends React.Component  {
             </div>
             <Link 
             to = {`/UserDashboard/stores/${this.props.store.id}/products/add`}
-            className = 'cta'
+            className = 'button cta'
             >Add Product</Link>
             </div>
         ) : <Loading />

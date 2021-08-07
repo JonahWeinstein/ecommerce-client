@@ -2,6 +2,7 @@ import React from 'react'
 import { startAddStore} from '../../actions/storeActions'
 import { connect } from 'react-redux'
 
+
 class AddStoreForm extends React.Component {
     state = {
         error: undefined,
@@ -13,23 +14,32 @@ class AddStoreForm extends React.Component {
         try {
             const store = await this.props.startAddStore(store_name)
             this.setState(() => ({error: undefined, success:'Store Added!'}))
+            this.props.history.push(`/UserDashboard/stores/${store.id}`)
         } catch (e) {
+            console.log(e)
             this.setState(() => ({error:'Unable to add store', success: undefined}))
         }
     }
     render() {
         return (
             <div>
-                <form onSubmit = {this.onformSubmit}>
-                    <input 
-                    type = "text" 
-                    name = "store_name"
-                    placeholder = "store name"
-                    />
-                    <button type = 'submit'>Create Store</button>
-                    {this.state.error && <p className = "error">{this.state.error}</p>}
-                    {this.state.success && <p>{this.state.success}</p>}
-                </form>
+                <p>Pick A Name For Your Store</p>
+                <div className = 'form__wrapper'>
+                    <form onSubmit = {this.onformSubmit} className = 'form'>
+                        <input 
+                        type = "text" 
+                        name = "store_name"
+                        placeholder = "store name"
+                        />
+                        <button type = 'submit' className = 'button cta'>Create Store</button>
+                        {this.state.error && <p className = "error">{this.state.error}</p>}
+                        {this.state.success && 
+                            <p>{this.state.success}</p>
+
+                        }
+                    </form>
+                </div>
+                
             </div>
         )
     } 

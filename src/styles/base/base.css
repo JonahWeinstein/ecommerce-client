@@ -112,6 +112,7 @@ button {
     flex-basis: 30%;
 	margin:var(--s-1);
 }
+/* Button Styling */
 
 .remove-image-button {
     background-color: white;
@@ -123,9 +124,31 @@ button {
 	opacity: 0;
 	height:20px;
 	width:20px;
+	margin: 2px;
     text-align: center;
 	transition: transform .2s, opacity .2s;
 	transform: scale(0.5);
+}
+.button {
+	margin-top: var(--s-4);
+	padding:var(--s-1);
+    border: 2px solid;
+    vertical-align: middle;
+	text-align: center;
+	white-space: nowrap;
+	min-width: 100px;
+    max-width: 200px;
+    min-height: 30px;
+    max-height: 40px;
+}
+.delete-button {
+	background-color:white;
+	color: red;
+	border: 2px solid;
+}
+.delete-button:hover {
+	background-color: red;
+	color: white;
 }
 .remove-image-button:hover {
     background-color: grey;
@@ -138,22 +161,11 @@ button {
 .cta{
 	background-position: 0 0;
 	--angle: 0deg;
-	margin-top: var(--s-4);
-	padding:var(--s-1);
-    border: 2px solid;
   	border-image-slice: 1;
-    vertical-align: middle;
-	text-align: center;
     background-color: white;
 	color:var(--black);
-	white-space: nowrap;
-	min-width: 100px;
-    max-width: 200px;
-    min-height: 30px;
-    max-height: 40px;
 	border-image: conic-gradient(from var(--angle), #E2BBE1,#F9DFCA,#F5B946,#83C79C,#E2BBE1) 1;
 	animation: 10s rotate linear infinite;
-	cursor:pointer;
 }
 @keyframes rotate {
 	to {
@@ -206,9 +218,9 @@ button {
   }
   
   .modal-main {
+	background-color: white;
     position:fixed;
 	padding: 10px;
-    background: white;
     width: 500px;
     height: auto;
     top:50%;

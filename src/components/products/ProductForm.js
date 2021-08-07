@@ -196,7 +196,7 @@ const ProductForm = (props) => {
                     onChange = {onImageChange}
                     />
 
-                <button className = 'cta' type = 'submit'>{props.action} Product</button> 
+                <button className = 'button cta' type = 'submit'>{props.action} Product</button> 
                 </form>
                 </div>
                 <ImagesList
@@ -205,7 +205,7 @@ const ProductForm = (props) => {
                 selected = {selectedImages}
                 setSelectedImages = {setSelectedImages}
                 />
-                {props.product && <button className = 'cta' onClick = {openModal}>Delete Product</button>}
+                {props.product && <button className = 'button delete-button' onClick = {openModal}>Delete Product</button>}
             </div>
         ) : <Loading />
     } 

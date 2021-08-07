@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
 import Homepage from '../components/Homepage'
-import AddStorePage from '../components/stores/AddStorePage';
+import AddStoreForm from '../components/stores/AddStoreForm';
 import UserDashboard from '../components/UserDashboard';
 import StoreDashboard from '../components/stores/StoreDashboard';
 import ProductsListPage from '../components/products/ProductsListPage';
@@ -15,7 +15,7 @@ const AppRouter = () => (
             <Switch>
                 <Route path = '/' component = {Homepage} exact = {true}/>
                 <Route path = '/UserDashboard' component = {UserDashboard} exact = {true} />
-                <Route path = '/UserDashboard/AddStore' component = {AddStorePage} />
+                <Route path = '/UserDashboard/AddStore' component = {AddStoreForm} />
                 <Route path = '/UserDashboard/stores/:id/products' component = {ProductsListPage} exact />
                 <Route path = '/UserDashboard/stores/:id' component = {StoreDashboard} exact = {true} />
                 <Route path = '/UserDashboard/stores/:id/products/add' component = {AddProductPage}  />

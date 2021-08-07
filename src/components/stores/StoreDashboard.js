@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux'
 import {startDeleteStore, startGetStores} from '../../actions/storeActions'
 import { Link } from 'react-router-dom'
+import ConfirmDeleteModal from '../ConfirmDeleteModal'
 
 
 const StoreDashboard = (props) => {
     const [error, setError] = useState(undefined)
     const [success, setSuccess] = useState(undefined)
+    const [showModal, setShowModal] = useState(false)
 
     useEffect(() => {
         const getStores = async () => {   
@@ -14,12 +16,18 @@ const StoreDashboard = (props) => {
         }
         getStores()
     }, [])
+    const openModal = () => {
+        setShowModal(true)
+    }
+    const hideModal = () => {
+        setShowModal(false)
+    }
     const handleClick = async (e) => {
         e.preventDefault()
         try {
             const store = await props.startDeleteStore(props.store.id)
             setError(undefined)
-            setSuccess('Product Deleted')
+            setSuccess('Store Deleted')
             props.history.replace(`/UserDashboard`)
          }
          catch (e){
@@ -30,10 +38,15 @@ const StoreDashboard = (props) => {
     }
     
         return (
-            <div>
+            <div className = "form">
+            <ConfirmDeleteModal 
+            show = {showModal} 
+            handleClose = {hideModal}
+            action = {handleClick}
+            />
                 <p>{props.store.store_name} </p>
                 <Link to = {`/UserDashboard/stores/${props.store.id}/products`}>Products</Link>
-                <button onClick = {handleClick}>Delete Store</button>
+                <button className = 'button delete-button' onClick = {openModal}>Delete Store</button>
             </div>
         )
     }

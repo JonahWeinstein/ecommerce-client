@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import {Link} from 'react-router-dom'
 import StoresList from './stores/StoresList'
-import AddStoreButton from './AddStoreButton';
+
 import { startGetStores } from '../actions/storeActions'
 
 
@@ -16,7 +17,7 @@ class UserDashboard extends React.Component {
                 <div>
                     <p>This is the user Dashboard</p>
                     <StoresList />
-                    <AddStoreButton />
+                    <Link className = 'button cta'to = "/UserDashboard/AddStore">Add Store</Link>
                     
                 </div>
             )

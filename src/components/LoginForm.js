@@ -45,7 +45,7 @@ class LoginForm extends React.Component {
                 <input type="text" name="email" placeholder = "Email" />
                 <input type = "text" name = "password" placeholder = "password" />
                 {this.state.error && <p className = "error">{this.state.error}</p>}
-                <button type = "submit" className = 'cta'>Login</button>
+                <button type = "submit" className = 'button cta'>Login</button>
             </form>
             </div>
         )
