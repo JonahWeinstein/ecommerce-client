@@ -23,7 +23,7 @@ const ImageListItem = (props) => {
 
     // must specify mime type and encoding so browser knows how to display the file
     return (
-        <div className = "list--grid-layout__item">
+        <div>
             <img 
             src = { "data:image/png;base64," + arrayBufferToBase64(props.image.data.data)} 
             className = {selected ? 'image--selected' : ''}

@@ -22,7 +22,7 @@ const ImagesList = (props) => {
                 <ul className = 'list--grid-layout__row'>
                 
                     {props.product.Images.map((image) => (
-                        <li key = {image.id}>
+                        <li key = {image.id} className = "list--grid-layout__item">
                             <ImageListItem 
                             image = {image}
                             store = {props.store}
