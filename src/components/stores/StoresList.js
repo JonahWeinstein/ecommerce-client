@@ -9,7 +9,7 @@ const StoresList = (props) => {
     return (
         <div >
             <p>Stores</p>
-            <ul>
+            <ul class = "list">
                 {props.stores.map((store) => (
                     <li key = {store.id}>
                         <StoreListItem 

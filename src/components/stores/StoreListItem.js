@@ -3,9 +3,11 @@ import {Link} from 'react-router-dom'
 
 const StoreListItem = (props) => {
     return (
-        <div>
-            <Link to = {`UserDashboard/stores/${props.store.id}`}>{props.store.store_name}</Link>
-        </div>
+        <Link to = {`UserDashboard/stores/${props.store.id}`}>
+            <div className = "list__item">
+                <div class = 'h1'>{props.store.store_name}</div>
+            </div>
+        </Link>
     )
 }
 export default StoreListItem

@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import { arrayBufferToBase64 } from '../../utils/displayImages'
 
 
 
@@ -13,13 +14,7 @@ const ImageListItem = (props) => {
         // toggle selected state for this image
         setSelected((selected) => !selected); 
     }
-    // images will either be from the database in Buffer form or from user in image format
-    const arrayBufferToBase64 = (buffer) => {
-        var binary = '';
-        var bytes = [].slice.call(new Uint8Array(buffer));
-        bytes.forEach((b) => binary += String.fromCharCode(b));
-        return window.btoa(binary);
-    };
+    
 
     // must specify mime type and encoding so browser knows how to display the file
     return (

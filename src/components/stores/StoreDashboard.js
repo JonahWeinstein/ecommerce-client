@@ -43,6 +43,7 @@ const StoreDashboard = (props) => {
             show = {showModal} 
             handleClose = {hideModal}
             action = {handleClick}
+            type = {'store'}
             />
                 <p>{props.store.store_name} </p>
                 <Link to = {`/UserDashboard/stores/${props.store.id}/products`}>Products</Link>

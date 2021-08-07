@@ -8,9 +8,8 @@
 	--s-7: 100px;
 	--s-8: 140px;
     --primary-color: rgba(57, 56, 78, 0.329);
+	--accent-color: rgba(0, 0, 0, 0.329);
 	font-family: 'Basis Grotesque Regular';
-	--accent-color:#F9DFCA;
-    --black:#221000;  /* shade of black/grey from design */
     --f-xs: 14px; /*font size for paragraphs */
     --f-m: 24px; /*font size for paragraphs */
     --f-ml:30px;
@@ -44,6 +43,9 @@ button {
 .error {
     color: red;
 }
+.h1 {
+	font: var(--t-h6);
+}
 
 
 .login {
@@ -59,12 +61,7 @@ button {
     filter: blur(8px);
     -webkit-filter: blur(8px);
 }
-.list {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    padding-bottom: var(--s-3);
-}
+
 .product-page {
     position: relative;
     display: flex;
@@ -89,7 +86,7 @@ button {
 .form input {
 	min-width: 250px;
 	padding: 12px;
-	border: 1px solid;
+	border: 2px solid;
 	background-color: white;
   	border-image-slice: 1;
 	border-image: conic-gradient(from var(--angle), #E2BBE1,#F9DFCA,#F5B946,#83C79C,#E2BBE1) 1;
@@ -99,6 +96,32 @@ button {
 	margin-bottom: 16px;
 	resize: vertical;
   }
+  .list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    padding-bottom: var(--s-3);
+	width: 50%;
+}
+.list__item {
+	display: flex;
+	align-items: center;
+	margin: var(--s-1);
+	background-color: var(--accent-color);
+	color: white;
+	cursor: pointer;
+	text-align: center;
+}
+.list__item div {
+	width: 100%;
+}
+.list__item img {
+	height: 100px;
+	width: 100px;
+}
+.list__item:hover {
+	background-color: #f5b84673;
+}
 .list--grid-layout__row {
     list-style-type: none;
     display: flex;
