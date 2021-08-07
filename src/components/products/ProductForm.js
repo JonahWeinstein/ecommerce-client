@@ -148,7 +148,7 @@ const ProductForm = (props) => {
             <div className = 'form__wrapper'>
                 <form 
                 onSubmit = {onformSubmit}
-                className = 'product-form'
+                className = 'form product-form'
                 >
                     {error && <p className = "error">{error}</p>}
                     {success && <p>{success}</p>}

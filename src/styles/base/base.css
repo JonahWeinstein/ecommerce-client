@@ -45,6 +45,16 @@ button {
     color: red;
 }
 
+
+.login {
+	/* styling for login form */
+	align-items: center;
+}
+.centered {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 .image--selected {
     filter: blur(8px);
     -webkit-filter: blur(8px);
@@ -62,19 +72,22 @@ button {
     width: 100%;
     padding: 0;
 }
+.product-form {
+	padding: 20px;
+	max-width: 200px
+}
 
 .form__wrapper {
 	display: flex;
 }
-.product-form{
+.form{
     display: flex;
     flex-direction: column;
     border-radius: 5px;
-	padding: 20px;
     flex-wrap: wrap;
 }
 
-.product-form input {
+.form input {
 	min-width: 250px;
 	padding: 12px;
 	border: 1px solid;

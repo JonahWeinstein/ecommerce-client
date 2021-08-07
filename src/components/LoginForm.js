@@ -40,12 +40,14 @@ class LoginForm extends React.Component {
     }
     render() {
         return (
-            <form onSubmit = {this.loginUser}>
+            <div className = 'centered'>
+            <form onSubmit = {this.loginUser} className = 'login form'>
                 <input type="text" name="email" placeholder = "Email" />
                 <input type = "text" name = "password" placeholder = "password" />
                 {this.state.error && <p className = "error">{this.state.error}</p>}
                 <button type = "submit" className = 'cta'>Login</button>
             </form>
+            </div>
         )
     }
 }
