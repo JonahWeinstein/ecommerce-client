@@ -1,4 +1,5 @@
 import React from 'react'
+import { loginUser } from '../utils/asyncLogic/userLogic';
 
 
 
@@ -6,32 +7,17 @@ class LoginForm extends React.Component {
     state = {
         error: undefined
     }
-    
-    onFormSubmit = async (data) => {
-        try{
-            const response = await fetch(`http://localhost:3000/users/login`, {
-                body: JSON.stringify(data),
-                credentials: 'same-origin',
-                headers: {
-                'Content-Type': 'application/json',
-                },
-                method: 'POST'});
-            return response.json()
-        } catch (error) {
-            return error
-        }   
-    }
-    loginUser = async (e) => {
+    onFormSubmit = async (e) => {
         e.preventDefault()
         const data = {
             email: e.target.elements.email.value,
             password: e.target.elements.password.value
         }
         try {
-            const user = await this.onFormSubmit(data)
+            const user = await loginUser(data)
             sessionStorage.setItem('token', user.token)
             this.setState(() => ({ error: undefined }))
-            this.props.onSubmit()
+            this.props.history.push('/UserDashboard')
 
         } catch (error) {
             this.setState(()=> ({error: 'Invalid Login Attempt'}))
@@ -41,7 +27,7 @@ class LoginForm extends React.Component {
     render() {
         return (
             <div className = 'centered'>
-            <form onSubmit = {this.loginUser} className = 'login form'>
+            <form onSubmit = {this.onFormSubmit} className = 'login form'>
                 <input type="text" name="email" placeholder = "Email" />
                 <input type = "text" name = "password" placeholder = "password" />
                 {this.state.error && <p className = "error">{this.state.error}</p>}

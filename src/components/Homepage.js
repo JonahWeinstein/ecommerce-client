@@ -1,17 +1,14 @@
 import React from 'react';
+import {Link} from 'react-router-dom'
 import Header from './Header'
-import LoginForm from './LoginForm';
 
 
-const Homepage = (props) => (
+
+const Homepage = () => (
     <div>
         <Header title = 'Homepage'/>
-        <LoginForm
-        // history is only available on components used directly in a route
-        onSubmit = {() => {
-            props.history.push('/UserDashboard')
-        }} />
-        
+        <Link to = '/register'> Register </Link>
+        <Link to = '/login' > Login </Link>
 
     </div>
 )

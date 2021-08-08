@@ -1,6 +1,8 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch, Link, NavLink } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Homepage from '../components/Homepage'
+import RegisterForm from '../components/RegisterForm';
+import LoginForm from '../components/LoginForm';
 import AddStoreForm from '../components/stores/AddStoreForm';
 import UserDashboard from '../components/UserDashboard';
 import StoreDashboard from '../components/stores/StoreDashboard';
@@ -14,6 +16,8 @@ const AppRouter = () => (
         <div>
             <Switch>
                 <Route path = '/' component = {Homepage} exact = {true}/>
+                <Route path = '/register' component = {RegisterForm} exact = {true}/>
+                <Route path = '/login' component = {LoginForm} exact = {true}/>
                 <Route path = '/UserDashboard' component = {UserDashboard} exact = {true} />
                 <Route path = '/UserDashboard/AddStore' component = {AddStoreForm} />
                 <Route path = '/UserDashboard/stores/:id/products' component = {ProductsListPage} exact />
