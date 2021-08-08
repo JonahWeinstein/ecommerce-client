@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import { registerUser } from '../utils/asyncLogic/userLogic'
+import Header from './Header'
 
 const RegisterForm = (props) => {
     const [error, setError] = useState(undefined)
@@ -40,7 +41,8 @@ const RegisterForm = (props) => {
 
     return (
         <div>
-            <form className = 'form' onSubmit = {onFormSubmit}>
+            <Header title = 'Register' />
+            <form className = 'centered form' onSubmit = {onFormSubmit}>
                 {error && <p className = "error">{error}</p>}
                 {success && <p>{success}</p>}
 

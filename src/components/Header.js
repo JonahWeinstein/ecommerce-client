@@ -1,9 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const Header = () => (
+const Header = ({title}) => (
     <div className = 'centered'>
-        <h1>Ecommerce Admin</h1>
+        <h1>{title}</h1>
     </div>
 )
 

@@ -1,5 +1,6 @@
 import React from 'react'
 import { loginUser } from '../utils/asyncLogic/userLogic';
+import Header from './Header';
 
 
 
@@ -26,13 +27,17 @@ class LoginForm extends React.Component {
     }
     render() {
         return (
+            <div>
+            <Header title = 'Login' />
             <div className = 'centered'>
+            
             <form onSubmit = {this.onFormSubmit} className = 'login form'>
                 <input type="text" name="email" placeholder = "Email" />
                 <input type = "text" name = "password" placeholder = "password" />
                 {this.state.error && <p className = "error">{this.state.error}</p>}
                 <button type = "submit" className = 'button cta'>Login</button>
             </form>
+            </div>
             </div>
         )
     }
