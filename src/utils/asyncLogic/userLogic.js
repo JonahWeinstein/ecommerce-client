@@ -1,5 +1,5 @@
 const registerUser = async (data) => {
-    const response = await fetch(`http://localhost:3000/users`, {
+    const response = await fetch(`${process.env.API_URL}/users`, {
         body: JSON.stringify(data),
         credentials: 'same-origin',
         headers: {
@@ -16,7 +16,7 @@ const registerUser = async (data) => {
 
 const loginUser = async (data) => {
 
-    const response = await fetch(`http://localhost:3000/users/login`, {
+    const response = await fetch(`${process.env.API_URL}/users/login`, {
         body: JSON.stringify(data),
         credentials: 'same-origin',
         headers: {

@@ -1,7 +1,7 @@
 const fetchStores = async () => {
     try{
         const authToken = sessionStorage.getItem('token')
-        const response = await fetch('http://localhost:3000/stores', {
+        const response = await fetch('${process.env.API_URL}/stores', {
         headers: {
             'Authorization': `Bearer ${authToken}`
             }
@@ -19,7 +19,7 @@ const addStore = async (store_name) => {
     
         const authToken = sessionStorage.getItem('token')
         // remember to set content-type in request
-        const response = await fetch(`http://localhost:3000/stores/add`, {
+        const response = await fetch(`${process.env.API_URL}/stores/add`, {
             body: JSON.stringify(data),
             headers: {
                 'Authorization': `Bearer ${authToken}`,
@@ -35,7 +35,7 @@ const addStore = async (store_name) => {
 
 const deleteStore = async (storeId) => {
     const authToken = sessionStorage.getItem('token')
-    const response = await fetch(`http://localhost:3000/stores/${storeId}/delete`, {
+    const response = await fetch(`${process.env.API_URL}/stores/${storeId}/delete`, {
         headers: {
             'Authorization': `Bearer ${authToken}`
         },

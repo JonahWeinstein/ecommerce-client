@@ -7,9 +7,8 @@ import StoreListItem from './StoreListItem'
 const StoresList = (props) => {
 
     return (
-        <div >
-            <p>Stores</p>
-            <ul class = "list">
+        <div className = 'centered'>
+            <ul className = "list">
                 {props.stores.map((store) => (
                     <li key = {store.id}>
                         <StoreListItem 

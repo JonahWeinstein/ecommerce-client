@@ -29,11 +29,14 @@ const UserDashboard = (props) => {
         
             return loaded ? (
                 
-                <div >
+                <div>
+                    
                     <Header title = 'User Dashboard' />
                     {error && <p className = "error">{error}</p>}
                     <StoresList />
-                    <Link className = 'button cta'to = "/UserDashboard/AddStore">Add Store</Link>
+                    <div className ='centered'>
+                        <Link className = 'button cta'to = "/UserDashboard/AddStore">Add Store</Link>
+                    </div>
                     
                 </div>
             ) : <Loading />

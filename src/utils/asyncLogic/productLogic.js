@@ -1,7 +1,7 @@
 const fetchProducts = async (storeId) => {
     
     const authToken = sessionStorage.getItem('token')
-    const response = await fetch(`http://localhost:3000/stores/${storeId}/products/all`, {
+    const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/all`, {
     headers: {
         'Authorization': `Bearer ${authToken}`
         }
@@ -14,7 +14,7 @@ const fetchProducts = async (storeId) => {
 }
 const fetchProduct = async (storeId, productId) => {
 const authToken = sessionStorage.getItem('token')
-    const response = await fetch(`http://localhost:3000/stores/${storeId}/products/${productId}`, {
+    const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/${productId}`, {
     headers: {
         'Authorization': `Bearer ${authToken}`
         }
@@ -28,7 +28,7 @@ const addProduct = async (name, description, price, quantity, storeId) => {
     const data = { name, description, price, quantity }
     const authToken = sessionStorage.getItem('token')
     // remember to set content-type in request
-    const response = await fetch(`http://localhost:3000/stores/${storeId}/products/add`, {
+    const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/add`, {
         body: JSON.stringify(data),
         headers: {
             'Authorization': `Bearer ${authToken}`,
@@ -65,7 +65,7 @@ const data = { name, description, price, quantity }
     const authToken = sessionStorage.getItem('token')
     // remember to set content-type in request
     
-        const response = await fetch(`http://localhost:3000/stores/${storeId}/products/${productId}/update`, {
+        const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/${productId}/update`, {
         body: JSON.stringify(data),
         headers: {
             'Authorization': `Bearer ${authToken}`,
@@ -98,7 +98,7 @@ const data = { name, description, price, quantity }
 
 const deleteProduct = async (storeId, productId) => {
 const authToken = sessionStorage.getItem('token')
-const response = await fetch(`http://localhost:3000/stores/${storeId}/products/${productId}/delete`, {
+const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/${productId}/delete`, {
     headers: {
         'Authorization': `Bearer ${authToken}`
     },
@@ -111,7 +111,7 @@ const response = await fetch(`http://localhost:3000/stores/${storeId}/products/$
 // IMAGE LOGIC
 const fetchImages = async (storeId, productId) => {
 const authToken = sessionStorage.getItem('token')
-const response = await fetch(`http://localhost:3000/stores/${storeId}/products/${productId}/images`, {
+const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/${productId}/images`, {
     headers: {
         'Authorization': `Bearer ${authToken}`
     }});
@@ -125,7 +125,7 @@ const addImage = async (image, storeId, productId) => {
     const authToken = sessionStorage.getItem('token')
     let formData = new FormData()
     formData.append("image", image);
-    const response = await fetch(`http://localhost:3000/stores/${storeId}/products/${productId}/images/add`, {
+    const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/${productId}/images/add`, {
         body: formData,
         // we don't specify content-type because the browser handles that
         headers: {
@@ -139,7 +139,7 @@ const addImage = async (image, storeId, productId) => {
 }
 const deleteImage = async (storeId, productId, imageId) => {
 const authToken = sessionStorage.getItem('token')
-const response = await fetch(`http://localhost:3000/stores/${storeId}/products/${productId}/images/${imageId}/delete`, {
+const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/${productId}/images/${imageId}/delete`, {
     headers: {
         'Authorization': `Bearer ${authToken}`
     },
