@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import {startGetProducts} from '../../actions/productActions'
 import ProductListItem from './ProductListItem'
 import Loading from '../Loading'
+import Header from '../Header'
 
 
 
@@ -26,8 +27,8 @@ class ProductsListPage extends React.Component  {
         const {loaded} =this.state
         return loaded ? (
             <div>
-            <p>Product list for {this.props.store.store_name}</p>
-            <div>
+            <Header title = {`${this.props.store.store_name} Products`} />
+            <div className = 'centered'>
             <ul className = 'list'>
                 {this.props.products.map((product) => (
                     <li key = {product.id}>
@@ -35,11 +36,16 @@ class ProductsListPage extends React.Component  {
                     </li>
                 ))}
             </ul>
+            
             </div>
-            <Link 
-            to = {`/UserDashboard/stores/${this.props.store.id}/products/add`}
-            className = 'button cta'
-            >Add Product</Link>
+            <div className = 'centered'>
+                <Link 
+                to = {`/UserDashboard/stores/${this.props.store.id}/products/add`}
+                className = 'button cta'
+                >Add Product</Link>
+            </div>
+           
+            
             </div>
         ) : <Loading />
        

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {Link} from 'react-router-dom'
 import StoresList from './stores/StoresList'
 import Loading from './Loading';
+import Header from './Header';
 import { startGetStores } from '../actions/storeActions'
 
 
@@ -27,8 +28,9 @@ const UserDashboard = (props) => {
         }, [])
         
             return loaded ? (
-                <div>
-                    <p>This is the user Dashboard</p>
+                
+                <div >
+                    <Header title = 'User Dashboard' />
                     {error && <p className = "error">{error}</p>}
                     <StoresList />
                     <Link className = 'button cta'to = "/UserDashboard/AddStore">Add Store</Link>

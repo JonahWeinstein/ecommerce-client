@@ -46,14 +46,12 @@ const RegisterForm = (props) => {
                 {error && <p className = "error">{error}</p>}
                 {success && <p>{success}</p>}
 
-                <label htmlFor='name'>Name</label>
-                <input type = "text" name = 'name' value = {name} onChange = {onNameChange} required/>
                 
-                <label for='email'>Email</label>
-                <input type = "text" name = 'email' value = {email} onChange = {onEmailChange} required/>
+                <input type = "text" name = 'name' value = {name} placeholder = "Name" onChange = {onNameChange} required/>
+                
+                <input type = "text" name = 'email' value = {email} placeholder = "Email" onChange = {onEmailChange} required/>
 
-                <label for='password'>Password</label>
-                <input type = "text" name = 'password' value = {password} onChange = {onPasswordChange} required />
+                <input type = "text" name = 'password' value = {password} placeholder = "Password" onChange = {onPasswordChange} required />
 
                 <button type = "submit" className = 'button cta'>Register</button>
             </form>

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import {startDeleteStore, startGetStores} from '../../actions/storeActions'
 import { Link } from 'react-router-dom'
 import ConfirmDeleteModal from '../ConfirmDeleteModal'
+import Header from '../Header';
 
 
 const StoreDashboard = (props) => {
@@ -39,13 +40,13 @@ const StoreDashboard = (props) => {
     
         return (
             <div className = "form">
+            <Header title = {props.store.store_name} />
             <ConfirmDeleteModal 
             show = {showModal} 
             handleClose = {hideModal}
             action = {handleClick}
             type = {'store'}
             />
-                <p>{props.store.store_name} </p>
                 <Link to = {`/UserDashboard/stores/${props.store.id}/products`}>Products</Link>
                 <button className = 'button delete-button' onClick = {openModal}>Delete Store</button>
             </div>

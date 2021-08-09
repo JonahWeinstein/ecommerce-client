@@ -160,7 +160,6 @@ button {
 	white-space: nowrap;
 	min-width: 100px;
     max-width: 200px;
-    min-height: 30px;
     max-height: 40px;
 }
 .delete-button {
