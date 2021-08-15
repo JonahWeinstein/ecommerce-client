@@ -1,9 +1,10 @@
 const fetchStores = async () => {
     try{
         const authToken = sessionStorage.getItem('token')
-        const response = await fetch('${process.env.API_URL}/stores', {
+        const response = await fetch(`${process.env.API_URL}/stores`, {
         headers: {
-            'Authorization': `Bearer ${authToken}`
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'application/json'
             }
         })
         if(!response.ok) {
@@ -11,6 +12,7 @@ const fetchStores = async () => {
         }
         return response.json();
     } catch (e) {
+        console.log(e)
         return e
     }
 }

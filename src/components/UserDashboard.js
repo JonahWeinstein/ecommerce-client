@@ -12,6 +12,7 @@ import { startGetStores } from '../actions/storeActions'
 const UserDashboard = (props) => {
         const [loaded, setLoaded] = useState(false)
         const [error, setError] = useState(false)
+
         useEffect(() => {
             const getData = async () => {
                 try{
@@ -21,7 +22,6 @@ const UserDashboard = (props) => {
                     setError('Unable to load stores')
                     setLoaded(true)
                 }
-                
             }
             getData()
             

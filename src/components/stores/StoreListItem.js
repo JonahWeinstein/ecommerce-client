@@ -5,7 +5,7 @@ const StoreListItem = (props) => {
     return (
         <Link to = {`UserDashboard/stores/${props.store.id}`}>
             <div className = "list__item">
-                <div class = 'h1'>{props.store.store_name}</div>
+                <div className = 'h1'>{props.store.store_name}</div>
             </div>
         </Link>
     )

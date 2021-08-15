@@ -6,7 +6,8 @@ const startGetStores = () => {
             const stores = await fetchStores()
             dispatch(getStores(stores))
         } catch (e) {
-            dispatch(updateError('Unable to fetch stores'))
+            console.log(e)
+            throw e
         }
     }
 }

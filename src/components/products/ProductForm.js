@@ -215,7 +215,7 @@ const mapDispatchToProps = (dispatch) => ({
     startAddProduct: (name, description, price, quantity, images, storeId) => dispatch(startAddProduct(name, description, price, quantity, images, storeId)),
     startUpdateProduct: (name, description, price, quantity, images, imagesToDelete, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, images, imagesToDelete, storeId, productId)),
     startDeleteProduct: (storeId, productId) => dispatch(startDeleteProduct(storeId, productId)),
-    startGetProduct: (storeId, productId) => dispatch(startGetProduct(storeId, productId)),  
+    startGetProduct: (storeId, productId) => dispatch(startGetProduct(storeId, productId))  
 })
 
 
