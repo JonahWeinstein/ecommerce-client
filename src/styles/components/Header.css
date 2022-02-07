@@ -2,3 +2,11 @@
     font-weight: bold;
     color: orange;
 }
+.header-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.header-wrapper>div {
+    padding: var(--s-1)
+}

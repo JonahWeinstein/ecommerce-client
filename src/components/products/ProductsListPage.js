@@ -1,36 +1,65 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import {startGetProducts} from '../../actions/productActions'
 import ProductListItem from './ProductListItem'
 import Loading from '../Loading'
 import Header from '../Header'
+import ConfirmDeleteModal from '../ConfirmDeleteModal'
+import {startDeleteStore, startGetStores} from '../../actions/storeActions'
 
 
 
 
-class ProductsListPage extends React.Component  {
-    state = {
-        loaded: false,
-        error: undefined
-    }
-    async componentDidMount() {
-        try {
-            await this.props.startGetProducts(this.props.store.id)
-            this.setState(() => ({loaded: true}))
-        } catch (e) {
-            this.setState(()=> ({error: 'Unable to load Products :('}))
+const ProductsListPage = (props) => {
+    const [error, setError] = useState(undefined)
+    const [success, setSuccess] = useState(undefined)
+    const [loaded, setLoaded] = useState(false)
+    const [showModal, setShowModal] = useState(false)
+
+    useEffect(() => {
+        const fetchData = async () =>{
+            try {
+                await props.startGetProducts(props.store.id)
+                setLoaded(true)
+                setError(undefined)
+            } catch (e) {
+                setSuccess(undefined)
+                setError("Unable to load products")
+            }
         }
-        
+        fetchData()
+  
+    }, []);
+
+    const openModal = () => {
+        setShowModal(true)
     }
-    render() {
-        const {loaded} =this.state
+    const hideModal = () => {
+        setShowModal(false)
+    }
+    const handleClick = async (e) => {
+        e.preventDefault()
+        try {
+            const store = await props.startDeleteStore(props.store.id)
+            setError(undefined)
+            setSuccess('Store Deleted')
+            props.history.replace(`/UserDashboard`)
+         }
+         catch (e){
+             console.log(e)
+             setSuccess(undefined)
+             setError('Unable to delete store :(')
+         }
+    }
+    
         return loaded ? (
             <div>
-            <Header title = {`${this.props.store.store_name} Products`} />
+            <Header title = {`${props.store.store_name} Products`}
+            store = {props.store }/>
             <div className = 'centered'>
             <ul className = 'list'>
-                {this.props.products.map((product) => (
+                {props.products.map((product) => (
                     <li key = {product.id}>
                         <ProductListItem product = {product}/>
                     </li>
@@ -40,16 +69,23 @@ class ProductsListPage extends React.Component  {
             </div>
             <div className = 'centered'>
                 <Link 
-                to = {`/UserDashboard/stores/${this.props.store.id}/products/add`}
+                to = {`/UserDashboard/stores/${props.store.id}/products/add`}
                 className = 'button cta'
                 >Add Product</Link>
+
             </div>
-           
+            <button className = 'button delete-button' onClick = {openModal}>Delete Store</button>
+                <ConfirmDeleteModal 
+                show = {showModal} 
+                handleClose = {hideModal}
+                action = {handleClick}
+                type = {'store'}
+                />
+            </div>
             
-            </div>
         ) : <Loading />
        
-    }
+    
 }
 const mapSateToProps = (state, props) => {
     return {
@@ -58,6 +94,8 @@ const mapSateToProps = (state, props) => {
     }
 }
 const mapDispatchToProps = (dispatch) => ({
-    startGetProducts: (storeId) => dispatch(startGetProducts(storeId))
+    startGetProducts: (storeId) => dispatch(startGetProducts(storeId)),
+    startGetStores: () => dispatch(startGetStores()),
+    startDeleteStore: (storeId) => dispatch(startDeleteStore(storeId))
 })
 export default connect(mapSateToProps, mapDispatchToProps)(ProductsListPage)

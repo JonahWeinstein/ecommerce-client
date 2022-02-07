@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 
 const StoreListItem = (props) => {
     return (
-        <Link to = {`UserDashboard/stores/${props.store.id}`}>
+        <Link to = {`UserDashboard/stores/${props.store.id}/products`}>
             <div className = "list__item">
                 <div className = 'h1'>{props.store.store_name}</div>
             </div>

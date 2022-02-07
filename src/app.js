@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import AppRouter from './routers/AppRouter';
 import configureStore from './store/configureStore';
 import './styles/base/base.css';
+import './styles/components/Header.css';
 import StateLoader from './store/StateLoader';
 // importing normalize.css file from normalize.css folder in node modules
 
