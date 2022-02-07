@@ -1,5 +1,5 @@
 const fetchProducts = async (storeId) => {
-    console.log("fetching products")
+   
     const authToken = sessionStorage.getItem('token')
     const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/all`, {
     headers: {

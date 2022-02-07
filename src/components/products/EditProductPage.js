@@ -3,10 +3,12 @@ import { connect } from 'react-redux'
 import ProductForm from './ProductForm'
 
 
+
 class EditProductPage extends React.Component {
     render() {
         return (
             <div>
+                
                 <ProductForm store = {this.props.store} product = {this.props.product} action = {'Update'} history = {this.props.history}/>
             </div>
         )

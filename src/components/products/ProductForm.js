@@ -5,6 +5,7 @@ import ImagesList from '../images/ImagesList'
 import Loading from '../Loading'
 import ConfirmDeleteModal from '../ConfirmDeleteModal'
 
+import Header from '../Header'
 
 
 const ProductForm = (props) => {
@@ -139,7 +140,10 @@ const ProductForm = (props) => {
     }
         // once ajax is complete render the product form for this product
         return loaded ? (
+            <div>
+            <Header store = {props.store}/>
             <div className = 'product-page'>
+           
             <ConfirmDeleteModal 
             show = {showModal} 
             handleClose = {hideModal}
@@ -188,10 +192,12 @@ const ProductForm = (props) => {
                     value = {quantity}
                     onChange = {onQuantityChange}
                     />
-                    <label for='image'>Add Image</label>
+                    <label htmlFor='image'>Add Image</label>
                     <input 
+                    
                     name = "image"
                     type = 'file'
+                    multiple
                     label = 'Add Image'
                     accept="image/png, image/jpeg"
                     onChange = {onImageChange}
@@ -207,6 +213,7 @@ const ProductForm = (props) => {
                 setSelectedImages = {setSelectedImages}
                 />
                 {props.product && <button className = 'button delete-button' onClick = {openModal}>Delete Product</button>}
+            </div>
             </div>
         ) : <Loading />
     } 

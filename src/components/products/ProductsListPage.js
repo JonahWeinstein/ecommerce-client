@@ -19,6 +19,7 @@ const ProductsListPage = (props) => {
 
     useEffect(() => {
         const fetchData = async () =>{
+            
             try {
                 await props.startGetProducts(props.store.id)
                 setSuccess(true)

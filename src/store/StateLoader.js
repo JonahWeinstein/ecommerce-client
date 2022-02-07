@@ -1,4 +1,6 @@
 // used to persist redux state in sessionStorage
+// without this, certain pages will not be able to fetch the data they need on reload,
+// since they require props to be passed to them from their parent component 
 
 // when a users localStorage is full this won't work and reloading the page (on  editProduct page for example)
 // will give appropriate error (can't load product) and prompt user to return to product list
