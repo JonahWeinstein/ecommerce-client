@@ -21,11 +21,15 @@ const ProductsListPage = (props) => {
         const fetchData = async () =>{
             try {
                 await props.startGetProducts(props.store.id)
-                setLoaded(true)
+                setSuccess(true)
                 setError(undefined)
+                setLoaded(true)
+                
             } catch (e) {
                 setSuccess(undefined)
                 setError("Unable to load products")
+                setLoaded(true)
+                console.log("Unable to load products")
             }
         }
         fetchData()
@@ -55,33 +59,43 @@ const ProductsListPage = (props) => {
     
         return loaded ? (
             <div>
-            <Header title = {`${props.store.store_name} Products`}
+            <Header 
             store = {props.store }/>
-            <div className = 'centered'>
-            <ul className = 'list'>
-                {props.products.map((product) => (
-                    <li key = {product.id}>
-                        <ProductListItem product = {product}/>
-                    </li>
-                ))}
-            </ul>
-            
-            </div>
-            <div className = 'centered'>
-                <Link 
-                to = {`/UserDashboard/stores/${props.store.id}/products/add`}
-                className = 'button cta'
-                >Add Product</Link>
+           
+            { error && <p className = "error">{error}</p>}
+            { success && 
+            <div>
+                <div className = 'centered'>
+                
+                
+                
+                <ul className = 'list'>
+                    {props.products.map((product) => (
+                        <li key = {product.id}>
+                            <ProductListItem product = {product}/>
+                        </li>
+                    ))}
+                </ul>
+                
+                </div>
+                <div className = 'centered'>
+                    <Link 
+                    to = {`/UserDashboard/stores/${props.store.id}/products/add`}
+                    className = 'button cta'
+                    >Add Product</Link>
 
+                </div>
+                <button className = 'button delete-button' onClick = {openModal}>Delete Store</button>
+                    <ConfirmDeleteModal 
+                    show = {showModal} 
+                    handleClose = {hideModal}
+                    action = {handleClick}
+                    type = {'store'}
+                    />
+                
             </div>
-            <button className = 'button delete-button' onClick = {openModal}>Delete Store</button>
-                <ConfirmDeleteModal 
-                show = {showModal} 
-                handleClose = {hideModal}
-                action = {handleClick}
-                type = {'store'}
-                />
-            </div>
+        }
+        </div>
             
         ) : <Loading />
        

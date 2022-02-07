@@ -3,12 +3,27 @@ import { NavLink } from 'react-router-dom'
 
 const Header = ({title, store}) => (
     <div className = 'header-wrapper'>
+    <NavLink exact 
+    activeClassName = "isActive" 
+    className="nav-link"
+    to= "/UserDashboard" >
+        <div>
+            Stores 
+        </div>
+    </NavLink>
+    
+    { store && <NavLink 
+        exact
+        activeClassName = "isActive"
+        className="nav-link"
+        to= {`/UserDashboard/stores/${store.id}/products`}
+    > 
     <div>
-        <NavLink to= "/UserDashboard"> Stores </NavLink>
+        Products 
     </div>
-    <div>
-    { store && <NavLink to= {`/UserDashboard/stores/${store.id}/products`}> products </NavLink>}
-    </div>
+   
+    </NavLink>}
+    
         
         
         

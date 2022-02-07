@@ -1,5 +1,5 @@
 const fetchProducts = async (storeId) => {
-    
+    console.log("fetching products")
     const authToken = sessionStorage.getItem('token')
     const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/all`, {
     headers: {
@@ -7,6 +7,7 @@ const fetchProducts = async (storeId) => {
         }
     })
     if(!response.ok) {
+        console.log("unable to fetch products");
         throw new Error(`Unable to fetch products ${response.status}`)
     }
     return response.json();

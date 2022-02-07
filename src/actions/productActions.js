@@ -2,13 +2,15 @@ import { fetchProducts, fetchProduct, addProductWithImages, updateProduct, delet
 
 
 const startGetProducts = (storeId) => {
+    
     return async (dispatch) => {
         try {
             const products = await fetchProducts(storeId)
             dispatch(getProducts(products))
             return products
         } catch(e) {
-            throw e
+            console.log("error fetching products")
+            throw new Error(e)
         }
     }
 }
