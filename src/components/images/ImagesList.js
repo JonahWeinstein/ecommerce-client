@@ -17,6 +17,7 @@ const ImagesList = (props) => {
     
     // if there are images associated with this product then list them
     if(props.product){
+        console.log(props.product.Images)
         return (
             <div >
                 <ul className = 'list--grid-layout__row'>
@@ -42,9 +43,6 @@ const ImagesList = (props) => {
         )
     }
 }
-// const mapstatetoprops = (state) => ({
-//     images
-// })
 
 
 

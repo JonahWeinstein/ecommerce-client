@@ -7,7 +7,7 @@ const fetchProducts = async (storeId) => {
         }
     })
     if(!response.ok) {
-        console.log("unable to fetch products");
+       
         throw new Error(`Unable to fetch products ${response.status}`)
     }
     return response.json();
@@ -46,17 +46,17 @@ const addProduct = async (name, description, price, quantity, storeId) => {
 const addProductWithImages = async (name, description = '', price, quantity, images, storeId) => {
 try {
     const product = await addProduct(name, description, price, quantity, storeId)
-
+    console.log(images)
     for (let i = 0; i < images.length; i++) {
         try {
-            const image = await addImage(images[i], storeId, product.id)
+            const image = await addImage(images[i].image, images[i].order, storeId, product.id)
         } catch (e) {
-            throw new Error(`Unable to add product images ${response.status}`)
+           return e
         }
     }
     return product
 } catch (e) {
-    throw e
+    return e
 }
 
 }
@@ -85,7 +85,7 @@ const data = { name, description, price, quantity }
     }
     for (let i = 0; i < images.length; i++) {
         try {
-            const image = await addImage(images[i], storeId, productId)
+            const image = await addImage(images[i].image, images[i].order, storeId, productId)
             return image
         } catch (e) {
             throw new Error(`Unable to add product images ${response.status}`)
@@ -122,13 +122,17 @@ if(!response.ok) {
 return response.json() 
 }
 
-const addImage = async (image, storeId, productId) => {
+const addImage = async (image, order, storeId, productId) => {
     const authToken = sessionStorage.getItem('token')
     let formData = new FormData()
     formData.append("image", image);
+    formData.append("order", JSON.stringify(order));
+    
+    
     const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/${productId}/images/add`, {
         body: formData,
-        // we don't specify content-type because the browser handles that
+        
+        // don't specify content-type because the browser handles that
         headers: {
             'Authorization': `Bearer ${authToken}`
         },

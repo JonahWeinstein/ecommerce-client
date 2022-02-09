@@ -9,7 +9,7 @@ class AddProductPage extends React.Component {
     render() {
         return (
             <div>
-                <Header store = {this.props.store.id}/>
+                
                 <ProductForm store = {this.props.store} action = {'Add'} history = {this.props.history}/>
             </div>
         )

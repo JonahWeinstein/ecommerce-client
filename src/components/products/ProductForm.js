@@ -62,7 +62,11 @@ const ProductForm = (props) => {
     const onImageChange = (e) => {
         const image = e.target.files[0]
         // add the image to images array in state (but don't add to database until form is submitted)
-        setImages(prevImages => [...prevImages, image])
+        if (props.product) {
+            setImages(prevImages => [...prevImages, {image, order: props.product.Images.length +1}])
+        }
+        setImages(prevImages => [...prevImages, {image, order: prevImages.length +1}])
+        
     }
     const handleDeleteProduct = async (e) => {
         e.preventDefault()
