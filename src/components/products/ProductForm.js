@@ -100,6 +100,7 @@ const ProductForm = (props) => {
             try {
                 // if we are updating a product, use startUpdateProduct instead of startAddProduct
                 if(props.product) {
+                    setLoaded(false)
                     await props.startUpdateProduct(
                         name, 
                         description, 
@@ -111,10 +112,11 @@ const ProductForm = (props) => {
                         props.product.id 
                         )
                         // fetch the updated product which will rerender productForm
-                        setLoaded(false)
+                        
                         await props.startGetProduct(props.store.id, props.product.id)
                         setLoaded(true)
                 } else {
+                    setLoaded(false)
                     // add product using the storeId from mapstatetoprops
                     const product = await props.startAddProduct(
                         name, 
@@ -161,7 +163,7 @@ const ProductForm = (props) => {
                 >
                     {error && <p className = "error">{error}</p>}
                     {success && <p>{success}</p>}
-                    <label for='name'>Name</label>
+                    <label htmlFor='name'>Name</label>
                     <input 
                     type = 'text' 
                     name = 'name'
@@ -169,7 +171,7 @@ const ProductForm = (props) => {
                     value = {name}
                     onChange = {onNameChange}
                     autoFocus />
-                    <label for='description'>Decription</label>
+                    <label htmlFor='description'>Decription</label>
                     <input 
                     name ='description'
                     type = 'text'
@@ -178,7 +180,7 @@ const ProductForm = (props) => {
                     value = {description}
                     onChange = {onDescriptionChange}
                     />
-                    <label for='price'>Price</label>
+                    <label htmlFor='price'>Price</label>
                     <input 
                     name = 'price'
                     type = 'text'
@@ -187,7 +189,7 @@ const ProductForm = (props) => {
                     value = {price}
                     onChange = {onPriceChange}
                     />
-                    <label for='quantity'>Quantity</label>
+                    <label htmlFor='quantity'>Quantity</label>
                     <input 
                     name = 'quantity'
                     type = 'number'

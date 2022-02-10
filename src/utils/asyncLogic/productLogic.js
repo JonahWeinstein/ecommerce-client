@@ -46,7 +46,7 @@ const addProduct = async (name, description, price, quantity, storeId) => {
 const addProductWithImages = async (name, description = '', price, quantity, images, storeId) => {
 try {
     const product = await addProduct(name, description, price, quantity, storeId)
-    console.log(images)
+    
     for (let i = 0; i < images.length; i++) {
         try {
             const image = await addImage(images[i].image, images[i].order, storeId, product.id)

@@ -5,6 +5,7 @@ import { arrayBufferToBase64 } from '../../utils/displayImages'
 
 const ImageListItem = (props) => {
     const [selected, setSelected] = useState(false)
+    // const [order, setOrder] = useState(props.image.order)
     // watch for selected to change and call handler from parent
     useEffect(() => {
         props.onSelect(props.image, selected)
@@ -23,7 +24,7 @@ const ImageListItem = (props) => {
             src = { "data:image/png;base64," + arrayBufferToBase64(props.image.data.data)} 
             className = {selected ? 'image--selected' : ''}
             />
-            <button className = "remove-image-button h1" onClick = {handleSelection}>Remove</button>
+            
         </div>
     )
 }
