@@ -20,9 +20,11 @@ const ProductForm = (props) => {
         const [loaded, setLoaded] = useState(false)
         const [showModal, setShowModal] = useState(false)
         // for image drag and drop reordering 
-        const defaultList = props.product.Images ? props.product.Images : []
-        defaultList.sort((a, b) => a.order - b.order)
-        const [itemList, setItemList] = useState(defaultList)
+            const defaultList = props.product ? props.product.Images : []
+            defaultList.sort((a, b) => a.order - b.order)
+            const [itemList, setItemList] = useState(defaultList)
+        
+        
          
         
 
@@ -233,7 +235,8 @@ const ProductForm = (props) => {
                 <button className = 'button cta' type = 'submit'>{props.action} Product</button> 
                 </form>
                 </div>
-                <ImagesList
+                {props.product && 
+                    <ImagesList
                 product = {props.product} 
                 store = {props.store}
                 selected = {selectedImages}
@@ -241,7 +244,7 @@ const ProductForm = (props) => {
                 handleDrop = {handleDrop}
                 itemList = {itemList}
                 setItemList = {setItemList}
-                />
+                />}
                 {props.product && <button className = 'button delete-button' onClick = {openModal}>Delete Product</button>}
             </div>
             </div>

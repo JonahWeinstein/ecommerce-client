@@ -77,7 +77,6 @@ const data = { name, description, price, quantity }
         throw new Error(`Unable to add product ${response.status}`)
     }
     for (let i =0; i< imagesOrder.length; i++) {
-        console.log(imagesOrder)
         // check if image order field is different from image index in imagesOrder array
         // image order starts from 1 but array indices start at 0
         if (imagesOrder[i].order != i+1 ) {

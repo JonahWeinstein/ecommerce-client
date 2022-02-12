@@ -6,7 +6,7 @@ import Header from './Header'
 
 const Homepage = () => (
     <div>
-        <Header title = 'Ecommerce Admin'/>
+       
         <div className = 'centered'>
             <Link to = '/register' className = 'button cta'> Register </Link>
             <Link to = '/login' className = 'button cta'> Login </Link>
