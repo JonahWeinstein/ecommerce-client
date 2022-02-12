@@ -19,6 +19,12 @@ const ProductForm = (props) => {
         const [success, setSuccess] = useState(undefined)
         const [loaded, setLoaded] = useState(false)
         const [showModal, setShowModal] = useState(false)
+        // for image drag and drop reordering 
+        const defaultList = props.product.Images ? props.product.Images : []
+        defaultList.sort((a, b) => a.order - b.order)
+        const [itemList, setItemList] = useState(defaultList)
+         
+        
 
         // if we are editing a product we want to set state to match current product values
     useEffect(() => {
@@ -107,6 +113,9 @@ const ProductForm = (props) => {
                         price, 
                         quantity, 
                         images,
+                        // used to check if order of images has been changed
+                        itemList,
+                        // array of images to delete (if any)
                         selectedImages,
                         props.store.id,
                         props.product.id 
@@ -144,6 +153,18 @@ const ProductForm = (props) => {
         }
         
     }
+    const handleDrop = (droppedItem) => {
+   
+        // Ignore drop outside droppable container
+        if (!droppedItem.destination) return;
+        var updatedList = [...itemList];
+        // Remove dragged item
+        const [reorderedItem] = updatedList.splice(droppedItem.source.index, 1);
+        // Add dropped item
+        updatedList.splice(droppedItem.destination.index, 0, reorderedItem);
+        // Update State
+        setItemList(updatedList);
+      };
         // once ajax is complete render the product form for this product
         return loaded ? (
             <div>
@@ -172,7 +193,7 @@ const ProductForm = (props) => {
                     onChange = {onNameChange}
                     autoFocus />
                     <label htmlFor='description'>Decription</label>
-                    <input 
+                    <textarea
                     name ='description'
                     type = 'text'
                     placeholder = 'description'
@@ -217,6 +238,9 @@ const ProductForm = (props) => {
                 store = {props.store}
                 selected = {selectedImages}
                 setSelectedImages = {setSelectedImages}
+                handleDrop = {handleDrop}
+                itemList = {itemList}
+                setItemList = {setItemList}
                 />
                 {props.product && <button className = 'button delete-button' onClick = {openModal}>Delete Product</button>}
             </div>
@@ -226,7 +250,7 @@ const ProductForm = (props) => {
 
 const mapDispatchToProps = (dispatch) => ({
     startAddProduct: (name, description, price, quantity, images, storeId) => dispatch(startAddProduct(name, description, price, quantity, images, storeId)),
-    startUpdateProduct: (name, description, price, quantity, images, imagesToDelete, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, images, imagesToDelete, storeId, productId)),
+    startUpdateProduct: (name, description, price, quantity, images, imagesOrder, imagesToDelete, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, images, imagesOrder, imagesToDelete, storeId, productId)),
     startDeleteProduct: (storeId, productId) => dispatch(startDeleteProduct(storeId, productId)),
     startGetProduct: (storeId, productId) => dispatch(startGetProduct(storeId, productId))  
 })

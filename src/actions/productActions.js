@@ -49,10 +49,11 @@ const addProductAction = (product= {}) => ({
     type: 'ADD_PRODUCT',
     product
 })
-const startUpdateProduct = (name, description = '', price, quantity, images, imagesToDelete, storeId, productId) => {
+const startUpdateProduct = (name, description = '', price, quantity, images, imagesOrder, imagesToDelete, storeId, productId) => {
+    
     return async (dispatch) => {
         try {
-            const product = await updateProduct(name, description, price, quantity, images, imagesToDelete, storeId, productId)
+            const product = await updateProduct(name, description, price, quantity, images, imagesOrder, imagesToDelete, storeId, productId)
             dispatch(updateProductAction(product))
         } catch (e) {
             throw e

@@ -61,7 +61,7 @@ try {
 
 }
 // updates a product with given id and storeId using argument values
-const updateProduct = async (name, description = '', price, quantity, images, imagesToDelete, storeId, productId) => {
+const updateProduct = async (name, description = '', price, quantity, images, imagesOrder, imagesToDelete, storeId, productId) => {
 const data = { name, description, price, quantity }
     const authToken = sessionStorage.getItem('token')
     // remember to set content-type in request
@@ -75,6 +75,19 @@ const data = { name, description, price, quantity }
         method: 'PATCH'});
     if(!response.ok) {
         throw new Error(`Unable to add product ${response.status}`)
+    }
+    for (let i =0; i< imagesOrder.length; i++) {
+        console.log(imagesOrder)
+        // check if image order field is different from image index in imagesOrder array
+        // image order starts from 1 but array indices start at 0
+        if (imagesOrder[i].order != i+1 ) {
+            
+            try {
+                await updateImage(imagesOrder[i], i+1, storeId, productId)
+            } catch(e) {
+                throw e
+            }    
+        }
     }
     for(let i = 0; i<imagesToDelete.length; i++) {
         try {
@@ -142,6 +155,22 @@ const addImage = async (image, order, storeId, productId) => {
     }
     return response.json() 
 }
+const updateImage = async (image, newOrder, storeId, productId) => {
+    const authToken = sessionStorage.getItem('token')
+    const data = {order: newOrder}
+    const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/${productId}/images/${image.id}/update`, {
+    body: JSON.stringify(data),
+    headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json'
+    },
+    method: 'PATCH'});
+    if(!response.ok) {
+        throw new Error(`Unable to Update Images`)
+    }
+    return response.json()
+}   
+
 const deleteImage = async (storeId, productId, imageId) => {
 const authToken = sessionStorage.getItem('token')
 const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/${productId}/images/${imageId}/delete`, {
