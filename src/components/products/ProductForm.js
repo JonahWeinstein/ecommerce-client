@@ -124,8 +124,10 @@ const ProductForm = (props) => {
                         props.store.id,
                         props.product.id 
                         )            
-                        // otherwise imageList won't be rerendered as it should
-                        setItemList(product.Images)
+                        // otherwise imageList won't be rerendered with updates
+                        const newImageList = product.Images ? product.Images : []
+                        newImageList.sort((a, b) => a.order - b.order)
+                        setItemList(newImageList)
                 } else {
                     setLoaded(false)
                     // add product using the storeId from mapstatetoprops
