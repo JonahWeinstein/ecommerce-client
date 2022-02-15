@@ -123,13 +123,9 @@ const ProductForm = (props) => {
                         selectedImages,
                         props.store.id,
                         props.product.id 
-                        )
-                        
-                        // fetch the updated product which will rerender productForm
-                        
-                        const image = await props.startGetProduct(props.store.id, props.product.id)
-                        console.log("products fetched")
-                        setLoaded(true)
+                        )            
+                        // otherwise imageList won't be rerendered as it should
+                        setItemList(product.Images)
                 } else {
                     setLoaded(false)
                     // add product using the storeId from mapstatetoprops
@@ -150,11 +146,13 @@ const ProductForm = (props) => {
                     setSuccess(props.action == 'Add' ? 'Added' : 'Updated')
                     setImages([])
                     setSelectedImages([])
+                    setLoaded(true)
                     // fetch all products from database to update redux store (and display new image for this product)
             } catch (e) { 
                 console.log(e)
                 setSuccess(undefined)
                 setError(e.message)
+                setLoaded(true)
             }
         }
         
@@ -260,6 +258,8 @@ const mapDispatchToProps = (dispatch) => ({
     startDeleteProduct: (storeId, productId) => dispatch(startDeleteProduct(storeId, productId)),
     startGetProduct: (storeId, productId) => dispatch(startGetProduct(storeId, productId))  
 })
+
+
 
 
 export default connect(undefined, mapDispatchToProps)(ProductForm)

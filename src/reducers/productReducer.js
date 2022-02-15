@@ -12,6 +12,7 @@ const productReducer = (state = productReducerDefaultState, action ) => {
         case 'GET_PRODUCT':
             return state.map((product) => {
                 if(product.id == action.product.id) {
+                    
                     return {...action.product}
                 } else {
                     return product
@@ -20,7 +21,9 @@ const productReducer = (state = productReducerDefaultState, action ) => {
         case 'UPDATE_PRODUCT':
             return state.map((product) => {
                 if(product.id == action.product.id) {
-                    return {...action.product}
+                    
+                    const newProduct = {...product, Images: [...action.product.Images]}
+                    return newProduct
                 } else {
                     return product
                 }

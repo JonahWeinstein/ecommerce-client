@@ -66,16 +66,7 @@ const data = { name, description, price, quantity }
     const authToken = sessionStorage.getItem('token')
     // remember to set content-type in request
     
-        const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/${productId}/update`, {
-        body: JSON.stringify(data),
-        headers: {
-            'Authorization': `Bearer ${authToken}`,
-            'Content-Type': 'application/json'
-        },
-        method: 'PATCH'});
-    if(!response.ok) {
-        throw new Error(`Unable to update product ${response.status}`)
-    }
+        
     for (let i =0; i< imagesOrder.length; i++) {
         // check if image order field is different from image index in imagesOrder array
         // image order starts from 1 but array indices start at 0
@@ -102,6 +93,17 @@ const data = { name, description, price, quantity }
             throw new Error(`Unable to add product images`)
         }
     }
+    const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/${productId}/update`, {
+        body: JSON.stringify(data),
+        headers: {
+            'Authorization': `Bearer ${authToken}`,
+            'Content-Type': 'application/json'
+        },
+        method: 'PATCH'});
+    if(!response.ok) {
+        throw new Error(`Unable to update product ${response.status}`)
+    }
+    
     return response.json()
     
     

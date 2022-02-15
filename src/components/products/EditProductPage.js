@@ -6,6 +6,7 @@ import ProductForm from './ProductForm'
 
 class EditProductPage extends React.Component {
     render() {
+        console.log(this.props.product)
         return (
             <div>
                 
