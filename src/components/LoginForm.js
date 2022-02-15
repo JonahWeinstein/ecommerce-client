@@ -28,7 +28,7 @@ class LoginForm extends React.Component {
     render() {
         return (
             <div>
-            <Header title = 'Login' />
+            
             <div className = 'centered'>
             
             <form onSubmit = {this.onFormSubmit} className = 'login form'>

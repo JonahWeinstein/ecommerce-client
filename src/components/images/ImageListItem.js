@@ -24,6 +24,8 @@ const ImageListItem = (props) => {
             src = { "data:image/png;base64," + arrayBufferToBase64(props.image.data.data)} 
             className = {selected ? 'image--selected' : ''}
             />
+            <button  onClick = {handleSelection}>X</button>
+
             
         </div>
     )

@@ -74,7 +74,7 @@ const data = { name, description, price, quantity }
         },
         method: 'PATCH'});
     if(!response.ok) {
-        throw new Error(`Unable to add product ${response.status}`)
+        throw new Error(`Unable to update product ${response.status}`)
     }
     for (let i =0; i< imagesOrder.length; i++) {
         // check if image order field is different from image index in imagesOrder array
@@ -82,7 +82,7 @@ const data = { name, description, price, quantity }
         if (imagesOrder[i].order != i+1 ) {
             
             try {
-                await updateImage(imagesOrder[i], i+1, storeId, productId)
+                const image = await updateImage(imagesOrder[i], i+1, storeId, productId)
             } catch(e) {
                 throw e
             }    
@@ -90,7 +90,7 @@ const data = { name, description, price, quantity }
     }
     for(let i = 0; i<imagesToDelete.length; i++) {
         try {
-            await deleteImage(storeId, productId, imagesToDelete[i].id)
+            const image = await deleteImage(storeId, productId, imagesToDelete[i].id)
         } catch(e) {
             throw e
         }            
@@ -98,9 +98,8 @@ const data = { name, description, price, quantity }
     for (let i = 0; i < images.length; i++) {
         try {
             const image = await addImage(images[i].image, images[i].order, storeId, productId)
-            return image
         } catch (e) {
-            throw new Error(`Unable to add product images ${response.status}`)
+            throw new Error(`Unable to add product images`)
         }
     }
     return response.json()

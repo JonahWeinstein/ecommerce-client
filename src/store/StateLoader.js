@@ -1,4 +1,4 @@
-// used to persist redux state in sessionStorage
+// used to persist redux state in localStorage
 // without this, certain pages will not be able to fetch the data they need on reload,
 // since they require props to be passed to them from their parent component 
 
@@ -9,7 +9,7 @@ class StateLoader {
 
     loadState() {
         try {
-            let serializedState = sessionStorage.getItem("appState");
+            let serializedState = localStorage.getItem("appState");
 
             if (serializedState === null) {
                 return this.initializeState();
@@ -24,9 +24,10 @@ class StateLoader {
     saveState(state) {
         try {
             let serializedState = JSON.stringify(state);
-            sessionStorage.setItem("appState", serializedState);
+            localStorage.setItem("appState", serializedState);
         }
         catch (err) {
+            console.log(err)
             localStorage.clear()
         }
 

@@ -54,7 +54,9 @@ const startUpdateProduct = (name, description = '', price, quantity, images, ima
     return async (dispatch) => {
         try {
             const product = await updateProduct(name, description, price, quantity, images, imagesOrder, imagesToDelete, storeId, productId)
+            
             dispatch(updateProductAction(product))
+            return product
         } catch (e) {
             throw e
         }

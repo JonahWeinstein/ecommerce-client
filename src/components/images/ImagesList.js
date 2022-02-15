@@ -27,7 +27,8 @@ const ImagesList = (props) => {
         return (
             <div className="image-list">
             <DragDropContext onDragEnd={props.handleDrop}>
-            <Droppable droppableId="list-container">
+            {props.itemList && 
+              <Droppable droppableId="list-container">
               {(provided) => (
                 <div
                   className="list-container"
@@ -56,23 +57,9 @@ const ImagesList = (props) => {
                   {provided.placeholder}
                 </div>
               )}
-            </Droppable>
+            </Droppable>}
           </DragDropContext>
             </div>
-                
-            //         {props.product.Images.map((image) => (
-            //             <li key = {image.id} className = "list--grid-layout__item">
-                            // <ImageListItem 
-
-                            // image = {image}
-                            // store = {props.store}
-                            // onSelect = {onSelect}
-                            // />
-                            
-            //             </li>
-            //         ))}
-            //     </ul>
-            // </div>
         )
     } else {
         return (

@@ -20,10 +20,9 @@ const ProductForm = (props) => {
         const [loaded, setLoaded] = useState(false)
         const [showModal, setShowModal] = useState(false)
         // for image drag and drop reordering 
-            const defaultList = props.product ? props.product.Images : []
-            defaultList.sort((a, b) => a.order - b.order)
-            const [itemList, setItemList] = useState(defaultList)
-        
+        const defaultList = props.product.Images ? props.product.Images : []
+        defaultList.sort((a, b) => a.order - b.order)
+        const [itemList, setItemList] = useState(defaultList)
         
          
         
@@ -73,7 +72,10 @@ const ProductForm = (props) => {
         if (props.product) {
             setImages(prevImages => [...prevImages, {image, order: props.product.Images.length +1}])
         }
-        setImages(prevImages => [...prevImages, {image, order: prevImages.length +1}])
+        else {
+            setImages(prevImages => [...prevImages, {image, order: prevImages.length +1}])
+        }
+        
         
     }
     const handleDeleteProduct = async (e) => {
@@ -109,7 +111,7 @@ const ProductForm = (props) => {
                 // if we are updating a product, use startUpdateProduct instead of startAddProduct
                 if(props.product) {
                     setLoaded(false)
-                    await props.startUpdateProduct(
+                    const product = await props.startUpdateProduct(
                         name, 
                         description, 
                         price, 
@@ -122,9 +124,11 @@ const ProductForm = (props) => {
                         props.store.id,
                         props.product.id 
                         )
+                        
                         // fetch the updated product which will rerender productForm
                         
-                        await props.startGetProduct(props.store.id, props.product.id)
+                        const image = await props.startGetProduct(props.store.id, props.product.id)
+                        console.log("products fetched")
                         setLoaded(true)
                 } else {
                     setLoaded(false)
@@ -235,8 +239,7 @@ const ProductForm = (props) => {
                 <button className = 'button cta' type = 'submit'>{props.action} Product</button> 
                 </form>
                 </div>
-                {props.product && 
-                    <ImagesList
+                <ImagesList
                 product = {props.product} 
                 store = {props.store}
                 selected = {selectedImages}
@@ -244,7 +247,7 @@ const ProductForm = (props) => {
                 handleDrop = {handleDrop}
                 itemList = {itemList}
                 setItemList = {setItemList}
-                />}
+                />
                 {props.product && <button className = 'button delete-button' onClick = {openModal}>Delete Product</button>}
             </div>
             </div>
