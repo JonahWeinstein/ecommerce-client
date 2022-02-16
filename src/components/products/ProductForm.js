@@ -20,7 +20,7 @@ const ProductForm = (props) => {
         const [loaded, setLoaded] = useState(false)
         const [showModal, setShowModal] = useState(false)
         // for image drag and drop reordering 
-        const defaultList = props.product.Images ? props.product.Images : []
+        const defaultList = props.product ? props.product.Images : []
         defaultList.sort((a, b) => a.order - b.order)
         const [itemList, setItemList] = useState(defaultList)
         
@@ -120,7 +120,6 @@ const ProductForm = (props) => {
             try {
                 // if we are updating a product, use startUpdateProduct instead of startAddProduct
                 if(props.product) {
-                    console.log(images)
                     setLoaded(false)
                     const product = await props.startUpdateProduct(
                         name, 
