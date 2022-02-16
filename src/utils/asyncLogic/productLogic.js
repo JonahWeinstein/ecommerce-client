@@ -65,7 +65,6 @@ const updateProduct = async (name, description = '', price, quantity, images, im
 const data = { name, description, price, quantity }
     const authToken = sessionStorage.getItem('token')
     // remember to set content-type in request
-    
         
     for (let i =0; i< imagesOrder.length; i++) {
         // check if image order field is different from image index in imagesOrder array

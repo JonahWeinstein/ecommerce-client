@@ -67,13 +67,23 @@ const ProductForm = (props) => {
         setQuantity(e.target.value)
     }
     const onImageChange = (e) => {
-        const image = e.target.files[0]
+        const images = e.target.files
+        // for when user adds images to upload and then removes them before submitting
+        if (images.length == 0 ) {
+            setImages([])
+        }
         // add the image to images array in state (but don't add to database until form is submitted)
         if (props.product) {
-            setImages(prevImages => [...prevImages, {image, order: props.product.Images.length +1}])
+            for(let i =0; i<images.length; i++){
+                setImages(prevImages => [...prevImages, { image: images[i], order: props.product.Images.length +1}])
+            }
         }
         else {
-            setImages(prevImages => [...prevImages, {image, order: prevImages.length +1}])
+            // order will just rely on current images in component if there is no product prop
+            for(let i =0; i<images.length; i++){
+                setImages(prevImages => [...prevImages, {image: images[i], order: prevImages.length +1}])
+            }
+            
         }
         
         
@@ -110,6 +120,7 @@ const ProductForm = (props) => {
             try {
                 // if we are updating a product, use startUpdateProduct instead of startAddProduct
                 if(props.product) {
+                    console.log(images)
                     setLoaded(false)
                     const product = await props.startUpdateProduct(
                         name, 
@@ -231,7 +242,7 @@ const ProductForm = (props) => {
                     name = "image"
                     type = 'file'
                     multiple
-                    label = 'Add Image'
+                    label = 'Add Images'
                     accept="image/png, image/jpeg"
                     onChange = {onImageChange}
                     />
