@@ -1,12 +1,12 @@
 
 
-const useQuery = async (url, data = null, method = 'GET') => {
+const useQuery = async (url, updates = null, method = 'GET') => {
     
-    if (data) {
+    if (updates) {
             const authToken = sessionStorage.getItem('token')
             // remember to set content-type in request
             const response = await fetch(`${process.env.API_URL}` + url, {
-                body: JSON.stringify(data),
+                body: JSON.stringify(updates),
                 headers: {
                     'Authorization': `Bearer ${authToken}`,
                     'Content-Type': 'application/json'

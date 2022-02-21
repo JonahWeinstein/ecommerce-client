@@ -129,7 +129,7 @@ const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/
         'Authorization': `Bearer ${authToken}`
     }});
 if(!response.ok) {
-    throw new Error(`Unable to add Image ${response.status}`)
+    throw new Error(`Unable to fetch Images ${response.status}`)
 }
 return response.json() 
 }
@@ -191,4 +191,5 @@ export {
     deleteProduct,
     fetchImages,
     deleteImage,
+    updateImage,
     fetchProduct }
