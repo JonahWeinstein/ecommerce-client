@@ -125,6 +125,7 @@ export {
     startGetProducts, 
     startGetProduct,
     getProducts, 
+    getProductAction,
     startAddProduct, 
     addProductAction,
     startUpdateProduct,
