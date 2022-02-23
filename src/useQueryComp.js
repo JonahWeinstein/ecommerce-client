@@ -32,7 +32,6 @@ const useQueryComp = ( url, updates=null, method='GET' ) => {
         
         }
     else {
-        console.log(history)
         const authToken = sessionStorage.getItem('token')
         // remember to set content-type in request
         const response = await fetch(`${process.env.API_URL}` + url, {
@@ -46,13 +45,11 @@ const useQueryComp = ( url, updates=null, method='GET' ) => {
             errorStatusCode: response.status 
           });
         } else {
-
             const data = await response.json()
             setApiData(data)
             setLoaded(true)
         }
         
-
 }  
         }
         logic()

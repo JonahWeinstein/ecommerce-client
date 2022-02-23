@@ -30,7 +30,6 @@ const useQuery = async (url, updates = null, method = 'GET') => {
                 method: method});
             const status = response.status
             const data = await response.json()
-            console.log("response: ", {data, status})
             return {data, status}
 
     }  
