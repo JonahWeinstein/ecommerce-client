@@ -1,41 +1,47 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {startGetProducts} from '../../actions/productActions'
+import {startGetProducts, getProducts} from '../../actions/productActions'
 import ProductListItem from './ProductListItem'
 import Loading from '../Loading'
 import Header from '../Header'
 import ConfirmDeleteModal from '../ConfirmDeleteModal'
 import {startDeleteStore, startGetStores} from '../../actions/storeActions'
-
+import useQueryComp from '../../useQueryComp'
 
 
 
 const ProductsListPage = (props) => {
     const [error, setError] = useState(undefined)
-    const [success, setSuccess] = useState(undefined)
-    const [loaded, setLoaded] = useState(false)
+    
+    // const [loaded, setLoaded] = useState(false)
     const [showModal, setShowModal] = useState(false)
 
-    useEffect(() => {
-        const fetchData = async () =>{
+    
+    
+
+    const { data, loaded} = useQueryComp(`/stores/${props.store.id}/products/all`, null, 'GET', getProducts)
+    console.log({data, loaded})
+ 
+    // useEffect(() => {
+    //     const fetchData = async () =>{
             
-            try {
-                await props.startGetProducts(props.store.id)
-                setSuccess(true)
-                setError(undefined)
-                setLoaded(true)
+    //         try {
+    //             await props.startGetProducts(props.store.id)
+    //             setSuccess(true)
+    //             setError(undefined)
+    //             setLoaded(true)
                 
-            } catch (e) {
-                setSuccess(undefined)
-                setError("Unable to load products")
-                setLoaded(true)
-                console.log("Unable to load products")
-            }
-        }
-        fetchData()
+    //         } catch (e) {
+    //             setSuccess(undefined)
+    //             setError("Unable to load products")
+    //             setLoaded(true)
+    //             console.log("Unable to load products")
+    //         }
+    //     }
+    //     fetchData()
   
-    }, []);
+    // }, []);
 
     const openModal = () => {
         setShowModal(true)
@@ -64,7 +70,7 @@ const ProductsListPage = (props) => {
             store = {props.store }/>
            
             { error && <p className = "error">{error}</p>}
-            { success && 
+            
             <div>
                 <div className = 'centered'>
                 
@@ -72,6 +78,7 @@ const ProductsListPage = (props) => {
                 
                 <ul className = 'list'>
                     {props.products.map((product) => (
+                        
                         <li key = {product.id}>
                             <ProductListItem product = {product}/>
                         </li>
@@ -95,7 +102,7 @@ const ProductsListPage = (props) => {
                     />
                 
             </div>
-        }
+        
         </div>
             
         ) : <Loading />
