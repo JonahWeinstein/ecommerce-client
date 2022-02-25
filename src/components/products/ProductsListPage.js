@@ -6,7 +6,7 @@ import ProductListItem from './ProductListItem'
 import Loading from '../Loading'
 import Header from '../Header'
 import ConfirmDeleteModal from '../ConfirmDeleteModal'
-import {startDeleteStore, startGetStores} from '../../actions/storeActions'
+import {startDeleteStore, startGetStores, deleteStoreAction} from '../../actions/storeActions'
 import useQueryComp from '../../useQueryComp'
 
 
@@ -16,32 +16,18 @@ const ProductsListPage = (props) => {
     
     // const [loaded, setLoaded] = useState(false)
     const [showModal, setShowModal] = useState(false)
-
+    const [queryParams, setQueryParams] = 
+        useState({url: `/stores/${props.store.id}/products/all`,
+                updates: null,
+                method: 'GET',
+                reduxCallback: getProducts})
+     
     
     
 
-    const { data, loaded} = useQueryComp(`/stores/${props.store.id}/products/all`, null, 'GET', getProducts)
-    console.log({data, loaded})
+    const { data, loaded} = useQueryComp(queryParams)
+   
  
-    // useEffect(() => {
-    //     const fetchData = async () =>{
-            
-    //         try {
-    //             await props.startGetProducts(props.store.id)
-    //             setSuccess(true)
-    //             setError(undefined)
-    //             setLoaded(true)
-                
-    //         } catch (e) {
-    //             setSuccess(undefined)
-    //             setError("Unable to load products")
-    //             setLoaded(true)
-    //             console.log("Unable to load products")
-    //         }
-    //     }
-    //     fetchData()
-  
-    // }, []);
 
     const openModal = () => {
         setShowModal(true)
@@ -52,14 +38,16 @@ const ProductsListPage = (props) => {
     const handleClick = async (e) => {
         e.preventDefault()
         try {
-            const store = await props.startDeleteStore(props.store.id)
+            setQueryParams({url: `/stores/${props.store.id}/delete`,
+                method: 'delete',
+                reduxCallback: ()=> deleteStoreAction})
             setError(undefined)
-            setSuccess('Store Deleted')
+            
             props.history.replace(`/UserDashboard`)
          }
          catch (e){
              console.log(e)
-             setSuccess(undefined)
+             
              setError('Unable to delete store :(')
          }
     }

@@ -1,10 +1,13 @@
 import {useState, useEffect} from 'react'
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-const useQueryComp = ( url, updates=null, method='GET' ) => {
+const useQueryComp = ( {url, updates=null, method='GET', reduxCallback} ) => {
+    console.log({url, updates, method, reduxCallback})
     const history = useHistory();
     const [apiData, setApiData] = useState();
     const [loaded, setLoaded] = useState(false)
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const logic = async () => {
@@ -26,7 +29,10 @@ const useQueryComp = ( url, updates=null, method='GET' ) => {
 
             const data = await response.json()
             
+            
+            dispatch(reduxCallback(data))
             setApiData(data)
+           
             setLoaded(true)
         }
         
@@ -46,14 +52,18 @@ const useQueryComp = ( url, updates=null, method='GET' ) => {
           });
         } else {
             const data = await response.json()
+            dispatch(reduxCallback(data))
             setApiData(data)
+           
             setLoaded(true)
+            
         }
         
 }  
         }
         logic()
-    }, [])
+    }, [url])
+   
     return {data: apiData, loaded}
 }
 export default useQueryComp
