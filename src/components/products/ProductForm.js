@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react'
-import { startAddProduct, getProductAction, startUpdateProduct, startGetProduct, startDeleteProduct } from '../../actions/productActions'
+import { startAddProduct, startUpdateProduct, startGetProduct, startDeleteProduct } from '../../actions/productActions'
 import { connect } from 'react-redux'
 import ImagesList from '../images/ImagesList'
 import Loading from '../Loading'
 import ConfirmDeleteModal from '../ConfirmDeleteModal'
 
 import Header from '../Header'
-import useQueryComp from '../../useQueryComp'
+
 
 const ProductForm = (props) => {
         const [name, setName] = useState(props.product ? props.product.name : '')
@@ -17,7 +17,7 @@ const ProductForm = (props) => {
         const [selectedImages, setSelectedImages] = useState([])
         const [error, setError] = useState(undefined)
         const [success, setSuccess] = useState(undefined)
-        // const [loaded, setLoaded] = useState(false)
+        const [loaded, setLoaded] = useState(false)
         const [showModal, setShowModal] = useState(false)
         // for image drag and drop reordering 
         const defaultList = props.product ? props.product.Images : []
@@ -26,37 +26,30 @@ const ProductForm = (props) => {
         
          
         
-    const {data, loaded} = useQueryComp(`/stores/${props.store.id}/products/${props.product.id}`)
-    getProductAction({data})
-    
-    
-        // if we are editing a product we want to set state to match current product values
-    // useEffect(() => {
-    //     // this is the way to make useEffect async
-    //     const fetchData = async () => {
-    //     // check if we are adding or updating a product 
-    //     // if we are updating a product we need to fetch the current version from the database
-    //     if(props.action == 'Update') {
 
-    //         try{
-    //             const data = 
-    //             await useQueryComp(`/stores/${props.store.id}/products/${props.product.id}`)
-                
-    //             getProductAction(data)
-    //             setLoaded(true)
-    //         } catch(e) {
-    //             console.log(e)
-    //             setSuccess(undefined)
-    //             setError('could not get product, return to product list')
-    //             setLoaded(true)
-    //         }
-    //     } else {
-    //         setLoaded(true)
-    //     }
-    // }
-    // fetchData()
+        // if we are editing a product we want to set state to match current product values
+    useEffect(() => {
+        // this is the way to make useEffect async
+        const fetchData = async () => {
+        // check if we are adding or updating a product 
+        // if we are updating a product we need to fetch the current version from the database
+        if(props.action == 'Update') {
+
+            try{
+                const product = await props.startGetProduct(props.store.id, props.product.id)
+                setLoaded(true)
+            } catch(e) {
+                setSuccess(undefined)
+                setError('could not get product, return to product list')
+                setLoaded(true)
+            }
+        } else {
+            setLoaded(true)
+        }
+    }
+    fetchData()
         
-    // }, [])
+    }, [])
     const onDescriptionChange = (e) => {
         setDescription(e.target.value)
     }
@@ -275,8 +268,7 @@ const mapDispatchToProps = (dispatch) => ({
     startAddProduct: (name, description, price, quantity, images, storeId) => dispatch(startAddProduct(name, description, price, quantity, images, storeId)),
     startUpdateProduct: (name, description, price, quantity, images, imagesOrder, imagesToDelete, storeId, productId) => dispatch(startUpdateProduct(name, description, price, quantity, images, imagesOrder, imagesToDelete, storeId, productId)),
     startDeleteProduct: (storeId, productId) => dispatch(startDeleteProduct(storeId, productId)),
-    startGetProduct: (storeId, productId) => dispatch(startGetProduct(storeId, productId)),
-    getProductAction: (product) => dispatch(getProductAction(product))
+    startGetProduct: (storeId, productId) => dispatch(startGetProduct(storeId, productId))  
 })
 
 

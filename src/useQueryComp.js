@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 const useQueryComp = ( {url, updates=null, method='GET', reduxCallback} ) => {
-    console.log({url, updates, method, reduxCallback})
+    
     const history = useHistory();
     const [apiData, setApiData] = useState();
     const [loaded, setLoaded] = useState(false)

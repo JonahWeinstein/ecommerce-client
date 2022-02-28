@@ -8,7 +8,7 @@ import Header from '../Header'
 import ConfirmDeleteModal from '../ConfirmDeleteModal'
 import {startDeleteStore, startGetStores, deleteStoreAction} from '../../actions/storeActions'
 import useQueryComp from '../../useQueryComp'
-
+import useQuery from '../../useQuery'
 
 
 const ProductsListPage = (props) => {
@@ -16,16 +16,16 @@ const ProductsListPage = (props) => {
     
     // const [loaded, setLoaded] = useState(false)
     const [showModal, setShowModal] = useState(false)
-    const [queryParams, setQueryParams] = 
-        useState({url: `/stores/${props.store.id}/products/all`,
-                updates: null,
-                method: 'GET',
-                reduxCallback: getProducts})
-     
+    const [queryParams, setQueryParams] = useState()
+   
+        const { data, loaded} = useQueryComp(queryParams || {url: `/stores/${props.store.id}/products/all`,
+        updates: null,
+        method: 'GET',
+        reduxCallback: getProducts
+    })
+       
+   
     
-    
-
-    const { data, loaded} = useQueryComp(queryParams)
    
  
 
@@ -38,12 +38,14 @@ const ProductsListPage = (props) => {
     const handleClick = async (e) => {
         e.preventDefault()
         try {
-            setQueryParams({url: `/stores/${props.store.id}/delete`,
-                method: 'delete',
-                reduxCallback: ()=> deleteStoreAction})
+            await useQuery(`/stores/${props.store.id}/delete`,
+                null,
+                'DELETE',
+                deleteStoreAction)
+            
             setError(undefined)
             
-            props.history.replace(`/UserDashboard`)
+            props.history.push(`/UserDashboard`)
          }
          catch (e){
              console.log(e)

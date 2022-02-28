@@ -1,7 +1,7 @@
+import { useHistory } from "react-router-dom";
 
-
-const useQuery = async (url, updates = null, method = 'GET') => {
-    
+const useQuery = async (url, updates = null, method = 'GET', reduxCallback) => {
+    // const history = useHistory()
     if (updates) {
             const authToken = sessionStorage.getItem('token')
             // remember to set content-type in request
@@ -14,9 +14,12 @@ const useQuery = async (url, updates = null, method = 'GET') => {
                 method: method});
            
             const status = response.status
+            if (status != 'ok') {
+                throw new Error('Unable to execute query')
+            }
             const data = await response.json()
-            
-            return {data, status}        
+            reduxCallback(data)
+            return data        
     }
     else {
        
@@ -28,9 +31,13 @@ const useQuery = async (url, updates = null, method = 'GET') => {
                     
                 },
                 method: method});
-            const status = response.status
-            const data = await response.json()
-            return {data, status}
+
+                if (response.status != 200) {
+                    throw new Error('Unable to execute query')
+                }
+                const data = await response.json()
+                reduxCallback(data)
+            return data
 
     }  
 }

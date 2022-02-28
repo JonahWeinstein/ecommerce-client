@@ -58,5 +58,6 @@ export {
     addStoreAction, 
     getStores, 
     updateError, 
-    startDeleteStore 
+    startDeleteStore ,
+    deleteStoreAction
 }

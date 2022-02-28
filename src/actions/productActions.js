@@ -1,18 +1,13 @@
-import { fetchProduct, addProductWithImages, updateProduct, deleteProduct, addImage, updateImage, deleteImage } from "../utils/asyncLogic/productLogic";
-import useQuery from '../useQuery'
+import { fetchProducts, fetchProduct, addProductWithImages, updateProduct, deleteProduct } from "../utils/asyncLogic/productLogic";
+
 
 const startGetProducts = (storeId) => {
     
     return async (dispatch) => {
         try {
-            const {data, status} = 
-            await useQuery(`/stores/${storeId}/products/all`)
-
-            if (status != 200) {
-                throw new Error('Unable to fetch products')
-            }
-            dispatch(getProducts(data))
-            return data
+            const products = await fetchProducts(storeId)
+            dispatch(getProducts(products))
+            return products
         } catch(e) {
             console.log("error fetching products")
             throw new Error(e)
@@ -22,13 +17,9 @@ const startGetProducts = (storeId) => {
 const startGetProduct = (storeId, productId) => {
     return async (dispatch) => {
         try {
-            const {data, status} =
-            await useQuery(`/stores/${storeId}/products/${productId}`)
-            if (status != 200) {
-                throw new Error('Unable to fetch products')
-            }
-            dispatch(getProductAction(data))
-            return data
+            const product = await fetchProduct(storeId, productId)
+            dispatch(getProductAction(product))
+            return product
         } catch (e) {
             throw e
         }
@@ -62,40 +53,9 @@ const startUpdateProduct = (name, description = '', price, quantity, images, ima
     
     return async (dispatch) => {
         try {
-            for (let i =0; i< imagesOrder.length; i++) {
-                // check if image order field is different from image index in imagesOrder array
-                // image order starts from 1 but array indices start at 0
-                if (imagesOrder[i].order != i+1 ) {
-                    
-                    try {
-                        const image = await updateImage(imagesOrder[i], i+1, storeId, productId)
-                    } catch(e) {
-                        throw e
-                    }    
-                }
-            }
-            for(let i = 0; i<imagesToDelete.length; i++) {
-                try {
-                    const image = await deleteImage(storeId, productId, imagesToDelete[i].id)
-                } catch(e) {
-                    throw e
-                }            
-            }
-            for (let i = 0; i < images.length; i++) {
-                try {
-                    const image = await addImage(images[i].image, images[i].order, storeId, productId)
-                } catch (e) {
-                    throw new Error(`Unable to add product images`)
-                }
-            }
-            const {data, status} = await useQuery(
-                `/stores/${storeId}/products/${productId}/update`,
-                {name, description, price, quantity}, 'PATCH')
-            if (status != 200) {
-                throw new Error('Unable to update product')
-            }
-            dispatch(updateProductAction(data))
-            return data
+            const product = await updateProduct(name, description, price, quantity, images, imagesOrder, imagesToDelete, storeId, productId)
+            dispatch(updateProductAction(product))
+            return product
         } catch (e) {
             throw e
         }
@@ -125,10 +85,10 @@ export {
     startGetProducts, 
     startGetProduct,
     getProducts, 
-    getProductAction,
     startAddProduct, 
     addProductAction,
     startUpdateProduct,
     updateProductAction,
-    startDeleteProduct
+    startDeleteProduct,
+    getProductAction
 }

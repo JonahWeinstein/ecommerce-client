@@ -14,7 +14,8 @@ class AddStoreForm extends React.Component {
         try {
             const store = await this.props.startAddStore(store_name)
             this.setState(() => ({error: undefined, success:'Store Added!'}))
-            this.props.history.push(`/UserDashboard/stores/${store.id}`)
+            // redirect to new store products page
+            this.props.history.push(`/UserDashboard/stores/${store.id}/products`)
         } catch (e) {
             console.log(e)
             this.setState(() => ({error:'Unable to add store', success: undefined}))
