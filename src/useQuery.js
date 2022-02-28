@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
-const useQuery = ( {url, updates=null, method='GET', reduxCallback} ) => {
+const useQuery = ( {url, updates=null, method='GET', action = null, reduxCallback} ) => {
     
     const history = useHistory();
     const [apiData, setApiData] = useState();
@@ -10,6 +10,10 @@ const useQuery = ( {url, updates=null, method='GET', reduxCallback} ) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
+        if (action == 'Add') {
+            setLoaded(true)
+            return {loaded, setLoaded}
+        } 
         const logic = async () => {
         if (updates) {
             const authToken = sessionStorage.getItem('token')

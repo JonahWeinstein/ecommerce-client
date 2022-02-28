@@ -27,34 +27,13 @@ const ProductForm = (props) => {
         // get loaded and setLoaded from the initial fetch query, 
         // setLoaded can now be used anywhere in product form
         const {data, loaded, setLoaded} = useQuery({url: `/stores/${props.storeId}/products/${props.productId}`,
+        action: props.action,
         reduxCallback: getProductAction
         })
         
         
 
-    //     // if we are editing a product we want to set state to match current product values
-    // useEffect(() => {
-    //     // this is the way to make useEffect async
-    //     const fetchData = async () => {
-    //     // check if we are adding or updating a product 
-    //     // if we are updating a product we need to fetch the current version from the database
-    //     if(props.action == 'Update') {
-
-    //         try{
-    //             const product = await props.startGetProduct(props.store.id, props.product.id)
-    //             setLoaded(true)
-    //         } catch(e) {
-    //             setSuccess(undefined)
-    //             setError('could not get product, return to product list')
-    //             setLoaded(true)
-    //         }
-    //     } else {
-    //         setLoaded(true)
-    //     }
-    // }
-    // fetchData()
-        
-    // }, [])
+    
     function onDescriptionChange(e) {
         setDescription(e.target.value)
     }
