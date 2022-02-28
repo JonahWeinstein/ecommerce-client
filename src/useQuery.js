@@ -1,8 +1,17 @@
-import { useHistory } from "react-router-dom";
+import {useState, useEffect} from 'react'
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-const useQuery = async (url, updates = null, method = 'GET', reduxCallback) => {
-    // const history = useHistory()
-    if (updates) {
+const useQuery = ( {url, updates=null, method='GET', reduxCallback} ) => {
+    
+    const history = useHistory();
+    const [apiData, setApiData] = useState();
+    const [loaded, setLoaded] = useState(false)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        const logic = async () => {
+        if (updates) {
             const authToken = sessionStorage.getItem('token')
             // remember to set content-type in request
             const response = await fetch(`${process.env.API_URL}` + url, {
@@ -12,33 +21,50 @@ const useQuery = async (url, updates = null, method = 'GET', reduxCallback) => {
                     'Content-Type': 'application/json'
                 },
                 method: method});
-           
-            const status = response.status
-            if (status != 'ok') {
-                throw new Error('Unable to execute query')
-            }
+            if (response.status >= 400) {
+                history.replace(history.location.pathname, { 
+                    errorStatusCode: response.status 
+            });
+            } else {
+
             const data = await response.json()
-            reduxCallback(data)
-            return data        
-    }
+            
+            
+            dispatch(reduxCallback(data))
+            setApiData(data)
+           
+            setLoaded(true)
+        }
+        
+        }
     else {
-       
-            const authToken = sessionStorage.getItem('token')
-            // remember to set content-type in request
-            const response = await fetch(`${process.env.API_URL}` + url, {
-                headers: {
-                    'Authorization': `Bearer ${authToken}`
-                    
-                },
-                method: method});
-
-                if (response.status != 200) {
-                    throw new Error('Unable to execute query')
-                }
-                const data = await response.json()
-                reduxCallback(data)
-            return data
-
-    }  
+        const authToken = sessionStorage.getItem('token')
+        // remember to set content-type in request
+        const response = await fetch(`${process.env.API_URL}` + url, {
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+                
+            },
+            method: method});
+        console.log("status: ", response.status)
+        if (response.status >= 400) {
+          history.replace(history.location.pathname, { 
+            errorStatusCode: response.status 
+          });
+        } else {
+            const data = await response.json()
+            dispatch(reduxCallback(data))
+            setApiData(data)
+           
+            setLoaded(true)
+            
+        }
+        
+}  
+        }
+        logic()
+    }, [url])
+   
+    return {data: apiData, loaded, setLoaded}
 }
 export default useQuery

@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react'
-import { startAddProduct, startUpdateProduct, startGetProduct, startDeleteProduct } from '../../actions/productActions'
+import { startAddProduct, startUpdateProduct, startGetProduct, getProductAction, startDeleteProduct } from '../../actions/productActions'
 import { connect } from 'react-redux'
 import ImagesList from '../images/ImagesList'
 import Loading from '../Loading'
 import ConfirmDeleteModal from '../ConfirmDeleteModal'
 
 import Header from '../Header'
-
+import useQuery from '../../useQuery'
 
 const ProductForm = (props) => {
         const [name, setName] = useState(props.product ? props.product.name : '')
@@ -17,40 +17,45 @@ const ProductForm = (props) => {
         const [selectedImages, setSelectedImages] = useState([])
         const [error, setError] = useState(undefined)
         const [success, setSuccess] = useState(undefined)
-        const [loaded, setLoaded] = useState(false)
+       
         const [showModal, setShowModal] = useState(false)
         // for image drag and drop reordering 
         const defaultList = props.product ? props.product.Images : []
         defaultList.sort((a, b) => a.order - b.order)
         const [itemList, setItemList] = useState(defaultList)
         
-         
+        // get loaded and setLoaded from the initial fetch query, 
+        // setLoaded can now be used anywhere in product form
+        const {data, loaded, setLoaded} = useQuery({url: `/stores/${props.storeId}/products/${props.productId}`,
+        reduxCallback: getProductAction
+        })
+        
         
 
-        // if we are editing a product we want to set state to match current product values
-    useEffect(() => {
-        // this is the way to make useEffect async
-        const fetchData = async () => {
-        // check if we are adding or updating a product 
-        // if we are updating a product we need to fetch the current version from the database
-        if(props.action == 'Update') {
+    //     // if we are editing a product we want to set state to match current product values
+    // useEffect(() => {
+    //     // this is the way to make useEffect async
+    //     const fetchData = async () => {
+    //     // check if we are adding or updating a product 
+    //     // if we are updating a product we need to fetch the current version from the database
+    //     if(props.action == 'Update') {
 
-            try{
-                const product = await props.startGetProduct(props.store.id, props.product.id)
-                setLoaded(true)
-            } catch(e) {
-                setSuccess(undefined)
-                setError('could not get product, return to product list')
-                setLoaded(true)
-            }
-        } else {
-            setLoaded(true)
-        }
-    }
-    fetchData()
+    //         try{
+    //             const product = await props.startGetProduct(props.store.id, props.product.id)
+    //             setLoaded(true)
+    //         } catch(e) {
+    //             setSuccess(undefined)
+    //             setError('could not get product, return to product list')
+    //             setLoaded(true)
+    //         }
+    //     } else {
+    //         setLoaded(true)
+    //     }
+    // }
+    // fetchData()
         
-    }, [])
-    const onDescriptionChange = (e) => {
+    // }, [])
+    function onDescriptionChange(e) {
         setDescription(e.target.value)
     }
     const onNameChange = (e) => {

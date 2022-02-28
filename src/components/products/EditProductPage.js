@@ -1,18 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from "react-router-dom";
+
 import ProductForm from './ProductForm'
 
 
 
-class EditProductPage extends React.Component {
-    render() {
+const EditProductPage = (props) => {
+    
         return (
             <div>
                 
-                <ProductForm store = {this.props.store} product = {this.props.product} action = {'Update'} history = {this.props.history}/>
+                <ProductForm 
+                store = {props.store} 
+                product = {props.product} 
+                action = {'Update'} 
+                history = {props.history}
+                storeId = {props.match.params.id}
+                productId = {props.match.params.productId} />
             </div>
         )
-    }
+    
 }
 const mapSateToProps = (state, props) => ({
     store: state.stores.find((store) => store.id == props.match.params.id),
