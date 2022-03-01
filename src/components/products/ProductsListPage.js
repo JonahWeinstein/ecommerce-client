@@ -8,7 +8,7 @@ import Header from '../Header'
 import ConfirmDeleteModal from '../ConfirmDeleteModal'
 import {startDeleteStore, startGetStores, deleteStoreAction} from '../../actions/storeActions'
 import useQuery from '../../useQuery'
-
+import useClickOutside from '../../useClickOutside'
 
 
 const ProductsListPage = (props) => {
@@ -24,14 +24,10 @@ const ProductsListPage = (props) => {
         reduxCallback: getProducts
     })
        
-   
-    
-   
- 
-
     const openModal = () => {
         setShowModal(true)
     }
+    
     const hideModal = () => {
         setShowModal(false)
     }
@@ -85,6 +81,8 @@ const ProductsListPage = (props) => {
                     handleClose = {hideModal}
                     action = {handleClick}
                     type = {'store'}
+                    setShowModal = {setShowModal}
+                    
                     />
                 
             </div>

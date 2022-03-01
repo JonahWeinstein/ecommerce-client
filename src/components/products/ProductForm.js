@@ -176,6 +176,7 @@ const ProductForm = (props) => {
             handleClose = {hideModal}
             action = {handleDeleteProduct}
             type = {'product'}
+            setShowModal = {setShowModal}
             />
             <div className = 'form__wrapper'>
                 <form 
