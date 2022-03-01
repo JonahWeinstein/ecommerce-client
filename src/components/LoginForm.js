@@ -33,7 +33,7 @@ class LoginForm extends React.Component {
             
             <form onSubmit = {this.onFormSubmit} className = 'login form'>
                 <input type="text" name="email" placeholder = "Email" />
-                <input type = "text" name = "password" placeholder = "password" />
+                <input type = "password" name = "password" placeholder = "password" autocomplete="off" />
                 {this.state.error && <p className = "error">{this.state.error}</p>}
                 <button type = "submit" className = 'button cta'>Login</button>
             </form>

@@ -9,7 +9,6 @@ import LoginRedirect from './components/LoginRedirect'
 const ErrorHandler = ({ children }) => {
  
   const location = useLocation();
-  console.log("location status: ", get(location.state, 'errorStatusCode'))
   switch (get(location.state, 'errorStatusCode')) {
     case 404:
       return <NotFoundPage />;
