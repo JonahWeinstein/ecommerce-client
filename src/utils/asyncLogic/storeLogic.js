@@ -34,9 +34,6 @@ const addStore = async (store_name) => {
 const deleteStore = async (storeId) => {
     
     const response = await fetch(`${process.env.API_URL}/stores/${storeId}/delete`, {
-        headers: {
-            'Authorization': `Bearer ${authToken}`
-        },
         credentials: 'include',
         method: 'DELETE'})
         

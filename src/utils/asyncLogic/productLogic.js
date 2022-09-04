@@ -112,9 +112,6 @@ const updateProduct = async (name, description = '', price, quantity, images, im
 const deleteProduct = async (storeId, productId) => {
 
     const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/${productId}/delete`, {
-        headers: {
-            'Authorization': `Bearer ${authToken}`
-        },
         credentials: 'include',
         method: 'DELETE'
     })
@@ -127,9 +124,6 @@ const deleteProduct = async (storeId, productId) => {
 const fetchImages = async (storeId, productId) => {
 
     const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/${productId}/images`, {
-        headers: {
-            'Authorization': `Bearer ${authToken}`
-        },
         credentials: 'include'
     });
     if (!response.ok) {
@@ -150,9 +144,6 @@ const addImage = async (image, order, storeId, productId) => {
         credentials: 'include',
 
         // don't specify content-type because the browser handles that
-        headers: {
-            'Authorization': `Bearer ${authToken}`
-        },
         method: 'POST'
     });
     if (!response.ok) {
@@ -181,9 +172,6 @@ const updateImage = async (image, newOrder, storeId, productId) => {
 const deleteImage = async (storeId, productId, imageId) => {
 
     const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/${productId}/images/${imageId}/delete`, {
-        headers: {
-            'Authorization': `Bearer ${authToken}`
-        },
         credentials: 'include',
         method: 'DELETE'
     });

@@ -23,6 +23,12 @@ const Header = ({title, store}) => (
     </div>
    
     </NavLink>}
+    <a 
+    activeClassName = "isActive"
+    className="nav-link"
+    href={'/api/users/logout'}>
+    Logout  
+    </a>
     
         
         

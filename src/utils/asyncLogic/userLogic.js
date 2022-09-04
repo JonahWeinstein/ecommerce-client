@@ -29,4 +29,5 @@ const loginUser = async (data) => {
     return response.json()
 }
 
+
 export {registerUser, loginUser}
