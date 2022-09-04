@@ -16,7 +16,6 @@ class LoginForm extends React.Component {
         }
         try {
             const user = await loginUser(data)
-            sessionStorage.setItem('token', user.token)
             this.setState(() => ({ error: undefined }))
             this.props.history.push('/UserDashboard')
 

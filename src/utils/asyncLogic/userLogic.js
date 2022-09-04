@@ -3,7 +3,7 @@ const registerUser = async (data) => {
         body: JSON.stringify(data),
         credentials: 'same-origin',
         headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
         },
         method: 'POST'})
     if(!response.ok) {
@@ -15,13 +15,13 @@ const registerUser = async (data) => {
 }
 
 const loginUser = async (data) => {
-
     const response = await fetch(`${process.env.API_URL}/users/login`, {
         body: JSON.stringify(data),
-        credentials: 'same-origin',
+        mode: 'cors',
         headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
         },
+        credentials: 'include',
         method: 'POST'});
     if(!response.ok){
         throw new Error('Unable to Login')

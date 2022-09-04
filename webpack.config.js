@@ -1,5 +1,6 @@
 const path = require('path')
 const Dotenv = require('dotenv-webpack');
+const fs = require('fs')
 // must specify input (app.js) and output
 // babel loader allows us to use webpack with babel, the test field uses regex
 // to tell webpack that babel should be used on all files ending in '.js' (unless its in the node_modules directory)
@@ -29,9 +30,18 @@ module.exports = {
     ],
     devtool: 'eval-cheap-module-source-map',
     devServer: {
+        // contentBase lets devserver know where source files are
         contentBase: path.join(__dirname, 'public'),
         // historyApiFallback allows us to use client side routing
-        historyApiFallback: true
+        historyApiFallback: true,
+        host: 'localhost',
+        port: 8080,
+        proxy: {
+            '/api': {
+                target: 'http://localhost:3000',
+                changeOrigin: true
+            }
+        }
     }
 };
-// contentBase lets devserver know where source files are
+

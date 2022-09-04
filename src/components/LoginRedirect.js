@@ -17,6 +17,7 @@ const LoginRedirect = (props) => {
             const user = await loginUser(data)
             sessionStorage.setItem('token', user.token)
             setError(undefined)
+            // unset the error at this location so errorHandler will render the normal route
             history.replace(history.location.pathname, { 
                 errorStatusCode: undefined 
         });
@@ -38,7 +39,7 @@ const LoginRedirect = (props) => {
                 <div>
                     <form onSubmit = {onFormSubmit} className = 'login form'>
                         <input type="text" name="email" placeholder = "Email" />
-                        <input type = "text" name = "password" placeholder = "password" />
+                        <input type = "password" name = "password" placeholder = "password" />
                         {error && <p className = "error">{error}</p>}
                         <button type = "submit" className = 'button cta'>Login</button>
                     </form>

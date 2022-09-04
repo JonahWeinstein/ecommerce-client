@@ -16,12 +16,12 @@ const useQuery = ( {url, updates=null, method='GET', action = null, reduxCallbac
         } 
         const logic = async () => {
         if (updates) {
-            const authToken = sessionStorage.getItem('token')
+            
             // remember to set content-type in request
             const response = await fetch(`${process.env.API_URL}` + url, {
                 body: JSON.stringify(updates),
                 headers: {
-                    'Authorization': `Bearer ${authToken}`,
+                    
                     'Content-Type': 'application/json'
                 },
                 method: method});
@@ -42,15 +42,11 @@ const useQuery = ( {url, updates=null, method='GET', action = null, reduxCallbac
         
         }
     else {
-        const authToken = sessionStorage.getItem('token')
+        
         // remember to set content-type in request
         const response = await fetch(`${process.env.API_URL}` + url, {
-            headers: {
-                'Authorization': `Bearer ${authToken}`
-                
-            },
+            
             method: method});
-        console.log("status: ", response.status)
         if (response.status >= 400) {
           history.replace(history.location.pathname, { 
             errorStatusCode: response.status 
