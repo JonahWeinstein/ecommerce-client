@@ -6,7 +6,7 @@ import ProductListItem from './ProductListItem'
 import Loading from '../Loading'
 import Header from '../Header'
 import ConfirmDeleteModal from '../ConfirmDeleteModal'
-import {startDeleteStore, startGetStores, deleteStoreAction} from '../../actions/storeActions'
+import {deleteStore, fetchStores, deleteStoreAction} from '../../actions/storeActions'
 import useQuery from '../../useQuery'
 import useClickOutside from '../../useClickOutside'
 
@@ -34,7 +34,7 @@ const ProductsListPage = (props) => {
     const handleClick = async (e) => {
         e.preventDefault()
         try {
-            const store = await props.startDeleteStore(props.store.id)
+            const store = await props.deleteStore(props.store.id, props.history)
             setError(undefined)
             
             props.history.replace(`/UserDashboard`)
@@ -104,4 +104,4 @@ const mapDispatchToProps = (dispatch) => ({
     startGetStores: () => dispatch(startGetStores()),
     startDeleteStore: (storeId) => dispatch(startDeleteStore(storeId))
 })
-export default connect(mapSateToProps, mapDispatchToProps)(ProductsListPage)
+export default connect(mapSateToProps, {fetchStores, deleteStore})(ProductsListPage)

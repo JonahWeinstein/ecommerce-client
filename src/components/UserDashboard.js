@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import StoresList from './stores/StoresList'
 import Loading from './Loading';
 import Header from './Header';
-import { startGetStores } from '../actions/storeActions'
+import { fetchStores } from '../actions/storeActions'
 
 
 
@@ -16,7 +16,7 @@ const UserDashboard = (props) => {
         useEffect(() => {
             const getData = async () => {
                 try{
-                    await props.startGetStores()
+                    await props.fetchStores()
                     setLoaded(true)
                 } catch(e) {
                     setError('Unable to load stores')
@@ -41,10 +41,8 @@ const UserDashboard = (props) => {
                 </div>
             ) : <Loading />
 }
-const mapDispatchToProps = (dispatch) => ({
-    startGetStores: () => dispatch(startGetStores())
-})
 
-export default connect(undefined, mapDispatchToProps)(UserDashboard)
+
+export default connect(undefined, {fetchStores})(UserDashboard)
 
 

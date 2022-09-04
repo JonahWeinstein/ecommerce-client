@@ -1,17 +1,4 @@
-const fetchStores = async () => {
-    
-        const response = await fetch(`${process.env.API_URL}/stores`, {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include'
-        })
-        if(!response.ok) {
-            throw new Error(`An Error has occured ${response.status}`)
-        }
-        return response.json();
-   
-}
+
 const addStore = async (store_name) => {
     const data = { store_name }
     
@@ -44,7 +31,7 @@ const deleteStore = async (storeId) => {
 }
 
 export { 
-    fetchStores, 
+    
     addStore, 
     deleteStore
 }

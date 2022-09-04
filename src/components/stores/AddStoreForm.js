@@ -1,5 +1,5 @@
 import React from 'react'
-import { startAddStore} from '../../actions/storeActions'
+import { addStore } from '../../actions/storeActions'
 import { connect } from 'react-redux'
 
 
@@ -12,10 +12,9 @@ class AddStoreForm extends React.Component {
         e.preventDefault()
         const store_name = e.target.elements.store_name.value
         try {
-            const store = await this.props.startAddStore(store_name)
+            const store = await this.props.addStore({store_name: store_name}, this.props.history)
             this.setState(() => ({error: undefined, success:'Store Added!'}))
-            // redirect to new store products page
-            this.props.history.push(`/UserDashboard/stores/${store.id}/products`)
+       
         } catch (e) {
             console.log(e)
             this.setState(() => ({error:'Unable to add store', success: undefined}))
@@ -45,8 +44,6 @@ class AddStoreForm extends React.Component {
         )
     } 
 }
-const mapDispatchToProps = (dispatch) => ({
-    startAddStore: (store_name) => dispatch(startAddStore(store_name))
-})
 
-export default connect(undefined, mapDispatchToProps)(AddStoreForm)
+
+export default connect(undefined, {addStore})(AddStoreForm)

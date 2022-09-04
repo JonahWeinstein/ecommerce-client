@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux'
-import {startDeleteStore, startGetStores} from '../../actions/storeActions'
+import {deleteStore, fetchStores} from '../../actions/storeActions'
 import { Link } from 'react-router-dom'
 import ConfirmDeleteModal from '../ConfirmDeleteModal'
 import Header from '../Header';
@@ -13,7 +13,7 @@ const StoreDashboard = (props) => {
 
     useEffect(() => {
         const getStores = async () => {   
-            await props.startGetStores()
+            await props.fetchStores()
         }
         getStores()
     }, [])
@@ -26,10 +26,9 @@ const StoreDashboard = (props) => {
     const handleClick = async (e) => {
         e.preventDefault()
         try {
-            const store = await props.startDeleteStore(props.store.id)
+            const store = await props.deleteStore(props.store.id)
             setError(undefined)
             setSuccess('Store Deleted')
-            props.history.replace(`/UserDashboard`)
          }
          catch (e){
              console.log(e)
@@ -59,8 +58,8 @@ const mapSateToProps = (state, props) => {
     }
 }   
 const mapDispatchToProps = (dispatch) => ({
-    startGetStores: () => dispatch(startGetStores()),
+    fetchStores: () => dispatch(fetchStores()),
     startDeleteStore: (storeId) => dispatch(startDeleteStore(storeId))
 })
 
-export default connect(mapSateToProps,mapDispatchToProps)(StoreDashboard)
+export default connect(mapSateToProps,{fetchStores, deleteStore})(StoreDashboard)

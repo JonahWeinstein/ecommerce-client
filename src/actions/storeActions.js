@@ -1,63 +1,47 @@
-import { fetchStores, addStore, deleteStore } from "../utils/asyncLogic/storeLogic"
 
-const startGetStores = () => {
-    return  async (dispatch) => {
-        try {
-            const stores = await fetchStores()
-            dispatch(getStores(stores))
-        } catch (e) {
-            console.log(e)
-            throw e
-        }
-    }
-}
 
-const getStores = (stores = []) => ({
-    type: 'GET_STORES',
-    stores
-})
-const startAddStore = (store_name) => {
-    return async (dispatch) => {
-        try {
-            const store = await addStore(store_name)
-            dispatch(addStoreAction(store))
-            return store
-        } catch (e) {
-            throw new Error(e)
-        }
-    }
-}
-const addStoreAction = (store= {}) => ({
-    type: 'ADD_STORE',
-    store
-})
 
-const startDeleteStore = (storeId) => {
-    return async (dispatch) => {
-        try {
-            const store = await deleteStore(storeId)
-            dispatch(deleteStoreAction(store))
-        } catch(e) {
-            throw e
-        }
-    }
+
+// returns async function that dispatches action
+const fetchStores = () => async dispatch => {
+    const result = await fetch(`${process.env.API_URL}/stores`, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include'
+        }).then(res => res.json())
+  
+    dispatch({ type: 'GET_STORES', payload: result });
+  };
+
+  const addStore = (data, history) => async dispatch => {
+    const result = await fetch(`${process.env.API_URL}/stores/add`, {
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        method: 'POST'}).then(res => res.json())
+
+        history.push('/UserDashboard')
+
+    dispatch({ type: 'ADD_STORE', payload: result})
+  }
+
+const deleteStore = (storeId, history) => async dispatch => {
+    const result = await fetch(`${process.env.API_URL}/stores/${storeId}/delete`, {
+        credentials: 'include',
+        method: 'DELETE'})
+    history.push('/UserDashboard')
 }
-const deleteStoreAction = (store) => ({
-    type: 'DELETE_STORE',
-    store
-}
-)
 const updateError = (error) => ({
     type: 'UPDATE_ERROR',
     error
 })
 
-export {
-    startGetStores, 
-    startAddStore, 
-    addStoreAction, 
-    getStores, 
+export { 
+    fetchStores,
+    addStore,
     updateError, 
-    startDeleteStore ,
-    deleteStoreAction
+    deleteStore
 }
