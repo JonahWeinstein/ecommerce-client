@@ -57,9 +57,6 @@ const mapSateToProps = (state, props) => {
         store: state.stores.find((store) => store.id == props.match.params.id)
     }
 }   
-const mapDispatchToProps = (dispatch) => ({
-    fetchStores: () => dispatch(fetchStores()),
-    startDeleteStore: (storeId) => dispatch(startDeleteStore(storeId))
-})
+
 
 export default connect(mapSateToProps,{fetchStores, deleteStore})(StoreDashboard)

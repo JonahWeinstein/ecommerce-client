@@ -1,28 +1,37 @@
 import React, {useState, useEffect} from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import {startGetProducts, getProducts} from '../../actions/productActions'
+import {fetchProducts } from '../../actions/productActions'
 import ProductListItem from './ProductListItem'
 import Loading from '../Loading'
 import Header from '../Header'
 import ConfirmDeleteModal from '../ConfirmDeleteModal'
-import {deleteStore, fetchStores, deleteStoreAction} from '../../actions/storeActions'
-import useQuery from '../../useQuery'
-import useClickOutside from '../../useClickOutside'
+import {deleteStore, fetchStores} from '../../actions/storeActions'
+import { useParams } from "react-router-dom";
+
 
 
 const ProductsListPage = (props) => {
     const [error, setError] = useState(undefined)
     
-    // const [loaded, setLoaded] = useState(false)
+    const [loaded, setLoaded] = useState(false)
     const [showModal, setShowModal] = useState(false)
-    
+    const { id } = useParams()
    
-        const { data, loaded} = useQuery({url: `/stores/${props.store.id}/products/all`,
-        updates: null,
-        method: 'GET',
-        reduxCallback: getProducts
-    })
+    useEffect(() => {
+        const getData = async () => {
+            try{
+                await props.fetchProducts(id, props.history)
+                setLoaded(true)
+            } catch(e) {
+                console.log(e)
+                setError('Unable to load products')
+                setLoaded(true)
+            }
+        }
+        getData()
+        
+    }, [])
        
     const openModal = () => {
         setShowModal(true)
@@ -34,7 +43,7 @@ const ProductsListPage = (props) => {
     const handleClick = async (e) => {
         e.preventDefault()
         try {
-            const store = await props.deleteStore(props.store.id, props.history)
+            const store = await props.deleteStore(id, props.history)
             setError(undefined)
             
             props.history.replace(`/UserDashboard`)
@@ -49,7 +58,7 @@ const ProductsListPage = (props) => {
         return loaded ? (
             <div>
             <Header 
-            store = {props.store }/>
+            store_id = {id}/>
            
             { error && <p className = "error">{error}</p>}
             
@@ -70,7 +79,7 @@ const ProductsListPage = (props) => {
                 </div>
                 <div className = 'centered'>
                     <Link 
-                    to = {`/UserDashboard/stores/${props.store.id}/products/add`}
+                    to = {`/UserDashboard/stores/${id}/products/add`}
                     className = 'button cta'
                     >Add Product</Link>
 
@@ -99,9 +108,5 @@ const mapSateToProps = (state, props) => {
         products: state.products
     }
 }
-const mapDispatchToProps = (dispatch) => ({
-    startGetProducts: (storeId) => dispatch(startGetProducts(storeId)),
-    startGetStores: () => dispatch(startGetStores()),
-    startDeleteStore: (storeId) => dispatch(startDeleteStore(storeId))
-})
-export default connect(mapSateToProps, {fetchStores, deleteStore})(ProductsListPage)
+
+export default connect(mapSateToProps, {fetchStores, deleteStore, fetchProducts})(ProductsListPage)

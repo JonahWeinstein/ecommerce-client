@@ -1,31 +1,56 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from "react-router-dom";
-
+import { setError } from '../../ErrorHandler';
 import ProductForm from './ProductForm'
+import { useParams } from 'react-router-dom';
+import Loading from '../Loading'
+import { fetchProduct } from '../../actions/productActions';
+import Header from '../Header';
+
 
 
 
 const EditProductPage = (props) => {
     
-        return (
-            <div>
+    const [loaded, setLoaded] = useState(false)
+    const {id, productId} = useParams()
+
+    useEffect(() => {
+        const getData = async () => {
+            try {
+                await props.fetchProduct(id, productId, props.history)
                 
+                setLoaded(true)
+            } catch (e) {
+               
+            }
+        }
+        // if we are updating a product, fetch it from db
+        getData()
+        
+        // else {
+        //     setLoaded(true)
+        // }
+
+
+    }, [])
+        return loaded ? (
+            <div>
+            <Header store_id = {id}/>
                 <ProductForm 
-                store = {props.store} 
                 product = {props.product} 
                 action = {'Update'} 
                 history = {props.history}
-                storeId = {props.match.params.id}
-                productId = {props.match.params.productId} />
+                storeId = {id}
+                productId = {productId} />
             </div>
-        )
+        ): <Loading />
     
 }
 const mapSateToProps = (state, props) => ({
-    store: state.stores.find((store) => store.id == props.match.params.id),
     // if we are adding product for the first time then product will be undefined
     product: state.products.find((product) => product.id == props.match.params.productId)
 })
 
-export default connect(mapSateToProps)(EditProductPage)
+export default connect(mapSateToProps, {fetchProduct})(EditProductPage)

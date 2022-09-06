@@ -16,7 +16,7 @@ const UserDashboard = (props) => {
         useEffect(() => {
             const getData = async () => {
                 try{
-                    await props.fetchStores()
+                    await props.fetchStores(props.history)
                     setLoaded(true)
                 } catch(e) {
                     setError('Unable to load stores')

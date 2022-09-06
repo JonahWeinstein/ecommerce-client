@@ -45,9 +45,7 @@ const ImagesList = (props) => {
                           {...provided.draggableProps}
                         >
                         <ImageListItem 
-
                         image = {item}
-                        store = {props.store}
                         onSelect = {onSelect}
                         />
                         </div>

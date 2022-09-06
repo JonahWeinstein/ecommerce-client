@@ -21,4 +21,15 @@ const ErrorHandler = ({ children }) => {
       return children
   }
 };
+// used in actions
+export const setError = (response, history) => {
+
+  if (!response.ok && response.status < 400) {
+    throw new Error()
+  } else {
+    history.replace(history.location.pathname, { 
+      errorStatusCode: response.status 
+    });
+  }
+} 
 export default ErrorHandler

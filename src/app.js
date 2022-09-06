@@ -12,9 +12,10 @@ const store = configureStore()
 // create a new instance of Stateloader 
 const stateLoader = new StateLoader()
 // when redux store changes save the new store to localStorage
-store.subscribe(() => {
-    stateLoader.saveState(store.getState());
-});
+
+// store.subscribe(() => {
+//     stateLoader.saveState(store.getState());
+// });
 
 const jsx = (
     <Provider store = {store}>

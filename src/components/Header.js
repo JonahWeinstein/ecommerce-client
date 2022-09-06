@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const Header = ({title, store}) => (
+const Header = ({title, store_id}) => (
     <div className = 'header-wrapper'>
     <NavLink exact 
     activeClassName = "isActive" 
@@ -12,11 +12,11 @@ const Header = ({title, store}) => (
         </div>
     </NavLink>
     
-    { store && <NavLink 
+    { store_id && <NavLink 
         exact
         activeClassName = "isActive"
         className="nav-link"
-        to= {`/UserDashboard/stores/${store.id}/products`}
+        to= {`/UserDashboard/stores/${store_id}/products`}
     > 
     <div>
         Products 
