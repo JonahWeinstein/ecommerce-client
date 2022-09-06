@@ -16,7 +16,9 @@ const fetchProduct = (storeId, productId, history) => async dispatch => {
         credentials: 'include'
     })
     setError(result, history)
-    dispatch({ type: 'GET_PRODUCT', payload: await result.json() });
+    const product = await result.json()
+    dispatch({ type: 'GET_PRODUCT', payload: product });
+    return product
 }
 
 const addImage = async (image, order, storeId, productId) => {
@@ -50,12 +52,9 @@ const addProduct = (name, description = '', price, quantity, images, storeId, hi
         method: 'POST'
     }).then(res => res.json())
     
-    images.forEach(async ({image, order}) => {
-            await addImage(image, order, storeId, response.id)
-    })
-    
-    dispatch({ type: 'ADD_PRODUCT', payload: response });  
-    history.replace(`/UserDashboard/stores/${storeId}/products/${response.id}`)
+    for (let {image, order} of images) {
+        await addImage(image, order, storeId, response.id)
+    }
     return response
 }
 

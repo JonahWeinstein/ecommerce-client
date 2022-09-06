@@ -126,6 +126,7 @@ const ProductForm = (props) => {
                         id,
                         props.history
                     )
+                    props.history.replace(`/UserDashboard/stores/${id}/products/${product.id}`)
                     
                 }
                 // setState needs some logic to see if product is being added or updated 

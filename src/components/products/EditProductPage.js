@@ -19,21 +19,15 @@ const EditProductPage = (props) => {
     useEffect(() => {
         const getData = async () => {
             try {
-                await props.fetchProduct(id, productId, props.history)
-                
+                const product = await props.fetchProduct(id, productId, props.history)
+                console.log(product)
                 setLoaded(true)
+                console.log('loaded')
             } catch (e) {
-               
+               console.log(e)
             }
         }
-        // if we are updating a product, fetch it from db
         getData()
-        
-        // else {
-        //     setLoaded(true)
-        // }
-
-
     }, [])
         return loaded ? (
             <div>

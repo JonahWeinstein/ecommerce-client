@@ -28,7 +28,6 @@ const addProduct = async (name, description, price, quantity, storeId) => {
     const response = await fetch(`${process.env.API_URL}/stores/${storeId}/products/add`, {
         body: JSON.stringify(data),
         headers: {
-
             'Content-Type': 'application/json'
         },
         credentials: 'include',
